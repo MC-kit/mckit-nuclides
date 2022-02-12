@@ -1,12 +1,13 @@
-from typing import Dict
+from typing import Dict, Tuple, Union
 
 from dataclasses import InitVar, dataclass, field
 from functools import reduce
 
 import pandas as pd
 
-from multipledispatch import dispatch
+from mckit_nuclides.elements import ELEMENTS_TABLE, Element
 from mckit_nuclides.utils.resource import path_resolver
+from multipledispatch import dispatch
 
 
 def load_tables():
@@ -76,27 +77,26 @@ SYMBOL_2_ATOMIC_NUMBER, ATOMIC_NUMBER_2_SYMBOL, NUCLIDES_TABLE = load_tables()
 
 
 @dataclass
-class Nuclide:
-    element: InitVar
-    atomic_number: int = field(init=False)
-    symbol: str = field(init=False)
+class Nuclide(Element):
     mass_number: int
 
-    def __post_init__(self, element):
-        if isinstance(element, str):
-            self.atomic_number = SYMBOL_2_ATOMIC_NUMBER[element]
-            self.symbol = element
-        elif isinstance(element, int):
-            self.atomic_number = element
-            self.symbol = ATOMIC_NUMBER_2_SYMBOL[element]
+    def __post_init__(self, element: Union[int, str]) -> None:
+        super(Nuclide, self).__post_init__(element)
 
     @property
-    def z(self):
-        return self.atomic_number
-
-    @property
-    def a(self):
+    def a(self) -> int:
         return self.mass_number
+
+    def key(self) -> Tuple[int, int]:
+        return self.atomic_number, self.mass_number
+
+    @property
+    def relative_atomic_mass(self) -> float:
+        return NUCLIDES_TABLE.loc[self.key()].relative_atomic_mass
+
+    @property
+    def isotopic_composition(self) -> float:
+        return NUCLIDES_TABLE.loc[self.key()].isotopic_composition
 
     @classmethod
     def from_dict(cls, data: Dict):
