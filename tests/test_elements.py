@@ -9,7 +9,7 @@ def test_get_atomic_mass(element, expected):
 
 
 @pytest.mark.parametrize("element, expected", [("B", "Boron"), ("Og", "Oganesson")])
-def test_get_atomic_mass(element, expected):
+def test_get_name(element, expected):
     assert expected == Element(element).name
 
 

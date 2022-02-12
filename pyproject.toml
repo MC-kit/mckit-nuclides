@@ -197,6 +197,14 @@ files = "src/mckit_nuclides/**/*.py"
 
 [[tool.mypy.overrides]]
 module = [
-    "nox", "nox_poetry", "pandas", "pytest", "click", "click.testing", "loguru", "numpy.testing"
+    "nox",
+    "nox_poetry",
+    "pandas",
+    "pytest",
+    "click",
+    "click.testing",
+    "loguru",
+    "numpy.testing",
+    "multipledispatch",
 ]
 ignore_missing_imports = true

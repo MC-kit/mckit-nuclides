@@ -1,10 +1,7 @@
-from typing import List
-
 import os
 
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
 from mckit_nuclides.utils.resource import path_resolver
