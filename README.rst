@@ -18,4 +18,3 @@ References
    Atomic Weights and Isotopic Compositions (version 4.1). [Online]
    Available: http://physics.nist.gov/Comp [year, month, day].
    National Institute of Standards and Technology, Gaithersburg, MD.
-
