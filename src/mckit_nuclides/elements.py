@@ -1,6 +1,6 @@
 """Module `elements` provides access to information on chemical element level."""
 
-from typing import Union, cast
+from typing import Any, Union
 
 from dataclasses import InitVar, dataclass, field
 
@@ -12,7 +12,7 @@ from multipledispatch import dispatch
 
 def _load_elements() -> pd.DataFrame:
     path = path_resolver("mckit_nuclides")("data/elements.csv")
-    return pd.read_csv(path, index_col="Symbol")
+    return pd.read_csv(path, index_col="symbol")
 
 
 ELEMENTS_TABLE = _load_elements()
@@ -35,10 +35,10 @@ class Element:
             TypeError: if element type is not str or int.
         """
         if isinstance(element, str):
-            self.atomic_number = ELEMENTS_TABLE.loc[element]["AtomicNumber"]
+            self.atomic_number = ELEMENTS_TABLE.loc[element]["atomic_number"]
         elif isinstance(element, int):
             self.atomic_number = element
-        else:  # pragma nocover
+        else:
             raise TypeError(f"Illegal parameter symbol {element}")
 
     @property
@@ -51,15 +51,6 @@ class Element:
         return self.atomic_number
 
     @property
-    def name(self) -> str:
-        """Get the name of the Element.
-
-        Returns:
-            English name for the Element.
-        """
-        return cast(str, ELEMENTS_TABLE.iloc[self.atomic_number - 1]["Name"])
-
-    @property
     def symbol(self) -> str:
         """Get periodical table symbol for the Element.
 
@@ -68,19 +59,18 @@ class Element:
         """
         return ELEMENTS_TABLE.index[self.atomic_number - 1]  # type: ignore[no-any-return]
 
-    @property
-    def atomic_mass(self) -> float:
-        """Get atomic mass.
+    def __getattr__(self, item: Any) -> Any:
+        """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
+
+        The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
+
+        Args:
+            item: column of ELEMENTS_TABLE
 
         Returns:
-            atomic mass in a.u.
+            content selected for this Element instance.
         """
-        return cast(float, ELEMENTS_TABLE.iloc[self.atomic_number - 1]["AtomicMass"])
-
-    # @classmethod
-    # def from_dict(cls, data: Dict) -> "Element":
-    #     """Helper for JSON information retrieval."""
-    #     return cls(data["atomic_number"])
+        return ELEMENTS_TABLE.iloc[self.atomic_number - 1][item]
 
 
 @dispatch(int)
@@ -93,7 +83,7 @@ def get_atomic_mass(atomic_number: int) -> float:
     Returns:
         Average atomic mass of the Element with the atomic number.
     """
-    return ELEMENTS_TABLE.iloc[atomic_number - 1]["AtomicMass"]
+    return ELEMENTS_TABLE.iloc[atomic_number - 1]["atomic_mass"]
 
 
 @dispatch(str)  # type: ignore[no-redef]
@@ -106,4 +96,4 @@ def get_atomic_mass(symbol: str) -> float:  # noqa: F811
     Returns:
         Average atomic mass of the Element with the atomic number.
     """
-    return ELEMENTS_TABLE.loc[symbol]["AtomicMass"]
+    return ELEMENTS_TABLE.loc[symbol]["atomic_mass"]

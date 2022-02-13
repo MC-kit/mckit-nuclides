@@ -9,11 +9,13 @@ def convert_to_atomic_fraction(df: pd.DataFrame) -> pd.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
     Args:
-        df: Pandas DataFrame with having column "fractions" and
+        df: Pandas DataFrame with having column "fraction" and
             indexed by MultipleIndex (atomic_number, mass_number)
 
     Returns:
-        DataFrame: df with modified column "fractions"
+        DataFrame: df with modified column "fraction"
     """
-    df["fraction"] /= NUCLIDES_TABLE.loc[df.index]["relative_atomic_mass"]
+    df["fraction"] = (
+        df["fraction"].values / NUCLIDES_TABLE.loc[df.index]["nuclide_mass"].values
+    )
     return df

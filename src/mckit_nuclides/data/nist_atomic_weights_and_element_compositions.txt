@@ -26856,7 +26856,7 @@ Standard Atomic Weight =
 Notes                  =
 
 Atomic Number          = 117
-Atomic Symbol          = Uus
+Atomic Symbol          = Ts
 Mass Number            = 294
 Relative Atomic Mass   = 294.21046(74#)
 Isotopic Composition   =

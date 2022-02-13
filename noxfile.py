@@ -28,17 +28,15 @@ except ImportError:
 
 # TODO dvp: uncomment when code and docs are more mature
 nox.options.sessions = (
-    "pre-commit",
     "safety",
     "isort",
     "black",
+    "pre-commit",
     "lint",
     "mypy",
     "xdoctest",
     "tests",
     "docs-build",
-    # "codecov",
-    # "docs",
 )
 
 package = "mckit_nuclides"
