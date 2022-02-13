@@ -1,10 +1,36 @@
-==============
-mckit-nuclides
-==============
-
-Python code to work with elements and their isotopes
+==============================================================================
+*mckit-nuclides*: tables with information on elements and nuclides
+==============================================================================
 
 
+
+|Maintained| |License| |Versions| |PyPI| |Docs|
+
+.. contents::
+
+
+Description
+-----------
+
+The module presents basic information on chemical elements and nuclides organized as Pandas tables.
+There are also some tools to work with composition fractions.
+Pandas allows to use dataset approach on data indexing, joining and selecting.
+
+Installation
+------------
+
+.. TODO
+
+
+Examples
+--------
+
+.. TODO
+
+Contributing
+------------
+
+.. TODO
 
 References
 ----------
@@ -18,3 +44,22 @@ References
    Atomic Weights and Isotopic Compositions (version 4.1). [Online]
    Available: http://physics.nist.gov/Comp [year, month, day].
    National Institute of Standards and Technology, Gaithersburg, MD.
+
+
+.. Substitutions
+
+.. |Maintained| image:: https://img.shields.io/badge/Maintained%3F-yes-green.svg
+   :target: https://github.com/MC-kit/mckit-nuclides/graphs/commit-activity
+.. |Tests| image:: https://github.com/MC-kit/mckit-nuclides/workflows/Tests/badge.svg
+   :target: https://github.com/MC-kit/mckit-nuclides/actions?workflow=Tests
+   :alt: Tests
+.. |License| image:: https://img.shields.io/github/license/MC-kit/mckit-nuclides
+   :target: https://github.com/MC-kit/mckit-nuclides
+.. |Versions| image:: https://img.shields.io/pypi/pyversions/mckit-nuclides
+   :alt: PyPI - Python Version
+.. |PyPI| image:: https://img.shields.io/pypi/v/mckit-nuclides
+   :target: https://pypi.org/project/mckit-nuclides/
+   :alt: PyPI
+.. |Docs| image:: https://readthedocs.org/projects/mckit-nuclides/badge/?version=latest
+   :target: https://mckit-nuclides.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
