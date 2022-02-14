@@ -158,7 +158,7 @@ source = ["mckit_nuclides"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-# fail_under = 100
+fail_under = 100
 # Regexes for lines to exclude from consideration
 exclude_lines = [
     # Have to re-enable the standard pragma
