@@ -83,6 +83,9 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
 
 SYMBOL_2_ATOMIC_NUMBER, ATOMIC_NUMBER_2_SYMBOL, NUCLIDES_TABLE = _load_tables()
 
+# TODO dvp: improve table, add uncertainties and more nuclide properties:
+#           half-life, decay mode, etc.
+
 
 @dataclass
 class Nuclide(Element):
