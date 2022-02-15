@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mckit-nuclides"
-version = "0.1.0"
+version = "0.1.1"
 description = "\"Python tools to work with elements and isotopes\""
 authors = ["dvp <dmitri_portnov@yahoo.com>"]
 license = "MIT"
@@ -42,7 +42,7 @@ numpy = "^1.21.4"
 multipledispatch = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^7.0.1"
 pytest-cache = "^1.0"
 pytest-cov = "^3.0.0"
 coverage = { version = "^6.1.2", extras = ["toml"] }   # TODO dvp: poetry doesn't find new version
@@ -158,7 +158,7 @@ source = ["mckit_nuclides"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-# fail_under = 100
+fail_under = 100
 # Regexes for lines to exclude from consideration
 exclude_lines = [
     # Have to re-enable the standard pragma

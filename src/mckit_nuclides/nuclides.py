@@ -39,9 +39,8 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
         value_type = types.get(label, None)
         if value_type is not None:
             if value:
-                value = value.split("(", 1)[
-                    0
-                ]  # drop uncertainties, so far, there's no use cases for them
+                # drop uncertainties, so far, there's no use cases for them
+                value = value.split("(", 1)[0]
                 value = value_type(value)
             else:
                 value = value_type()
@@ -73,12 +72,19 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
     table.set_index(
         ["atomic_number", "mass_number"], inplace=True, verify_integrity=True
     )
-    table.index.name = "atom_mass"
+    table.index.name = "atom_and_mass_numbers"
+    table.rename(
+        columns=dict(atomic_symbol="symbol", relative_atomic_mass="nuclide_mass"),
+        inplace=True,
+    )
 
     return symbol_2_atomic_number, atomic_number_2_symbol, table
 
 
 SYMBOL_2_ATOMIC_NUMBER, ATOMIC_NUMBER_2_SYMBOL, NUCLIDES_TABLE = _load_tables()
+
+# TODO dvp: improve table, add uncertainties and more nuclide properties:
+#           half-life, decay mode, etc.
 
 
 @dataclass
@@ -107,47 +113,41 @@ class Nuclide(Element):
     def _key(self) -> Tuple[int, int]:
         return self.atomic_number, self.mass_number
 
-    @property
-    def relative_atomic_mass(self) -> float:
-        """The isotope mass (a.u.).
+    def __getattr__(self, item: Any) -> Any:
+        """Use columns of NUCLIDES_TABLE as properties of the Element accessor.
+
+        The `column` can be anything selecting a column or columns
+        from NUCLIDES_TABLE and ELEMENTS_TABLE, but not from both.
+
+        Args:
+            item: column of NUCLIDES_TABLE
 
         Returns:
-            The nuclide mass (a.u.).
+            content selected for this Nuclide instance.
         """
-        return cast(float, NUCLIDES_TABLE.loc[self._key()].relative_atomic_mass)
-
-    @property
-    def isotopic_composition(self) -> float:
-        """Natural presence of nuclide (fraction of atoms in Element).
-
-        Returns:
-            float: fraction of atoms of this nuclide.
-        """
-        return cast(float, NUCLIDES_TABLE.loc[self._key()].isotopic_composition)
-
-    # @classmethod
-    # def from_dict(cls, data: Dict) -> "Nuclide":
-    #     """Helper to retrieve a Nuclide from JSON."""
-    #     return cls(data["atomic_number"], mass_number=data["mass_number"])
+        try:
+            return super(Nuclide, self).__getattr__(item)
+        except KeyError:
+            return NUCLIDES_TABLE.loc[self._key()][item]
 
 
 @dispatch(int, int)
-def get_atomic_mass(atomic_number: int, mass_number: int) -> float:
-    """Retrieve atomic mass for a nuclide by atomic and mass numbers, a.u.
+def get_nuclide_mass(atomic_number: int, mass_number: int) -> float:
+    """Retrieve mass of a nuclide by atomic and mass numbers, a.u.
 
     Args:
         atomic_number: Z of a nuclide
         mass_number: A
 
     Returns:
-        Mass of the Nuclide by its atomic and mass numbers.
+        Mass of the Nuclide by its atomic and mass numbers (a.u).
     """
-    return NUCLIDES_TABLE.loc[(atomic_number, mass_number)]["relative_atomic_mass"]
+    return NUCLIDES_TABLE.loc[(atomic_number, mass_number)]["nuclide_mass"]
 
 
 @dispatch(str, int)  # type: ignore[no-redef]
-def get_atomic_mass(symbol: str, mass_number: int) -> float:  # noqa: F811
-    """Retrieve atomic mass for a nuclide by symbol and mass number, a.u.
+def get_nuclide_mass(symbol: str, mass_number: int) -> float:  # noqa: F811
+    """Retrieve mass of a nuclide by symbol and mass number, a.u.
 
     Args:
         symbol: symbol of a nuclide
@@ -157,7 +157,4 @@ def get_atomic_mass(symbol: str, mass_number: int) -> float:  # noqa: F811
         Mass of the Nuclide by its symbol and mass numbers.
     """
     atomic_number = SYMBOL_2_ATOMIC_NUMBER[symbol]
-    return get_atomic_mass(atomic_number, mass_number)
-
-
-# TODO dvp: implement abundance functionality using the NIST data in this module
+    return get_nuclide_mass(atomic_number, mass_number)

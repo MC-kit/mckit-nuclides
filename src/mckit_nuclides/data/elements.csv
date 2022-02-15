@@ -1,4 +1,4 @@
-AtomicNumber,Symbol,Name,AtomicMass,CPKHexColor,ElectronConfiguration,Electronegativity,AtomicRadius,IonizationEnergy,ElectronAffinity,OxidationStates,StandardState,MeltingPoint,BoilingPoint,Density,GroupBlock,YearDiscovered,Period,Group
+atomic_number,symbol,name,atomic_mass,cpk_hex_color,electron_configuration,electronegativity,atomic_radius,ionization_energy,electron_affinity,oxidation_states,standard_state,melting_point,boiling_point,density,group_block,year_discovered,period,group
 1,H,Hydrogen,1.0080,FFFFFF,1s1,2.2,120,13.598,0.754,"+1, -1",Gas,13.81,20.28,0.00008988,Nonmetal,1766,1,1
 2,He,Helium,4.00260,D9FFFF,1s2,,140,24.587,,0,Gas,0.95,4.22,0.0001785,Noble gas,1868,1,18
 3,Li,Lithium,7.0,CC80FF,[He]2s1,0.98,182,5.392,0.618,1,Solid,453.65,1615,0.534,Alkali metal,1817,2,1
