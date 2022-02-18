@@ -8,10 +8,9 @@ Run this if test_package() fails on pytest run.
 """
 from typing import Optional, TypeVar
 
-import platform
 import shutil
+import site
 import subprocess  # noqa
-import sys
 
 from pathlib import Path
 
@@ -62,32 +61,9 @@ def get_project_name() -> str:
     return name
 
 
-def get_packages_dir() -> Path:
-    """Define packages location depending on system.
-
-    Returns:
-        Path: to directory 'site-packages' containing distributions info folders.
-
-    Raises:
-        EnvironmentError: if there's no directory 'site-packages'.
-    """
-    system = platform.system()
-    if system == "Windows":
-        site_packages = Path("Lib", "site-packages")
-    else:
-        python = f"python{sys.version_info.major}.{sys.version_info.minor}"
-        site_packages = Path("lib", python, "site-packages")
-    result = Path(sys.prefix, site_packages)
-    if not result.is_dir():
-        raise EnvironmentError(
-            f"Cannot find site package for system {system} in folder {result}"
-        )
-    return result
-
-
 def clear_previous_distributions_info() -> None:
     """Remove all dist-info folders from previous installations."""
-    packages_dir = get_packages_dir()
+    packages_dir = Path(site.getsitepackages()[0])
     name = get_project_name()
     dists = list(packages_dir.glob(f"{name}-*.dist-info"))
     if dists:
