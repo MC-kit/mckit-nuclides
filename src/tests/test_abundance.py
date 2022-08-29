@@ -9,7 +9,7 @@ from numpy.testing import assert_array_almost_equal
 @pytest.fixture
 def water():
     return pd.DataFrame(
-        dict(fraction=[2 * get_atomic_mass(1), get_atomic_mass(8)]),
+        {"fraction": [2 * get_atomic_mass(1), get_atomic_mass(8)]},
         index=pd.MultiIndex.from_tuples([(1, 1), (8, 16)]),
     )
 
@@ -19,7 +19,6 @@ def test_convert_to_atomic_fraction_h2o(water):
     assert_array_almost_equal(water["fraction"].values, [2.0, 1.0], decimal=3)
 
 
-# @pytest.mark.xfail(reason="Not implemented")
 def test_expand_natural_presence():
     composition = [
         [(1, 0), 2.0],
@@ -31,7 +30,7 @@ def test_expand_natural_presence():
         (8, 16, 1.0),  # O (mass_number is specified)
     ]
     actual = list(
-        expand_natural_presence(map(lambda x: (x[0][0], x[0][1], x[1]), composition))
+        expand_natural_presence((x[0][0], x[0][1], x[1]) for x in composition)
     )
     assert expected == actual
 

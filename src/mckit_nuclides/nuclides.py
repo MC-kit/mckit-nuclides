@@ -1,9 +1,8 @@
 """Information on nuclides: masses, natural presence and more."""
 
-from typing import Any, Dict, List, Tuple, Union, cast
+from typing import Any, Dict, List, Tuple, Union
 
 from dataclasses import dataclass
-from functools import reduce
 
 import pandas as pd
 
@@ -17,20 +16,20 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
         "data/nist_atomic_weights_and_element_compositions.txt"
     )
 
-    collector: Dict[str, List[Any]] = dict(
-        atomic_number=[],
-        atomic_symbol=[],
-        mass_number=[],
-        relative_atomic_mass=[],
-        isotopic_composition=[],
-    )
+    collector: Dict[str, List[Any]] = {
+        "atomic_number": [],
+        "atomic_symbol": [],
+        "mass_number": [],
+        "relative_atomic_mass": [],
+        "isotopic_composition": [],
+    }
 
-    types = dict(
-        atomic_number=int,
-        mass_number=int,
-        relative_atomic_mass=float,
-        isotopic_composition=float,
-    )
+    types = {
+        "atomic_number": int,
+        "mass_number": int,
+        "relative_atomic_mass": float,
+        "isotopic_composition": float,
+    }
 
     # noinspection PyTypeChecker
     def _split_line(line: str) -> Tuple[str, Any]:
@@ -46,24 +45,16 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
                 value = value_type()
         return label, value
 
-    def _reducer(_: Any, line: str) -> None:
-        line = line.strip()
-        if not line or line.startswith("#"):
-            return
-        label, value = _split_line(line)
-        dst = collector.get(label, None)
-        if dst is not None:
-            dst.append(value)
-
     with path.open(encoding="utf-8") as fid:
-        reduce(_reducer, fid.readlines(), None)
+        for line in fid.readlines():
+            line = line.strip()
+            if line and not line.startswith("#"):
+                label, value = _split_line(line)
+                dst = collector.get(label, None)
+                if dst is not None:
+                    dst.append(value)
 
-    symbols = list(
-        cast(
-            str,
-            map(lambda x: "H" if x in ["D", "T"] else x, collector["atomic_symbol"]),
-        )
-    )
+    symbols = ["H" if x in ["D", "T"] else x for x in collector["atomic_symbol"]]
     collector["atomic_symbol"] = symbols
     atomic_numbers = collector["atomic_number"]
     symbol_2_atomic_number = dict(zip(symbols, atomic_numbers))
@@ -74,7 +65,7 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
     )
     table.index.name = "atom_and_mass_numbers"
     table.rename(
-        columns=dict(atomic_symbol="symbol", relative_atomic_mass="nuclide_mass"),
+        columns={"atomic_symbol": "symbol", "relative_atomic_mass": "nuclide_mass"},
         inplace=True,
     )
 
@@ -113,7 +104,7 @@ class Nuclide(Element):
     def _key(self) -> Tuple[int, int]:
         return self.atomic_number, self.mass_number
 
-    def __getattr__(self, item: Any) -> Any:
+    def __getattr__(self, item):
         """Use columns of NUCLIDES_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns
