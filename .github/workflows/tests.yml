@@ -10,6 +10,7 @@ on:
       - "**.py"
       - "**.yml"
       - "**.toml"
+      - ".github/constraints.txt"
   pull_request:
     branches:
       - "master"
