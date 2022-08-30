@@ -39,7 +39,7 @@ nox.options.sessions = (
 package = "mckit_nuclides"
 locations = f"src/{package}", "tests", "noxfile.py", "docs/source/conf.py"
 
-supported_pythons = ["3.8", "3.9", "3.10"]
+supported_pythons = "3.8", "3.9", "3.10", "3.11"
 black_pythons = "3.10"
 mypy_pythons = "3.10"
 lint_pythons = "3.10"

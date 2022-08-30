@@ -1412,7 +1412,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "virtualenv"
-version = "20.16.3"
+version = "20.16.4"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -1424,8 +1424,8 @@ filelock = ">=3.4.1,<4"
 platformdirs = ">=2.4,<3"
 
 [package.extras]
-testing = ["pytest-timeout (>=2.1)", "pytest-randomly (>=3.10.3)", "pytest-mock (>=3.6.1)", "pytest-freezegun (>=0.4.2)", "pytest-env (>=0.6.2)", "pytest (>=7.0.1)", "packaging (>=21.3)", "flaky (>=3.7)", "coverage-enable-subprocess (>=1)", "coverage (>=6.2)"]
-docs = ["towncrier (>=21.9)", "sphinx-rtd-theme (>=1)", "sphinx-argparse (>=0.3.1)", "sphinx (>=5.1.1)", "proselint (>=0.13)"]
+docs = ["proselint (>=0.13)", "sphinx (>=5.1.1)", "sphinx-argparse (>=0.3.1)", "sphinx-rtd-theme (>=1)", "towncrier (>=21.9)"]
+testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7)", "packaging (>=21.3)", "pytest (>=7.0.1)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.2)", "pytest-mock (>=3.6.1)", "pytest-randomly (>=3.10.3)", "pytest-timeout (>=2.1)"]
 
 [[package]]
 name = "xdoctest"
@@ -1476,8 +1476,8 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.8,<3.11"   # TODO dvp: numpy 1.21.4 sets upper limit to 3.11
-content-hash = "374fb390bf45c313cc7904337b11e0cb58a00b5a63ed23ce4a243890d9473e89"
+python-versions = ">=3.8,<4.0"
+content-hash = "77a6e5bf472759dc02d49cc7f136c964cdab95438872b432529389999dbff7eb"
 
 [metadata.files]
 alabaster = [
@@ -1997,7 +1997,10 @@ urllib3 = [
     {file = "urllib3-1.26.12-py2.py3-none-any.whl", hash = "sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997"},
     {file = "urllib3-1.26.12.tar.gz", hash = "sha256:3fa96cf423e6987997fc326ae8df396db2a8b7c667747d47ddd8ecba91f4a74e"},
 ]
-virtualenv = []
+virtualenv = [
+    {file = "virtualenv-20.16.4-py3-none-any.whl", hash = "sha256:035ed57acce4ac35c82c9d8802202b0e71adac011a511ff650cbcf9635006a22"},
+    {file = "virtualenv-20.16.4.tar.gz", hash = "sha256:014f766e4134d0008dcaa1f95bafa0fb0f575795d07cae50b1bee514185d6782"},
+]
 xdoctest = [
     {file = "xdoctest-1.0.2-py3-none-any.whl", hash = "sha256:d036c21daa0475bb6a68c4f03a2456ab06a2a7f15f514051ef3036948b3c161f"},
     {file = "xdoctest-1.0.2.tar.gz", hash = "sha256:1bbf8de45dadbb31f1e2c9f427b4cc915d6d655c347b03bba6979653939ece34"},
