@@ -4,7 +4,7 @@
 
 
 
-|Maintained| |License| |Versions| |PyPI| |Docs|
+|Maintained| |License| |Versions| |PyPI| |Docs| |Bandit|
 
 .. contents::
 
@@ -74,3 +74,6 @@ References
 .. |Docs| image:: https://readthedocs.org/projects/mckit-nuclides/badge/?version=latest
    :target: https://mckit-nuclides.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
+.. |Bandit| image:: https://img.shields.io/badge/security-bandit-yellow.svg
+   :target: https://github.com/PyCQA/bandit
+   :alt: Security Status

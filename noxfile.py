@@ -47,8 +47,7 @@ lint_pythons = "3.10"
 FLAKE8_DEPS = [
     "flake8",
     "flake8-annotations",
-    # TODO dvp: versions 3.0.0 and older don't work with recent flake8, check on update
-    #  "flake8-bandit",
+    "flake8-bandit",
     "flake8-bugbear",
     "flake8-builtins",
     "flake8-colors",
@@ -63,6 +62,18 @@ FLAKE8_DEPS = [
     "pep8-naming",
     "pydocstyle",
     "tryceratops",
+]
+
+SPHINX_DEPS = [
+    "sphinx",
+    "sphinx-click",
+    "sphinx-rtd-theme",
+    # "sphinxcontrib-htmlhelp",
+    # "sphinxcontrib-jsmath",
+    "sphinxcontrib-napoleon",
+    # "sphinxcontrib-qthelp",
+    "sphinx-autodoc-typehints",
+    # "sphinx_autorun",
 ]
 
 
@@ -269,17 +280,7 @@ def docs_build(s: Session) -> None:
         "--no-dev",
         external=True,
     )
-    s.install(
-        "sphinx",
-        "sphinx-click",
-        "sphinx-rtd-theme",
-        # "sphinxcontrib-htmlhelp",
-        # "sphinxcontrib-jsmath",
-        "sphinxcontrib-napoleon",
-        # "sphinxcontrib-qthelp",
-        "sphinx-autodoc-typehints",
-        # "sphinx_autorun",
-    )
+    s.install(*SPHINX_DEPS)
 
     build_dir = Path("docs", "_build")
     if build_dir.exists():
@@ -298,18 +299,7 @@ def docs(s: Session) -> None:
         "--no-dev",
         external=True,
     )
-    s.install(
-        "sphinx",
-        "sphinx-autobuild",
-        "sphinx-click",
-        "sphinx-rtd-theme",
-        # "sphinxcontrib-htmlhelp",
-        # "sphinxcontrib-jsmath",
-        # "sphinxcontrib-napoleon",
-        # "sphinxcontrib-qthelp",
-        # "sphinx-autodoc-typehints",
-        # "sphinx_autorun",
-    )
+    s.install("sphinx-autobuild", *SPHINX_DEPS)
 
     build_dir = Path("docs", "_build")
     if build_dir.exists():
