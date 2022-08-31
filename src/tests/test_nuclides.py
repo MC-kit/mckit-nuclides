@@ -27,7 +27,7 @@ def test_get_nuclide_by_element_and_isotope(inp, expected, msg):
 def test_get_nuclide_by_z_and_isotope(inp, expected, msg):
     actual = Nuclide(*inp)
     assert actual.symbol == expected
-    assert actual.a == actual.mass_number  # noqa
+    assert actual.a == actual.mass_number
 
 
 @pytest.mark.parametrize(

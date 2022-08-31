@@ -1,6 +1,6 @@
 """Module `elements` provides access to information on chemical element level."""
 
-from typing import Any, Union
+from typing import Union
 
 from dataclasses import InitVar, dataclass, field
 
@@ -59,7 +59,7 @@ class Element:
         """
         return ELEMENTS_TABLE.index[self.atomic_number - 1]  # type: ignore[no-any-return]
 
-    def __getattr__(self, item: Any) -> Any:
+    def __getattr__(self, item):
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.

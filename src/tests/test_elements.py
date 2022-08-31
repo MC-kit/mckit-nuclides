@@ -21,7 +21,7 @@ def test_z():
 
 def test_element_with_invalid_key():
     with pytest.raises(TypeError):
-        print(Element(3.1415926))  # noqa
+        print(Element(3.1415926))
 
 
 def test_get_unknown_property():
