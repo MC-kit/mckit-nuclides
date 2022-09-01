@@ -25,7 +25,6 @@ ignore=
 exclude=
     .git
     __pycache__
-    src/mapstp/cli/runner.py
     docs/source/conf.py
     adhoc
     wrk
