@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
@@ -73,7 +73,7 @@ jobs:
     needs: lint
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
@@ -115,7 +115,7 @@ jobs:
         python-version: ['3.8', '3.9', '3.10']
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -139,7 +139,7 @@ jobs:
     needs: tests
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
