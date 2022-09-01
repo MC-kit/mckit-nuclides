@@ -8,6 +8,7 @@ on:
       - "main"
     paths:
       - "**.py"
+      - "**.yaml"
       - "**.yml"
       - "**.toml"
       - ".github/constraints.txt"
@@ -18,6 +19,7 @@ on:
       - "main"
     paths:
       - "**.py"
+      - "**.yaml"
       - "**.yml"
       - "**.toml"
 
@@ -110,7 +112,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.8', '3.9', '3.10'     ]
+        python-version: ['3.8', '3.9', '3.10']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

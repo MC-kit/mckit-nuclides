@@ -17,6 +17,68 @@ def _load_elements() -> pd.DataFrame:
 
 ELEMENTS_TABLE = _load_elements()
 
+__all__ = [
+    "ELEMENTS_TABLE",
+    "Element",
+    "atomic_mass",
+    "atomic_number",
+    "symbol",
+    "z",
+]
+
+
+def atomic_number(element: str) -> int:
+    """Get atomic number (Z) for an element.
+
+    Args:
+        element: element by chemical symbol
+
+    Returns:
+        int: Z - the atomic number for the element.
+    """
+    return ELEMENTS_TABLE.loc[element]["atomic_number"]
+
+
+z = atomic_number
+
+
+def symbol(_atomic_number: int) -> str:
+    """Get chemical symbol for a given Z (atomic number).
+
+    Args:
+        _atomic_number: Z of an element
+
+    Returns:
+        str: Chemical symbol
+    """
+    return ELEMENTS_TABLE.index[_atomic_number - 1]  # type: ignore[no-any-return]
+
+
+@dispatch(int)
+def atomic_mass(_atomic_number: int) -> float:
+    """Get standard atomic mass for and Element by atomic number.
+
+    Args:
+        _atomic_number: define Element by atomic number
+
+    Returns:
+        Average atomic mass of the Element with the atomic number.
+    """
+    return ELEMENTS_TABLE.iloc[_atomic_number - 1]["atomic_mass"]
+
+
+@dispatch(str)  # type: ignore[no-redef]
+def atomic_mass(_symbol: str) -> float:  # noqa: F811
+    """Get standard atomic mass for and Element by symbol.
+
+    Args:
+        _symbol: define Element by symbol.
+
+    Returns:
+        Average atomic mass of the Element with the atomic number.
+    """
+    return ELEMENTS_TABLE.loc[_symbol]["atomic_mass"]
+
 
 @dataclass
 class Element:
@@ -35,7 +97,7 @@ class Element:
             TypeError: if element type is not str or int.
         """
         if isinstance(element, str):
-            self.atomic_number = ELEMENTS_TABLE.loc[element]["atomic_number"]
+            self.atomic_number = z(element)
         elif isinstance(element, int):
             self.atomic_number = element
         else:
@@ -57,7 +119,7 @@ class Element:
         Returns:
             Chemical symbol of the element.
         """
-        return ELEMENTS_TABLE.index[self.atomic_number - 1]  # type: ignore[no-any-return]
+        return symbol(self.atomic_number)
 
     def __getattr__(self, item):
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
@@ -71,29 +133,3 @@ class Element:
             content selected for this Element instance.
         """
         return ELEMENTS_TABLE.iloc[self.atomic_number - 1][item]
-
-
-@dispatch(int)
-def get_atomic_mass(atomic_number: int) -> float:
-    """Get standard atomic mass for and Element by atomic number.
-
-    Args:
-        atomic_number: define Element by atomic number
-
-    Returns:
-        Average atomic mass of the Element with the atomic number.
-    """
-    return ELEMENTS_TABLE.iloc[atomic_number - 1]["atomic_mass"]
-
-
-@dispatch(str)  # type: ignore[no-redef]
-def get_atomic_mass(symbol: str) -> float:  # noqa: F811
-    """Get standard atomic mass for and Element by symbol.
-
-    Args:
-        symbol: define Element by symbol.
-
-    Returns:
-        Average atomic mass of the Element with the atomic number.
-    """
-    return ELEMENTS_TABLE.loc[symbol]["atomic_mass"]

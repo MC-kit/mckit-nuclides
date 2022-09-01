@@ -35,7 +35,7 @@ def filename_resolver(package: Optional[str] = None) -> Callable[[str], str]:
 def path_resolver(package: Optional[str] = None) -> Callable[[str], Path]:
     """Create method to find data path.
 
-    Uses :meth:`file_resolver`.
+    Uses :py:func:`file_resolver`.
 
     Args:
         package: the package below which the data is stored.
