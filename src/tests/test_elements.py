@@ -1,11 +1,11 @@
 import pytest
 
-from mckit_nuclides.elements import Element, get_atomic_mass
+from mckit_nuclides.elements import Element, atomic_mass
 
 
 @pytest.mark.parametrize("element, expected", [("Ag", 107.868), (1, 1.008)])
-def test_get_atomic_mass(element, expected):
-    assert expected == get_atomic_mass(element)
+def test_atomic_mass(element, expected):
+    assert expected == atomic_mass(element)
 
 
 @pytest.mark.parametrize("element, expected", [("B", "Boron"), ("Og", "Oganesson")])
