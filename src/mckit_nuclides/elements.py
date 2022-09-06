@@ -1,6 +1,6 @@
 """Module `elements` provides access to information on chemical element level."""
 
-from typing import Union
+from typing import Union, cast
 
 from dataclasses import InitVar, dataclass, field
 
@@ -12,7 +12,28 @@ from multipledispatch import dispatch
 
 def _load_elements() -> pd.DataFrame:
     path = path_resolver("mckit_nuclides")("data/elements.csv")
-    return pd.read_csv(path, index_col="symbol")
+    converters = {
+        "atomic_number": int,
+        "symbol": str,
+        "name": str,
+        "atomic_mass": float,
+        "cpk_hex_color": lambda x: int(x, base=16) if x and str.isalnum(x) else x,
+        "electron_configuration": str,
+        "electronegativity": lambda x: float(x) if x else x,
+        "atomic_radius": lambda x: float(x) if x else x,
+        "ionization_energy": lambda x: float(x) if x else x,
+        "electron_affinity": lambda x: float(x) if x else x,
+        "oxidation_states": str,
+        "standard_state": str,
+        "melting_point": lambda x: float(x) if x else x,
+        "boiling_point": lambda x: float(x) if x else x,
+        "density": lambda x: float(x) if x else x,
+        "group_block": str,
+        "year_discovered": lambda x: int(x) if str.isnumeric(x) else x,
+        "period": int,
+        "group": int,
+    }
+    return pd.read_csv(path, index_col="symbol", converters=converters)
 
 
 ELEMENTS_TABLE = _load_elements()
@@ -36,7 +57,7 @@ def atomic_number(element: str) -> int:
     Returns:
         int: Z - the atomic number for the element.
     """
-    return ELEMENTS_TABLE.loc[element]["atomic_number"]
+    return cast(int, ELEMENTS_TABLE.loc[element]["atomic_number"])
 
 
 z = atomic_number
