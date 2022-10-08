@@ -44,5 +44,5 @@ def expand_natural_presence(
                 z
             ].isotopic_composition
             isotopic_compositions = isotopic_compositions[0 < isotopic_compositions]
-            for _a, _ic in isotopic_compositions.iteritems():
+            for _a, _ic in isotopic_compositions.items():
                 yield z, _a, f * _ic

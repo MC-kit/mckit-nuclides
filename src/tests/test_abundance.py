@@ -2,14 +2,14 @@ import pandas as pd
 import pytest
 
 from mckit_nuclides.abundance import convert_to_atomic_fraction, expand_natural_presence
-from mckit_nuclides.elements import get_atomic_mass
+from mckit_nuclides.elements import atomic_mass
 from numpy.testing import assert_array_almost_equal
 
 
 @pytest.fixture
 def water():
     return pd.DataFrame(
-        {"fraction": [2 * get_atomic_mass(1), get_atomic_mass(8)]},
+        {"fraction": [2 * atomic_mass(1), atomic_mass(8)]},
         index=pd.MultiIndex.from_tuples([(1, 1), (8, 16)]),
     )
 
