@@ -182,6 +182,9 @@ markers = [
 # xfail tests that pass should fail the test suite
 xfail_strict = true
 
+[tool.xdoctest]
+quiet = true
+options = ""
 
 # [tool.coverage]
 [tool.coverage.paths]
@@ -245,10 +248,21 @@ module = [
 ]
 ignore_missing_imports = true
 
+[tool.check-manifest]
+ignore = [
+    "tests/*",
+    "tools/*",
+    "*.yaml",
+    "noxfile.py",
+]
+
+[tool.ipdb]
+# For debugging in jupyterlab and ipython
+# see https://github.com/gotcha/ipdb
+context=5
 
 [tool.tryceratops]
 include = ["src"]
-#ignore = ["TC002", "TC200", "TC300"]
 experimental = true
 
 [tool.pycln]
