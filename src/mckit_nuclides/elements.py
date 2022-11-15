@@ -11,7 +11,7 @@ from mckit_nuclides.utils.resource import path_resolver
 from multipledispatch import dispatch
 
 
-def _opt_float(x: Optional[str]) -> Optional[float]:
+def _opt_float(x: Optional[str]) -> Optional[float | str]:
     return float(x) if x else x
 
 
