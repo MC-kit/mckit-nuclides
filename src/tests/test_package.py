@@ -2,7 +2,10 @@ import re
 
 from pathlib import Path
 
-import tomli
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib
 
 from mckit_nuclides import __version__
 
@@ -10,7 +13,7 @@ from mckit_nuclides import __version__
 def find_version_from_project_toml():
     toml_path = Path(__file__).parent.parent.parent / "pyproject.toml"
     assert toml_path.exists()
-    pyproject = tomli.loads(toml_path.read_text())
+    pyproject = tomllib.loads(toml_path.read_text())
     version = pyproject["tool"]["poetry"]["version"]
     return version
 
