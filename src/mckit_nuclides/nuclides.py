@@ -104,7 +104,7 @@ class Nuclide(Element):
     def _key(self) -> Tuple[int, int]:
         return self.atomic_number, self.mass_number
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: Any) -> Any:
         """Use columns of NUCLIDES_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns

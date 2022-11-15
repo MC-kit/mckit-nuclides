@@ -215,20 +215,20 @@ sort = "Cover"
 
 # MyPy config
 # See https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
+#     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
 [tool.mypy]
-python_version = "3.10"
-# strict = true     # TODO dvp: uncomment this to get strict control
+strict = true
 follow_imports = "silent"
 # namespace_packages = true
-warn_return_any = true
-warn_unused_configs = true
-show_error_codes = true
-enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
-show_error_context = true
-error_summary = true
-warn_redundant_casts = true
-warn_unreachable = true
-warn_unused_ignores = true
+#warn_return_any = true
+#warn_unused_configs = true
+#show_error_codes = true
+#enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+#show_error_context = true
+#error_summary = true
+#warn_redundant_casts = true
+#warn_unreachable = true
+#warn_unused_ignores = true
 files = "src/mckit_nuclides/**/*.py"
 
 

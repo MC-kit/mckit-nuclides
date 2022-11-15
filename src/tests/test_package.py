@@ -11,7 +11,7 @@ else:
 from mckit_nuclides import __version__
 
 
-def find_version_from_project_toml():
+def find_version_from_project_toml() -> str:
     toml_path = Path(__file__).parent.parent.parent / "pyproject.toml"
     assert toml_path.exists()
     pyproject = tomllib.loads(toml_path.read_text())
@@ -22,11 +22,11 @@ def find_version_from_project_toml():
 _VERSION_NORM_PATTERN = re.compile(r"-(?P<letter>.)[^.]*\.(?P<prepatch>.*)$")
 
 
-def normalize_version(version: str):
+def normalize_version(version: str) -> str:
     return re.sub(_VERSION_NORM_PATTERN, r"\1\2", version)
 
 
-def test_package():
+def test_package() -> None:
     """This test checks if only current version is installed in working environment."""
     version = find_version_from_project_toml()
     assert __version__ == normalize_version(
