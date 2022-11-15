@@ -117,7 +117,7 @@ class Nuclide(Element):
             content selected for this Nuclide instance.
         """
         try:
-            return super(Nuclide, self).__getattr__(item)   # type: ignore[no-untyped-call]
+            return super(Nuclide, self).__getattr__(item)  # type: ignore[no-untyped-call]
         except KeyError:
             return NUCLIDES_TABLE.loc[self._key()][item]
 

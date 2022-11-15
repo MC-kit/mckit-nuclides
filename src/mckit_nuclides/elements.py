@@ -143,7 +143,7 @@ class Element:
         """
         return symbol(self.atomic_number)
 
-    def __getattr__(self, item):   # type: ignore[no-untyped-def]
+    def __getattr__(self, item):  # type: ignore[no-untyped-def]
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
