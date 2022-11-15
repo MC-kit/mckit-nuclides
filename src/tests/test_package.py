@@ -1,10 +1,11 @@
 import re
+import sys
 
 from pathlib import Path
 
-try:
+if sys.version_info >= (3, 11):
     import tomllib
-except ModuleNotFoundError:
+else:
     import tomli as tomllib
 
 from mckit_nuclides import __version__
