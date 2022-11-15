@@ -1,7 +1,7 @@
 """Module `elements` provides access to information on chemical element level."""
 from __future__ import annotations
 
-from typing import Any, Union, cast
+from typing import Union, cast
 
 from dataclasses import InitVar, dataclass, field
 
@@ -143,13 +143,13 @@ class Element:
         """
         return symbol(self.atomic_number)
 
-    def __getattr__(self, item: Any) -> Any:
+    def __getattr__(self, item):   # type: ignore[no-untyped-def]
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
 
         Args:
-            item: column of ELEMENTS_TABLE
+            item: column or columns of ELEMENTS_TABLE
 
         Returns:
             content selected for this Element instance.
