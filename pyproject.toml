@@ -7,7 +7,12 @@ license = "MIT"
 homepage = "https://github.com/MC-kit/mckit-nuclides"
 repository = "https://github.com/MC-kit/mckit-nuclides"
 # documentation = "https://mckit-nuclides.readthedocs.io
-keywords = ["nuclide", "isotope", "abundance"]
+keywords = [
+    "element",
+    "nuclide",
+    "isotope",
+    "abundance",
+]
 readme = "README.rst"
 packages = [
     { include = "mckit_nuclides", from = "src" },
@@ -28,7 +33,7 @@ classifiers = [
 
 [tool.poetry.urls]
 # documentation = "https://mckit_nuclides.readthedocs.io"
-Chnagelog = "https://github.com/MC-kit/mckit-nuclides/releases"
+Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 
 [tool.poetry.dependencies]
