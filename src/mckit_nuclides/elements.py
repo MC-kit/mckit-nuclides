@@ -1,6 +1,7 @@
 """Module `elements` provides access to information on chemical element level."""
+from __future__ import annotations
 
-from typing import Union, cast
+from typing import Optional, Union, cast
 
 from dataclasses import InitVar, dataclass, field
 
@@ -8,6 +9,10 @@ import pandas as pd
 
 from mckit_nuclides.utils.resource import path_resolver
 from multipledispatch import dispatch
+
+
+def _opt_float(x: Optional[str]) -> Optional[float | str]:
+    return float(x) if x else x
 
 
 def _load_elements() -> pd.DataFrame:
@@ -19,15 +24,15 @@ def _load_elements() -> pd.DataFrame:
         "atomic_mass": float,
         "cpk_hex_color": lambda x: int(x, base=16) if x and str.isalnum(x) else x,
         "electron_configuration": str,
-        "electronegativity": lambda x: float(x) if x else x,
-        "atomic_radius": lambda x: float(x) if x else x,
-        "ionization_energy": lambda x: float(x) if x else x,
-        "electron_affinity": lambda x: float(x) if x else x,
+        "electronegativity": _opt_float,
+        "atomic_radius": _opt_float,
+        "ionization_energy": _opt_float,
+        "electron_affinity": _opt_float,
         "oxidation_states": str,
         "standard_state": str,
-        "melting_point": lambda x: float(x) if x else x,
-        "boiling_point": lambda x: float(x) if x else x,
-        "density": lambda x: float(x) if x else x,
+        "melting_point": _opt_float,
+        "boiling_point": _opt_float,
+        "density": _opt_float,
         "group_block": str,
         "year_discovered": lambda x: int(x) if str.isnumeric(x) else x,
         "period": int,
@@ -142,13 +147,13 @@ class Element:
         """
         return symbol(self.atomic_number)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item):  # type: ignore[no-untyped-def]
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
 
         Args:
-            item: column of ELEMENTS_TABLE
+            item: column or columns of ELEMENTS_TABLE
 
         Returns:
             content selected for this Element instance.

@@ -104,20 +104,20 @@ class Nuclide(Element):
     def _key(self) -> Tuple[int, int]:
         return self.atomic_number, self.mass_number
 
-    def __getattr__(self, item):
+    def __getattr__(self, item):  # type: ignore[no-untyped-def]
         """Use columns of NUCLIDES_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns
         from NUCLIDES_TABLE and ELEMENTS_TABLE, but not from both.
 
         Args:
-            item: column of NUCLIDES_TABLE
+            item: column or columns of NUCLIDES_TABLE
 
         Returns:
             content selected for this Nuclide instance.
         """
         try:
-            return super(Nuclide, self).__getattr__(item)
+            return super(Nuclide, self).__getattr__(item)  # type: ignore[no-untyped-call]
         except KeyError:
             return NUCLIDES_TABLE.loc[self._key()][item]
 

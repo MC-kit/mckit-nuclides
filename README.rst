@@ -12,9 +12,14 @@
 Description
 -----------
 
-The module presents basic information on chemical elements and nuclides organized as Pandas tables.
-There are also some tools to work with composition fractions.
+The module presents basic information on chemical elements and nuclides including natural presence.
+The data is organized as Pandas tables.
 Pandas allows to use dataset approach on data indexing, joining and selecting.
+There are also some tools to work with composition fractions.
+
+.. note::
+
+    The documentation is in progress yet.
 
 Installation
 ------------

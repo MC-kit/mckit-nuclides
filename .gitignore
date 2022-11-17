@@ -134,3 +134,6 @@ dmypy.json
 
 # A soundbox work and data folder
 wrk/
+
+# poetry local config
+/poetry.toml

@@ -1,16 +1,20 @@
 import re
+import sys
 
 from pathlib import Path
 
-import tomli
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
 
 from mckit_nuclides import __version__
 
 
-def find_version_from_project_toml():
+def find_version_from_project_toml() -> str:
     toml_path = Path(__file__).parent.parent.parent / "pyproject.toml"
     assert toml_path.exists()
-    pyproject = tomli.loads(toml_path.read_text())
+    pyproject = tomllib.loads(toml_path.read_text())
     version = pyproject["tool"]["poetry"]["version"]
     return version
 
@@ -18,11 +22,11 @@ def find_version_from_project_toml():
 _VERSION_NORM_PATTERN = re.compile(r"-(?P<letter>.)[^.]*\.(?P<prepatch>.*)$")
 
 
-def normalize_version(version: str):
+def normalize_version(version: str) -> str:
     return re.sub(_VERSION_NORM_PATTERN, r"\1\2", version)
 
 
-def test_package():
+def test_package() -> None:
     """This test checks if only current version is installed in working environment."""
     version = find_version_from_project_toml()
     assert __version__ == normalize_version(
