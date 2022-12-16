@@ -3,7 +3,7 @@
 # set -exu
 
 pyenv virtualenv-delete -f  mckit-nuclides
-pyenv virtualenv 3.11.0 mckit-nuclides
+pyenv virtualenv 3.11.1 mckit-nuclides
 pyenv rehash
 poetry install
 pyenv rehash
