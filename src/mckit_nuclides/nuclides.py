@@ -1,4 +1,5 @@
 """Information on nuclides: masses, natural presence and more."""
+from __future__ import annotations
 
 from typing import Any, Dict, List, Tuple, Union
 
