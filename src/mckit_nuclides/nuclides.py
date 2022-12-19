@@ -1,4 +1,5 @@
 """Information on nuclides: masses, natural presence and more."""
+from __future__ import annotations
 
 from typing import Any, Dict, List, Tuple, Union
 
@@ -32,18 +33,18 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
     }
 
     # noinspection PyTypeChecker
-    def _split_line(line: str) -> Tuple[str, Any]:
-        label, value = map(str.strip, line.split("="))  # type: str, str
-        label = label.lower().replace(" ", "_")
-        value_type = types.get(label, None)
+    def _split_line(_line: str) -> Tuple[str, Any]:
+        _label, _value = map(str.strip, _line.split("="))  # type: str, str
+        _label = _label.lower().replace(" ", "_")
+        value_type = types.get(_label, None)
         if value_type is not None:
-            if value:
+            if _value:
                 # drop uncertainties, so far, there's no use cases for them
-                value = value.split("(", 1)[0]
-                value = value_type(value)
+                _value = _value.split("(", 1)[0]
+                _value = value_type(_value)
             else:
-                value = value_type()
-        return label, value
+                _value = value_type()
+        return _label, _value
 
     with path.open(encoding="utf-8") as fid:
         for line in fid.readlines():
@@ -63,6 +64,12 @@ def _load_tables() -> Tuple[Dict[str, int], Dict[int, str], pd.DataFrame]:
     table.set_index(
         ["atomic_number", "mass_number"], inplace=True, verify_integrity=True
     )
+    # TODO dvp: There's an important exclusion with Ta180.
+    #           It's "observationally stable" only in metastable state
+    #           (https://en.wikipedia.org/wiki/Isotopes_of_tantalum).
+    #           Should we add add additional sub index for 'state' for
+    #           this only exclusion?
+    #           Or we'd better to supply this information on compositions specs?
     table.index.name = "atom_and_mass_numbers"
     table.rename(
         columns={"atomic_symbol": "symbol", "relative_atomic_mass": "nuclide_mass"},
@@ -104,20 +111,20 @@ class Nuclide(Element):
     def _key(self) -> Tuple[int, int]:
         return self.atomic_number, self.mass_number
 
-    def __getattr__(self, item):
+    def __getattr__(self, item):  # type: ignore[no-untyped-def]
         """Use columns of NUCLIDES_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns
         from NUCLIDES_TABLE and ELEMENTS_TABLE, but not from both.
 
         Args:
-            item: column of NUCLIDES_TABLE
+            item: column or columns of NUCLIDES_TABLE
 
         Returns:
             content selected for this Nuclide instance.
         """
         try:
-            return super(Nuclide, self).__getattr__(item)
+            return super(Nuclide, self).__getattr__(item)  # type: ignore[no-untyped-call]
         except KeyError:
             return NUCLIDES_TABLE.loc[self._key()][item]
 

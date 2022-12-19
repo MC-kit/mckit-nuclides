@@ -14,7 +14,10 @@ import subprocess
 
 from pathlib import Path
 
-import tomli
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib
 
 PathLike = TypeVar("PathLike", str, Path)
 
@@ -55,8 +58,8 @@ def get_project_name() -> str:
             "Illegal directory: cannot find file pyproject.toml "
             f"from current directory: {Path.cwd()}"
         )
-    pyproject = tomli.loads(pyproject_path.read_text())
-    name = pyproject["tool"]["poetry"]["name"].replace("-", "_")
+    pyproject = tomllib.loads(pyproject_path.read_text())
+    name: str = pyproject["tool"]["poetry"]["name"].replace("-", "_")
     print(f"Package {name} is found in {pyproject_path.absolute()}")
     return name
 

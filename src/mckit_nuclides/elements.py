@@ -1,6 +1,7 @@
 """Module `elements` provides access to information on chemical element level."""
+from __future__ import annotations
 
-from typing import Union
+from typing import Optional, Union, cast
 
 from dataclasses import InitVar, dataclass, field
 
@@ -10,9 +11,34 @@ from mckit_nuclides.utils.resource import path_resolver
 from multipledispatch import dispatch
 
 
+def _opt_float(x: Optional[str]) -> Optional[float | str]:
+    return float(x) if x else x
+
+
 def _load_elements() -> pd.DataFrame:
     path = path_resolver("mckit_nuclides")("data/elements.csv")
-    return pd.read_csv(path, index_col="symbol")
+    converters = {
+        "atomic_number": int,
+        "symbol": str,
+        "name": str,
+        "atomic_mass": float,
+        "cpk_hex_color": lambda x: int(x, base=16) if x and str.isalnum(x) else x,
+        "electron_configuration": str,
+        "electronegativity": _opt_float,
+        "atomic_radius": _opt_float,
+        "ionization_energy": _opt_float,
+        "electron_affinity": _opt_float,
+        "oxidation_states": str,
+        "standard_state": str,
+        "melting_point": _opt_float,
+        "boiling_point": _opt_float,
+        "density": _opt_float,
+        "group_block": str,
+        "year_discovered": lambda x: int(x) if str.isnumeric(x) else x,
+        "period": int,
+        "group": int,
+    }
+    return pd.read_csv(path, index_col="symbol", converters=converters)
 
 
 ELEMENTS_TABLE = _load_elements()
@@ -36,7 +62,7 @@ def atomic_number(element: str) -> int:
     Returns:
         int: Z - the atomic number for the element.
     """
-    return ELEMENTS_TABLE.loc[element]["atomic_number"]
+    return cast(int, ELEMENTS_TABLE.loc[element]["atomic_number"])
 
 
 z = atomic_number
@@ -121,13 +147,13 @@ class Element:
         """
         return symbol(self.atomic_number)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item):  # type: ignore[no-untyped-def]
         """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
 
         The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
 
         Args:
-            item: column of ELEMENTS_TABLE
+            item: column or columns of ELEMENTS_TABLE
 
         Returns:
             content selected for this Element instance.
