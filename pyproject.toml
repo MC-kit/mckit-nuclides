@@ -106,6 +106,9 @@ flake8-rst-docstrings = ">=0.2.7"
 flake8-use-fstring = ">=1.4"
 tryceratops = ">=1.0.1"
 
+# TODO dvp: check/use flake8-pyprojecttoml plugin
+# https://gitlab.com/durko/flake8-pyprojecttoml/-/blob/master/pyproject.toml
+
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=5.3.0"
 sphinx-autodoc-typehints = ">=1.19.5"
@@ -183,6 +186,9 @@ markers = [
 ]
 # xfail tests that pass should fail the test suite
 xfail_strict = true
+filterwarnings = [
+    "ignore:.*not typechecking multipledispatch.dispatcher.*:UserWarning"
+]
 
 [tool.xdoctest]
 quiet = true
