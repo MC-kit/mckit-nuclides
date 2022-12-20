@@ -4,7 +4,7 @@
 
 pyenv virtualenv-delete -f  mckit-nuclides
 pyenv virtualenv 3.11.1 mckit-nuclides
-pyenv rehash
+poetry env info
 poetry install
 pyenv rehash
 python -c "import mckit_nuclides; print(mckit_nuclides.__version__)"

@@ -116,7 +116,7 @@ def activate_virtualenv_in_precommit_hooks(s: Session) -> None:
         hook.write_text("\n".join(lines))
 
 
-@session(name="pre-commit", python="3.10")
+@session(name="pre-commit", python="3.11")
 def precommit(s: Session) -> None:
     """Lint using pre-commit."""
     args = s.posargs or ["run", "--all-files", "--show-diff-on-failure"]
@@ -196,7 +196,7 @@ def typeguard(s: Session) -> None:
     s.run("pytest", f"--typeguard-packages={package}", *s.posargs)
 
 
-@session(python="3.10")
+@session(python="3.11")
 def isort(s: Session) -> None:
     """Organize imports."""
     search_patterns = [
@@ -303,7 +303,6 @@ def docs_build(s: Session) -> None:
     s.run(
         "poetry",
         "install",
-        "--no-root",
         "--only",
         "docs",
         external=True,
@@ -322,7 +321,6 @@ def docs(s: Session) -> None:
     s.run(
         "poetry",
         "install",
-        "--no-root",
         "--only",
         "docs,docs_auto",
         external=True,
