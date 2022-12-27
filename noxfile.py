@@ -66,7 +66,7 @@ lint_pythons: Final = "3.11"
 mypy_pythons: Final = "3.11"
 
 
-def _update_hook(hook, virtualenv, s: Session) -> None:
+def _update_hook(hook: Path, virtualenv: str, s: Session) -> None:
     text = hook.read_text()
     bin_dir = repr(s.bin)[1:-1]  # strip quotes
     if Path("A") == Path("a") and bin_dir.lower() in text.lower() or bin_dir in text:
