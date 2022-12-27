@@ -16,7 +16,7 @@ def water():
 
 def test_convert_to_atomic_fraction_h2o(water):
     convert_to_atomic_fraction(water)
-    assert_array_almost_equal(water["fraction"].values, [2.0, 1.0], decimal=3)
+    assert_array_almost_equal(water["fraction"].to_numpy(), [2.0, 1.0], decimal=3)
 
 
 def test_expand_natural_presence():
@@ -29,9 +29,7 @@ def test_expand_natural_presence():
         (1, 2, 2.0 * 0.000115),  # D, -/-
         (8, 16, 1.0),  # O (mass_number is specified)
     ]
-    actual = list(
-        expand_natural_presence((x[0][0], x[0][1], x[1]) for x in composition)
-    )
+    actual = list(expand_natural_presence((x[0][0], x[0][1], x[1]) for x in composition))
     assert expected == actual
 
 
