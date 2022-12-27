@@ -58,9 +58,9 @@ jobs:
           pip install --constraint=.github/constraints.txt nox
           nox --version
 
-#      - name: Run safety session
-#        run: |
-#          nox --force-color --session=safety
+      - name: Run safety session
+        run: |
+          nox --force-color --session=safety
 
       - name: Run pre commit checks
         run: |
