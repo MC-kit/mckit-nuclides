@@ -1,6 +1,17 @@
 import pytest
 
-from mckit_nuclides.elements import Element, atomic_mass
+from mckit_nuclides.elements import (
+    atomic_mass,
+    atomic_number,
+    get_property,
+    name,
+    symbol,
+    z,
+)
+
+
+def test_symbol():
+    assert symbol(1) == "H"
 
 
 @pytest.mark.parametrize("element, expected", [("Ag", 107.868), (1, 1.008)])
@@ -9,24 +20,22 @@ def test_atomic_mass(element, expected):
 
 
 @pytest.mark.parametrize("element, expected", [("B", "Boron"), ("Og", "Oganesson")])
-def test_get_name(element, expected):
-    e = Element(element)
-    assert expected == e.name
+def test_name(element, expected):
+    assert expected == name(element)
 
 
 def test_z():
-    e = Element(11)
-    assert e.z == e.atomic_number
+    assert z("H") == atomic_number("H")
 
 
 def test_element_with_invalid_key():
-    with pytest.raises(TypeError):
-        print(Element(3.1415926))
+    with pytest.raises(IndexError):
+        get_property(1000000, "name")
 
 
 def test_get_unknown_property():
     with pytest.raises(KeyError):
-        print(Element("Ar").unknown)
+        get_property("Ar", "unknown")
 
 
 if __name__ == "__main__":

@@ -6,18 +6,22 @@ import pandas as pd
 from mckit_nuclides.nuclides import NUCLIDES_TABLE
 
 
-def convert_to_atomic_fraction(df: pd.DataFrame) -> pd.DataFrame:
+def convert_to_atomic_fraction(
+    df: pd.DataFrame, fraction_column: str = "fraction"
+) -> pd.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
     Args:
-        df: Pandas DataFrame with having column "fraction" and
-            indexed by MultipleIndex (atomic_number, mass_number)
+        df:
+            DataFrame indexed by MultipleIndex (atomic_number, mass_number)
+        fraction_column:
+            name of column presenting fraction
 
     Returns:
         DataFrame: df with modified column "fraction"
     """
-    df["fraction"] = (
-        df["fraction"].values / NUCLIDES_TABLE.loc[df.index]["nuclide_mass"].values
+    df[fraction_column] /= (
+        NUCLIDES_TABLE.loc[df.index, ["nuclide_mass"]].to_numpy().flatten()
     )
     return df
 
@@ -40,9 +44,7 @@ def expand_natural_presence(
         if a != 0:
             yield z, a, f
         else:
-            isotopic_compositions: pd.Series = NUCLIDES_TABLE.loc[
-                z
-            ].isotopic_composition
+            isotopic_compositions: pd.Series = NUCLIDES_TABLE.loc[z].isotopic_composition
             isotopic_compositions = isotopic_compositions[0 < isotopic_compositions]
             for _a, _ic in isotopic_compositions.items():
                 yield z, _a, f * _ic
