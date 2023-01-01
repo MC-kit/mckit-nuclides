@@ -282,6 +282,8 @@ def mypy(s: Session) -> None:
         external=True,
     )
     s.run("mypy", *args)
+
+    # special case for noxfile.py: need to fine `nox` itself in session
     if not s.posargs:
         s.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
 
