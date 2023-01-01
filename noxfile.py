@@ -16,7 +16,7 @@ from textwrap import dedent
 
 import nox
 
-from nox import Session, session  # mypy: ignore
+from nox import Session, session
 
 nox.options.sessions = (
     "safety",
