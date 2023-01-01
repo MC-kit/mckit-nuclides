@@ -1,19 +1,17 @@
 import pytest
 
-from mckit_nuclides.nuclides import Nuclide, get_nuclide_mass
+from mckit_nuclides.elements import atomic_mass
+from mckit_nuclides.nuclides import NUCLIDES_TABLE, get_nuclide_mass
 
 
 @pytest.mark.parametrize(
-    "inp, expected, msg", [(("H", 1), ("H", 1), "At least Hydrogen should be found")]
+    "inp, expected, msg", [(("H", 1), 1.00782503223, "At least Hydrogen should be found")]
 )
 def test_get_nuclide_by_element_and_isotope(inp, expected, msg):
-    actual = Nuclide(*inp)
-    assert actual == Nuclide(*expected), msg
-    actual_mass = actual.nuclide_mass
-    assert actual.a == actual.mass_number
-    assert actual_mass == 1.00782503223
-    assert (
-        actual_mass != actual.atomic_mass
+    actual = get_nuclide_mass(*inp)
+    assert actual == expected
+    assert actual != atomic_mass(
+        inp[0]
     ), "Average Element mass differs from an Nuclide mass."
 
 
@@ -25,9 +23,9 @@ def test_get_nuclide_by_element_and_isotope(inp, expected, msg):
     ],
 )
 def test_get_nuclide_by_z_and_isotope(inp, expected, msg):
-    actual = Nuclide(*inp)
-    assert actual.symbol == expected
-    assert actual.a == actual.mass_number
+    actual = NUCLIDES_TABLE.loc[inp]
+    assert actual["symbol"] == expected
+    assert actual.name == inp
 
 
 @pytest.mark.parametrize(

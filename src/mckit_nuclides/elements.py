@@ -3,12 +3,11 @@ from __future__ import annotations
 
 from typing import Optional, Union, cast
 
-from dataclasses import InitVar, dataclass, field
-
 import pandas as pd
 
 from mckit_nuclides.utils.resource import path_resolver
-from multipledispatch import dispatch
+
+TABLE_VALUE_TYPE = Union[int, str, float, None]
 
 
 def _opt_float(x: Optional[str]) -> Optional[float | str]:
@@ -43,15 +42,6 @@ def _load_elements() -> pd.DataFrame:
 
 ELEMENTS_TABLE = _load_elements()
 
-__all__ = [
-    "ELEMENTS_TABLE",
-    "Element",
-    "atomic_mass",
-    "atomic_number",
-    "symbol",
-    "z",
-]
-
 
 def atomic_number(element: str) -> int:
     """Get atomic number (Z) for an element.
@@ -62,10 +52,11 @@ def atomic_number(element: str) -> int:
     Returns:
         int: Z - the atomic number for the element.
     """
-    return cast(int, ELEMENTS_TABLE.loc[element]["atomic_number"])
+    return cast(int, ELEMENTS_TABLE.at[element, "atomic_number"])
 
 
 z = atomic_number
+"""Synonym to atomic_number"""
 
 
 def symbol(_atomic_number: int) -> str:
@@ -80,82 +71,47 @@ def symbol(_atomic_number: int) -> str:
     return ELEMENTS_TABLE.index[_atomic_number - 1]  # type: ignore[no-any-return]
 
 
-@dispatch(int)
-def atomic_mass(_atomic_number: int) -> float:
+def get_property(z_or_symbol: int | str, column: str) -> TABLE_VALUE_TYPE:
+    """Get column value for an element specified with atomic number or symbol.
+
+    Args:
+        z_or_symbol: define either by atomic number or symbol
+        column: column name in ELEMENTS_TABLE
+
+    Returns:
+        The column value for the given element.
+    """
+    if isinstance(z_or_symbol, int):
+        result: TABLE_VALUE_TYPE = ELEMENTS_TABLE.iat[
+            z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)
+        ]
+    else:
+        result = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
+    return result
+
+
+def atomic_mass(z_or_symbol: int | str) -> float:
     """Get standard atomic mass for and Element by atomic number.
 
     Args:
-        _atomic_number: define Element by atomic number
+        z_or_symbol: define either by atomic number or symbol
 
     Returns:
         Average atomic mass of the Element with the atomic number.
     """
-    return ELEMENTS_TABLE.iloc[_atomic_number - 1]["atomic_mass"]
+    return cast(float, get_property(z_or_symbol, "atomic_mass"))
 
 
-@dispatch(str)  # type: ignore[no-redef]
-def atomic_mass(_symbol: str) -> float:  # noqa: F811
-    """Get standard atomic mass for and Element by symbol.
+def name(z_or_symbol: int | str) -> str:
+    """Get standard atomic mass for and Element by atomic number.
 
     Args:
-        _symbol: define Element by symbol.
+        z_or_symbol: define either by atomic number or symbol
 
     Returns:
-        Average atomic mass of the Element with the atomic number.
+        The name of the element.
     """
-    return ELEMENTS_TABLE.loc[_symbol]["atomic_mass"]
+    return cast(str, get_property(z_or_symbol, "name"))
 
 
-@dataclass
-class Element:
-    """Accessor to a chemical element information."""
-
-    element: InitVar[Union[int, str]]
-    atomic_number: int = field(init=False)
-
-    def __post_init__(self, element: Union[int, str]) -> None:
-        """Create an Element either from symbol or atomic number (Z).
-
-        Args:
-            element: symbol or atomic number for new Element.
-
-        Raises:
-            TypeError: if element type is not str or int.
-        """
-        if isinstance(element, str):
-            self.atomic_number = z(element)
-        elif isinstance(element, int):
-            self.atomic_number = element
-        else:
-            raise TypeError(f"Illegal parameter symbol {element}")
-
-    @property
-    def z(self) -> int:
-        """Atomic number and Z are synonymous.
-
-        Returns:
-            atomic number
-        """
-        return self.atomic_number
-
-    @property
-    def symbol(self) -> str:
-        """Get periodical table symbol for the Element.
-
-        Returns:
-            Chemical symbol of the element.
-        """
-        return symbol(self.atomic_number)
-
-    def __getattr__(self, item):  # type: ignore[no-untyped-def]
-        """Use columns of ELEMENTS_TABLE as properties of the Element accessor.
-
-        The `column` can be anything selecting a column or columns from ELEMENTS_TABLE.
-
-        Args:
-            item: column or columns of ELEMENTS_TABLE
-
-        Returns:
-            content selected for this Element instance.
-        """
-        return ELEMENTS_TABLE.iloc[self.atomic_number - 1][item]
+__all__ = [n for n in locals() if not n.startswith("_")]
