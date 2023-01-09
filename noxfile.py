@@ -16,7 +16,7 @@ from textwrap import dedent
 
 import nox
 
-from nox import Session, session  # mypy: ignore
+from nox import Session, session
 
 nox.options.sessions = (
     "safety",
@@ -282,6 +282,8 @@ def mypy(s: Session) -> None:
         external=True,
     )
     s.run("mypy", *args)
+
+    # special case for noxfile.py: need to find `nox` itself in session
     if not s.posargs:
         s.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
 
