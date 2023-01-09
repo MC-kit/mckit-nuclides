@@ -1643,6 +1643,21 @@ dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
 
 [[package]]
+name = "pydocstringformatter"
+version = "0.7.3"
+description = "A tool to automatically format Python docstrings that tries to follow recommendations from PEP 8 and PEP 257."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pydocstringformatter-0.7.3-py3-none-any.whl", hash = "sha256:3654f52c49fc729b49712d1e7c49384dfd253bdffeda4939e79dab31491c563f"},
+    {file = "pydocstringformatter-0.7.3.tar.gz", hash = "sha256:dfcc07bec1706803d563275e282ef9e629b02dc19983ec6778d07a9f500bb62b"},
+]
+
+[package.dependencies]
+tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pydocstyle"
 version = "6.2.3"
 description = "Python docstring style checker"
@@ -2734,4 +2749,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "311c98242d981b3e08b07e03752b92d8101e4189530f9f284adb3c0ad7a8aa7c"
+content-hash = "91374e2bed3b7892d3bd6fe65c6169272c7601dfff1bc6c4c58600ba0cd2208b"
