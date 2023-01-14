@@ -32,7 +32,6 @@ classifiers = [
 requires = ["poetry-core>=1.1.0"]
 build-backend = "poetry.core.masonry.api"
 
-
 # [tool.poetry.scripts]
 # mckit_nuclides = "mckit_nuclides.cli.runner:mckit_nuclides"
 
