@@ -7,11 +7,11 @@ import pandas as pd
 
 from mckit_nuclides.utils.resource import path_resolver
 
-TABLE_VALUE_TYPE = Union[int, str, float, None]
+TableValue = Union[int, str, float, None]
 
 
-def _opt_float(x: Optional[str]) -> Optional[float | str]:
-    return float(x) if x else x
+def _opt_float(x: Optional[str]) -> Optional[float]:
+    return float(x) if x else None
 
 
 def _load_elements() -> pd.DataFrame:
@@ -71,7 +71,7 @@ def symbol(_atomic_number: int) -> str:
     return ELEMENTS_TABLE.index[_atomic_number - 1]  # type: ignore[no-any-return]
 
 
-def get_property(z_or_symbol: int | str, column: str) -> TABLE_VALUE_TYPE:
+def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     """Get column value for an element specified with atomic number or symbol.
 
     Args:
@@ -82,7 +82,7 @@ def get_property(z_or_symbol: int | str, column: str) -> TABLE_VALUE_TYPE:
         The column value for the given element.
     """
     if isinstance(z_or_symbol, int):
-        result: TABLE_VALUE_TYPE = ELEMENTS_TABLE.iat[
+        result: TableValue = ELEMENTS_TABLE.iat[
             z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)
         ]
     else:

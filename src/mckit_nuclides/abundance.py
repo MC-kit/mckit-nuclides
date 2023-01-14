@@ -7,23 +7,21 @@ from mckit_nuclides.nuclides import NUCLIDES_TABLE
 
 
 def convert_to_atomic_fraction(
-    df: pd.DataFrame, fraction_column: str = "fraction"
+    composition: pd.DataFrame, fraction_column: str = "fraction"
 ) -> pd.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
     Args:
-        df:
-            DataFrame indexed by MultipleIndex (atomic_number, mass_number)
-        fraction_column:
-            name of column presenting fraction
+        composition: DataFrame indexed by MultipleIndex (atomic_number, mass_number)
+        fraction_column: name of column presenting fraction
 
     Returns:
         DataFrame: df with modified column "fraction"
     """
-    df[fraction_column] /= (
-        NUCLIDES_TABLE.loc[df.index, ["nuclide_mass"]].to_numpy().flatten()
+    composition[fraction_column] /= (
+        NUCLIDES_TABLE.loc[composition.index, ["nuclide_mass"]].to_numpy().flatten()
     )
-    return df
+    return composition
 
 
 def expand_natural_presence(

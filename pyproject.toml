@@ -312,3 +312,9 @@ exclude = "tools/**"
 strip-whitespaces = true
 max-line-length = 90
 summary-quotes-same-line = true
+
+
+[tool.pylint]
+good-names-rgxs=["."]  # a single character variable is okay
+logging-format-style="new"   # use {} in logging messages
+deprecated-modules=["six"]
