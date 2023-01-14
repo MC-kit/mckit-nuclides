@@ -56,7 +56,7 @@ def atomic_number(element: str) -> int:
 
 
 z = atomic_number
-"""Synonym to atomic_number"""
+"""Synonym to atomic_number."""
 
 
 def symbol(_atomic_number: int) -> str:

@@ -36,7 +36,7 @@ jobs:
       !contains(github.event.head_commit.message, '[skip_ci]')
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.3.0
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4.4.0
@@ -75,7 +75,7 @@ jobs:
     needs: lint
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.3.0
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4.4.0
@@ -114,7 +114,7 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11']
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 1
       - uses: actions/setup-python@v4.4.0
@@ -136,7 +136,7 @@ jobs:
       - name: Run nox tests
         run: nox  --force-color --session tests --python ${{ matrix.python-version }}
       - name: Upload coverage data
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: coverage-data
           path: ".coverage.*"
@@ -146,7 +146,7 @@ jobs:
     needs: tests
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.3.0
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4.4.0
@@ -169,7 +169,7 @@ jobs:
           nox --version
 
       - name: Download coverage data
-        uses: actions/download-artifact@v3.0.1
+        uses: actions/download-artifact@v3.0.2
         with:
           name: coverage-data
 
