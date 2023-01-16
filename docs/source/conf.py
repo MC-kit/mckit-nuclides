@@ -14,9 +14,9 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-from typing import List
+from typing import Dict, List
 
-import mckit_nuclides
+import mckit_nuclides  # type: ignore[import]
 
 # -- Project information -----------------------------------------------------
 
@@ -38,9 +38,6 @@ release = mckit_nuclides.__version__
 
 # -- General configuration ---------------------------------------------------
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
 extensions: List[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
@@ -127,19 +124,15 @@ htmlhelp_basename = "mckitdoc"
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements = {
+latex_elements: Dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
+    "papersize": "a4paper",
     # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
+    "pointsize": "12pt",
     # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
+    "preamble": "",
     # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
+    "figure_align": "htbp",
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
