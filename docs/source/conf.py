@@ -45,6 +45,8 @@ release = mckit_nuclides.__version__
 extensions: List[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.ifconfig",
     "sphinx.ext.doctest",
     "sphinx.ext.duration",
     "sphinx.ext.extlinks",
@@ -170,4 +172,6 @@ latex_elements: Dict[str, str] = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, document class [howto, manual, or own class]).
-latex_documents = [(master_doc, "mapstp.tex", "mapstp Documentation", "Dmitry Portnov", "manual")]
+latex_documents = [
+    (master_doc, "mckit-nuclides.tex", "mckit-nuclides Documentation", "Dmitry Portnov", "manual")
+]
