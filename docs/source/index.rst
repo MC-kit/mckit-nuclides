@@ -9,7 +9,7 @@ There's also API to use this information:
 
     - expand "natural" isotopic presence
 
-.. todo ::
+.. todo::
 
     Move to this package functionality of materials importing, merging and exporting
     in various formats.
