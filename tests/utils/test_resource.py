@@ -17,9 +17,7 @@ THIS_FILENAME = Path(__file__).name
 def test_filename_resolver(package, resource, expected):
     resolver = filename_resolver(package)
     actual = resolver(resource)
-    assert actual.replace("\\", "/").endswith(
-        expected
-    ), "Failed to compute resource file name"
+    assert actual.replace("\\", "/").endswith(expected), "Failed to compute resource file name"
     assert Path(actual).exists(), f"The resource {resource!r} is not available"
 
 
@@ -53,9 +51,7 @@ def test_path_resolver():
 
 def test_path_resolver_in_own_package_with_separate_file():
     resolver = path_resolver("tests")
-    assert resolver(
-        "__init__.py"
-    ).exists(), "Should find '__init__.py' in the 'tests' package"
+    assert resolver("__init__.py").exists(), "Should find '__init__.py' in the 'tests' package"
 
 
 if __name__ == "__main__":

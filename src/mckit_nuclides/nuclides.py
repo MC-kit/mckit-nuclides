@@ -47,9 +47,7 @@ def _load_tables() -> pd.DataFrame:
 
 
 def _load_nist_file() -> Dict[str, List[Any]]:
-    path = path_resolver("mckit_nuclides")(
-        "data/nist_atomic_weights_and_element_compositions.txt"
-    )
+    path = path_resolver("mckit_nuclides")("data/nist_atomic_weights_and_element_compositions.txt")
     collector: Dict[str, List[Any]] = {
         "atomic_number": [],
         "atomic_symbol": [],

@@ -1,13 +1,6 @@
 import pytest
 
-from mckit_nuclides.elements import (
-    atomic_mass,
-    atomic_number,
-    get_property,
-    name,
-    symbol,
-    z,
-)
+from mckit_nuclides.elements import atomic_mass, atomic_number, get_property, name, symbol, z
 
 
 def test_symbol():
