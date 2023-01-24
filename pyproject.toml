@@ -218,7 +218,7 @@ source = ["src", ".nox/*/site-packages"]
 
 [tool.coverage.run]
 branch = true
-source = ["mckit_nuclides"]
+source = ["src/mckit_nuclides"]
 
 [tool.coverage.report]
 show_missing = true
