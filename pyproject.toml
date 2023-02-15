@@ -141,6 +141,7 @@ sphinx-autobuild = ">=2021.3.14"
 atomic = true
 ensure_newline_before_comments = true
 known_first_party = "mckit_nuclides"
+known_third_party = "mpl_toolkits,matplotlib,numpy,scipy"
 known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
 sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 default_section = "FIRSTPARTY"
@@ -178,6 +179,7 @@ exclude = '''
   | build
   | build_configs
   | dist
+  | 3rd-party
   | data
   | htmlcov
   | \.egg-info
@@ -199,7 +201,9 @@ markers = [
 # xfail tests that pass should fail the test suite
 xfail_strict = true
 filterwarnings = [
-    "ignore:.*not typechecking multipledispatch.dispatcher.*:UserWarning"
+    "error",
+    'ignore:Implementing implicit namespace packages \(as specified in PEP 420\) is preferred to `pkg_resources.declare_namespace`',
+    "ignore:.*not typechecking multipledispatch.dispatcher.*UserWarning"
 ]
 
 [tool.xdoctest]
@@ -213,12 +217,14 @@ source = ["src", ".nox/*/site-packages"]
 [tool.coverage.run]
 branch = true
 source = ["src/mckit_nuclides"]
+omit = ["*_tab.py", "**/__init__.py"]
 
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
 fail_under = 100
 # Regexes for lines to exclude from consideration
+omit = ["*_tab.py", "**/__init__.py"]
 exclude_lines = [
     # Have to re-enable the standard pragma
     "pragma: no cover",
@@ -298,13 +304,36 @@ experimental = true
 
 [tool.pycln]
 path = "src"
+exclude = '''
+(
+    \.egg-info
+  | \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.nox
+  | \.venv
+  | \.idea
+  | _build
+  | 3rd-party
+  | build
+  | build_configs
+  | data
+  | dist
+  | notebooks
+  | htmlcov
+  | wrk
+  | [Pp]arser
+  | tab\.py
+)
+'''
 #silence = true
 
 
 [tool.pydocstringformatter]
 write = true
 style = "pep257"
-exclude = "tools/**"
+exclude = ["tools/**","src/**/*_parser.py","src/**/*_tab.py"]
 strip-whitespaces = true
 max-line-length = 100
 summary-quotes-same-line = true
