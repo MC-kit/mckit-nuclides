@@ -1,9 +1,10 @@
+from numpy.testing import assert_array_almost_equal
+
 import pandas as pd
 import pytest
 
 from mckit_nuclides.abundance import convert_to_atomic_fraction, expand_natural_presence
 from mckit_nuclides.elements import atomic_mass
-from numpy.testing import assert_array_almost_equal
 
 
 @pytest.fixture
