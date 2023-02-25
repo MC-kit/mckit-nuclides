@@ -206,6 +206,8 @@ filterwarnings = [
     "ignore:.*not typechecking multipledispatch.dispatcher.*UserWarning",
     'ignore:.*Deprecated call to `pkg_resources.declare_namespace'
 ]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
 
 [tool.xdoctest]
 quiet = true
@@ -224,8 +226,8 @@ omit = ["*_tab.py", "**/__init__.py"]
 show_missing = true
 skip_covered = true
 fail_under = 100
-# Regexes for lines to exclude from consideration
 omit = ["*_tab.py", "**/__init__.py"]
+# Regexes for lines to exclude from consideration
 exclude_lines = [
     # Have to re-enable the standard pragma
     "pragma: no cover",
