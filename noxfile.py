@@ -110,7 +110,7 @@ def activate_virtualenv_in_precommit_hooks(s: Session) -> None:
         _update_hook(hook, virtualenv, s)
 
 
-@session(name="pre-commit", python="3.11")
+@session(name="pre-commit")
 def precommit(s: Session) -> None:
     """Lint using pre-commit."""
     args = s.posargs or ["run", "--all-files", "--show-diff-on-failure"]
