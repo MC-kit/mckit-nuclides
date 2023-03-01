@@ -82,12 +82,12 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
         The column value for the given element.
     """
     if isinstance(z_or_symbol, int):
-        result: TableValue = ELEMENTS_TABLE.iat[
+        column_value: TableValue = ELEMENTS_TABLE.iat[
             z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)
         ]
     else:
-        result = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
-    return result
+        column_value = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
+    return column_value
 
 
 def atomic_mass(z_or_symbol: int | str) -> float:
