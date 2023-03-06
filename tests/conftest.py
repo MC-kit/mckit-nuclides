@@ -1,12 +1,11 @@
 from typing import Generator
 
+import importlib.resources as rc
 import os
 
 from pathlib import Path
 
 import pytest
-
-from mckit_nuclides.utils.resource import path_resolver
 
 
 @pytest.fixture(scope="session")
@@ -16,7 +15,7 @@ def data() -> Path:
     Returns:
         Path: path to test data
     """
-    return path_resolver("tests")("data")
+    return rc.files("tests").joinpath("data")
 
 
 @pytest.fixture

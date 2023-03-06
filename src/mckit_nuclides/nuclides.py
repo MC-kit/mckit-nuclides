@@ -3,10 +3,16 @@ from __future__ import annotations
 
 from typing import Any, Dict, Final, List, Tuple, cast
 
+import sys
+
+if sys.version_info >= (3, 9):
+    from importlib.resources import files
+else:
+    from importlib_resources import files
+
 import pandas as pd
 
 from mckit_nuclides.elements import TableValue, z
-from mckit_nuclides.utils.resource import path_resolver
 
 _TYPES: Final = {
     "atomic_number": int,
@@ -47,7 +53,6 @@ def _load_tables() -> pd.DataFrame:
 
 
 def _load_nist_file() -> Dict[str, List[Any]]:
-    path = path_resolver("mckit_nuclides")("data/nist_atomic_weights_and_element_compositions.txt")
     collector: Dict[str, List[Any]] = {
         "atomic_number": [],
         "atomic_symbol": [],
@@ -55,6 +60,7 @@ def _load_nist_file() -> Dict[str, List[Any]]:
         "relative_atomic_mass": [],
         "isotopic_composition": [],
     }
+    path = files("mckit_nuclides") / "data/nist_atomic_weights_and_element_compositions.txt"
     with path.open(encoding="utf-8") as fid:
         for line in fid.readlines():
             line = line.strip()
