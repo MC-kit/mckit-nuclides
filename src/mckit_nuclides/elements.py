@@ -3,9 +3,14 @@ from __future__ import annotations
 
 from typing import Optional, Union, cast
 
-import pandas as pd
+import sys
 
-from mckit_nuclides.utils.resource import path_resolver
+if sys.version_info >= (3, 9):
+    from importlib.resources import files
+else:
+    from importlib_resources import files
+
+import pandas as pd
 
 TableValue = Union[int, str, float, None]
 
@@ -15,7 +20,6 @@ def _opt_float(x: Optional[str]) -> Optional[float]:
 
 
 def _load_elements() -> pd.DataFrame:
-    path = path_resolver("mckit_nuclides")("data/elements.csv")
     converters = {
         "atomic_number": int,
         "symbol": str,
@@ -37,7 +41,9 @@ def _load_elements() -> pd.DataFrame:
         "period": int,
         "group": int,
     }
-    return pd.read_csv(path, index_col="symbol", converters=converters)
+    path = files("mckit_nuclides").joinpath("data/elements.csv")
+    with path.open(encoding="utf-8") as fid:
+        return pd.read_csv(fid, index_col="symbol", converters=converters)
 
 
 ELEMENTS_TABLE = _load_elements()
