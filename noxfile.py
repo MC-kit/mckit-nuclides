@@ -195,7 +195,7 @@ def typeguard(s: Session) -> None:
         "main,test,typeguard",
         external=True,
     )
-    s.run("pytest", "--typeguard-packages=src", *s.posargs)
+    s.run("pytest", "--typeguard-packages=src", *s.posargs, external=True)
 
 
 @session
