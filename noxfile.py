@@ -4,7 +4,7 @@ See `Cjolowicz's article <https://cjolowicz.github.io/posts/hypermodern-python-0
 """
 from __future__ import annotations
 
-from typing import Final, List
+from typing import Final, List  # type: ignore[attr-defined]
 
 import re
 import shutil
@@ -156,7 +156,7 @@ def tests(s: Session) -> None:
     try:
         s.run("coverage", "run", "--parallel", "-m", "pytest", *s.posargs)
     finally:
-        if s.interactive:
+        if s.interactive and "--no-cov" not in s.posargs:
             s.notify("coverage", posargs=[])
 
 
@@ -184,7 +184,6 @@ def coverage(s: Session) -> None:
     s.run("coverage", *args)
 
 
-# TODO dvp: check some strange errors on 3.8, 3.9 and slow install of pandas on 3.11
 @session
 def typeguard(s: Session) -> None:
     """Runtime type checking using Typeguard."""
