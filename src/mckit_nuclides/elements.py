@@ -3,14 +3,9 @@ from __future__ import annotations
 
 from typing import Optional, Union, cast
 
-import sys
-
-if sys.version_info >= (3, 9):
-    from importlib.resources import files
-else:
-    from importlib_resources import files
-
 import pandas as pd
+
+from mckit_nuclides.utils.resource import path_resolver
 
 TableValue = Union[int, str, float, None]
 
@@ -41,7 +36,7 @@ def _load_elements() -> pd.DataFrame:
         "period": int,
         "group": int,
     }
-    path = files("mckit_nuclides").joinpath("data/elements.csv")
+    path = path_resolver("mckit_nuclides")("data/elements.csv")
     with path.open(encoding="utf-8") as fid:
         return pd.read_csv(fid, index_col="symbol", converters=converters)
 
