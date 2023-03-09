@@ -11,7 +11,7 @@ THIS_FILENAME = Path(__file__).name
 @pytest.mark.parametrize(
     "package, resource, expected",
     [
-        ("tests", "cli/data/simple_cubes.mcnp", "/cli/data/simple_cubes.mcnp"),
+        ("mckit_nuclides", "data/elements.csv", "data/elements.csv"),
     ],
 )
 def test_path_resolver(package, resource, expected) -> None:
@@ -25,8 +25,8 @@ def test_path_resolver(package, resource, expected) -> None:
 @pytest.mark.parametrize(
     "package, resource, expected",
     [
-        ("tests", "data/fispact/not_existing", "tests/data/fispact/not_existing"),
-        ("mckit", "data/not_existing", "mckit/data/not_existing"),
+        ("tests", "data/not_existing", "tests/data/not_existing"),
+        ("mckit_nuclides", "data/not_existing", "mckit_nuclides/data/not_existing"),
     ],
 )
 def test_path_resolver_when_resource_doesnt_exist(package, resource, expected) -> None:
