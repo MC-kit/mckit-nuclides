@@ -7,15 +7,14 @@ import pandas as pd
 
 from mckit_nuclides.utils.resource import path_resolver
 
-TABLE_VALUE_TYPE = Union[int, str, float, None]
+TableValue = Union[int, str, float, None]
 
 
-def _opt_float(x: Optional[str]) -> Optional[float | str]:
-    return float(x) if x else x
+def _opt_float(x: Optional[str]) -> Optional[float]:
+    return float(x) if x else None
 
 
 def _load_elements() -> pd.DataFrame:
-    path = path_resolver("mckit_nuclides")("data/elements.csv")
     converters = {
         "atomic_number": int,
         "symbol": str,
@@ -37,7 +36,9 @@ def _load_elements() -> pd.DataFrame:
         "period": int,
         "group": int,
     }
-    return pd.read_csv(path, index_col="symbol", converters=converters)
+    path = path_resolver("mckit_nuclides")("data/elements.csv")
+    with path.open(encoding="utf-8") as fid:
+        return pd.read_csv(fid, index_col="symbol", converters=converters)
 
 
 ELEMENTS_TABLE = _load_elements()
@@ -56,7 +57,7 @@ def atomic_number(element: str) -> int:
 
 
 z = atomic_number
-"""Synonym to atomic_number"""
+"""Synonym to atomic_number."""
 
 
 def symbol(_atomic_number: int) -> str:
@@ -71,7 +72,7 @@ def symbol(_atomic_number: int) -> str:
     return ELEMENTS_TABLE.index[_atomic_number - 1]  # type: ignore[no-any-return]
 
 
-def get_property(z_or_symbol: int | str, column: str) -> TABLE_VALUE_TYPE:
+def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     """Get column value for an element specified with atomic number or symbol.
 
     Args:
@@ -82,12 +83,12 @@ def get_property(z_or_symbol: int | str, column: str) -> TABLE_VALUE_TYPE:
         The column value for the given element.
     """
     if isinstance(z_or_symbol, int):
-        result: TABLE_VALUE_TYPE = ELEMENTS_TABLE.iat[
+        column_value: TableValue = ELEMENTS_TABLE.iat[
             z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)
         ]
     else:
-        result = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
-    return result
+        column_value = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
+    return column_value
 
 
 def atomic_mass(z_or_symbol: int | str) -> float:

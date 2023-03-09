@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mckit-nuclides"
-version = "0.2.0"
-description = "\"Python tools to work with elements and isotopes\""
+version = "0.2.1"
+description = "Python tools to work with elements and isotopes"
 authors = ["dvp <dmitri_portnov@yahoo.com>"]
 license = "MIT"
 homepage = "https://github.com/MC-kit/mckit-nuclides"
@@ -28,6 +28,10 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
 ]
 
+[build-system]
+requires = ["poetry-core >= 1.1.0"]
+build-backend = "poetry.core.masonry.api"
+
 # [tool.poetry.scripts]
 # mckit_nuclides = "mckit_nuclides.cli.runner:mckit_nuclides"
 
@@ -38,9 +42,10 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-numpy = ">=1.23.2"
+importlib-resources = {version = ">=5.12.0", python = "3.8"}
+numpy = ">=1.24.2"
 openpyxl = ">=3.0.9"
-pandas = ">=1.3.4"
+pandas = ">=1.4.1"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
@@ -60,9 +65,10 @@ safety = ">=2.3.5"
 [tool.poetry.group.pre_commit.dependencies]
 pre-commit = ">=2.15.0"
 rstcheck = ">=3.3.1"
+pydocstringformatter = "^0.7.3"
 
 [tool.poetry.group.black.dependencies]
-black = ">=22.8.0"
+black = ">=22.8.0"  #TODO dvp: update with safety and packaging
 
 [tool.poetry.group.isort.dependencies]
 isort = ">=5.9.3"
@@ -73,7 +79,6 @@ pytest = ">=7.0.1"
 pytest-cache = ">=1.0"
 pytest-cov = ">=3.0.0"
 pytest-mock = ">=3.6.1"
-#codecov = ">=2.1.12"
 coverage = { version = ">=6.1.2", extras = ["toml"] }
 
 [tool.poetry.group.coverage.dependencies]
@@ -93,7 +98,8 @@ numpy = ">=1.23.2"
 
 [tool.poetry.group.flake8.dependencies]
 darglint = ">=1.8.1"
-flake8 = ">=4.0.1"
+flake8 = ">=4.0.1"  #TODO dvp: update with flake8-eradicate
+#flake8 = ">=6.0.0"
 flake8-adjustable-complexity = ">=0.0.6"
 flake8-annotations = ">=2.6.2"
 flake8-annotations-coverage = ">=0.0.6"
@@ -119,39 +125,33 @@ flake8-use-fstring = ">=1.4"
 flake8-use-pathlib = ">=0.3.0"
 pandas-vet = ">=0.2.3"
 tryceratops = ">=1.0.1"
-
+pylint = ">=2.15.10"
+flake8-pylint = ">=0.1.3"
 # TODO dvp: check/use flake8-pyprojecttoml plugin
 # https://gitlab.com/durko/flake8-pyprojecttoml/-/blob/master/pyproject.toml
 
 [tool.poetry.group.docs.dependencies]
-sphinx = ">=5.3.0"
+sphinx = ">=6.1.3"
 sphinx-autodoc-typehints = ">=1.19.5"
-sphinx-autorun = ">=1.1.1"
-sphinx-click = ">=4.4.0"
-sphinx-rtd-theme = ">=1.1.1"
-sphinxcontrib-napoleon = ">=0.7"
 
 [tool.poetry.group.docs_auto.dependencies]
 sphinx-autobuild = ">=2021.3.14"
 
 
-[build-system]
-requires = ["poetry-core>=1.1.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.isort]
 atomic = true
 ensure_newline_before_comments = true
 known_first_party = "mckit_nuclides"
+known_third_party = "mpl_toolkits,matplotlib,numpy,scipy"
 known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
 sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 default_section = "FIRSTPARTY"
 use_parentheses = true
 multi_line_output = 3
-line_length = 90
+line_length = 100
 include_trailing_comma = true
 lines_between_types = 1
-skip = ["setup-generated.py"]
+skip_gitignore = true
 skip_glob = ["*-example.py"]
 
 
@@ -161,7 +161,7 @@ skip_glob = ["*-example.py"]
 # character.
 
 [tool.black]
-line-length = 90
+line-length = 100
 include = '''
 (
     \.pyi?$
@@ -180,9 +180,11 @@ exclude = '''
   | build
   | build_configs
   | dist
+  | 3rd-party
   | data
   | htmlcov
   | \.egg-info
+  | _tab\.py$
   | notebooks
   | wrk
 )
@@ -190,7 +192,7 @@ exclude = '''
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-norecursedirs = ".* build dist *.egg-info data"
+norecursedirs = ".* build dist *.egg-info data htmlcov notebooks tools wrk"
 python_functions = "test_*  profile_*"
 addopts = "-ra -q --tb=short --doctest-modules --strict-markers --ignore setup.py --failed-first"
 doctest_optionflags = "NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES"
@@ -201,8 +203,14 @@ markers = [
 # xfail tests that pass should fail the test suite
 xfail_strict = true
 filterwarnings = [
-    "ignore:.*not typechecking multipledispatch.dispatcher.*:UserWarning"
+    "error",
+    'ignore:Implementing implicit namespace packages \(as specified in PEP 420\) is preferred to `pkg_resources.declare_namespace`',
+    "ignore:.*not typechecking multipledispatch.dispatcher.*UserWarning",
+    'ignore:.*io.FileIO \[closed\]',
+    'ignore:.*Deprecated call to `pkg_resources.declare_namespace'
 ]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
 
 [tool.xdoctest]
 quiet = true
@@ -214,12 +222,14 @@ source = ["src", ".nox/*/site-packages"]
 
 [tool.coverage.run]
 branch = true
-source = ["mckit_nuclides"]
+source = ["src"]
+omit = ["*_tab.py", "**/__init__.py"]
 
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
 fail_under = 100
+omit = ["*_tab.py", "**/__init__.py"]
 # Regexes for lines to exclude from consideration
 exclude_lines = [
     # Have to re-enable the standard pragma
@@ -261,6 +271,7 @@ files = "src/mckit_nuclides/**/*.py"
 module = [
     "click",
     "click.testing",
+    "importlib_resources",
     "loguru",
     "multipledispatch",
     "nox",
@@ -300,4 +311,42 @@ experimental = true
 
 [tool.pycln]
 path = "src"
+exclude = '''
+(
+    \.egg-info
+  | \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.nox
+  | \.venv
+  | \.idea
+  | _build
+  | 3rd-party
+  | build
+  | build_configs
+  | data
+  | dist
+  | notebooks
+  | htmlcov
+  | wrk
+  | [Pp]arser
+  | tab\.py
+)
+'''
 #silence = true
+
+
+[tool.pydocstringformatter]
+write = true
+style = "pep257"
+exclude = ["tools/**","src/**/*_parser.py","src/**/*_tab.py"]
+strip-whitespaces = true
+max-line-length = 100
+summary-quotes-same-line = true
+
+
+[tool.pylint]
+good-names-rgxs=["."]  # a single character variable is okay
+logging-format-style="new"   # use {} in logging messages
+deprecated-modules=["six"]

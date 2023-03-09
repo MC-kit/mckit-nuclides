@@ -5,7 +5,7 @@ from typing import Any, Dict, Final, List, Tuple, cast
 
 import pandas as pd
 
-from mckit_nuclides.elements import TABLE_VALUE_TYPE, z
+from mckit_nuclides.elements import TableValue, z
 from mckit_nuclides.utils.resource import path_resolver
 
 _TYPES: Final = {
@@ -38,12 +38,6 @@ def _load_tables() -> pd.DataFrame:
     nuclides_table = nuclides_table.set_index(
         ["atomic_number", "mass_number"], verify_integrity=True
     )
-    # TODO dvp: There's an important exclusion with Ta180.
-    #           It's "observationally stable" only in metastable state
-    #           (https://en.wikipedia.org/wiki/Isotopes_of_tantalum).
-    #           Should we add add additional sub index for 'state' for
-    #           this only exclusion?
-    #           Or we'd better to supply this information on compositions specs?
     nuclides_table.index.name = "atom_and_mass_numbers"
     nuclides_table = nuclides_table.rename(
         columns={"atomic_symbol": "symbol", "relative_atomic_mass": "nuclide_mass"},
@@ -53,9 +47,6 @@ def _load_tables() -> pd.DataFrame:
 
 
 def _load_nist_file() -> Dict[str, List[Any]]:
-    path = path_resolver("mckit_nuclides")(
-        "data/nist_atomic_weights_and_element_compositions.txt"
-    )
     collector: Dict[str, List[Any]] = {
         "atomic_number": [],
         "atomic_symbol": [],
@@ -63,6 +54,7 @@ def _load_nist_file() -> Dict[str, List[Any]]:
         "relative_atomic_mass": [],
         "isotopic_composition": [],
     }
+    path = path_resolver("mckit_nuclides")("data/nist_atomic_weights_and_element_compositions.txt")
     with path.open(encoding="utf-8") as fid:
         for line in fid.readlines():
             line = line.strip()
@@ -76,13 +68,8 @@ def _load_nist_file() -> Dict[str, List[Any]]:
 
 NUCLIDES_TABLE = _load_tables()
 
-# TODO dvp: improve table, add uncertainties and more nuclide properties:
-#           half-life, decay mode, etc.
 
-
-def get_property(
-    z_or_symbol: int | str, mass_number: int, column: str
-) -> TABLE_VALUE_TYPE:
+def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> TableValue:
     """Retrieve mass of a nuclide by atomic and mass numbers, a.u.
 
     Args:
@@ -91,11 +78,11 @@ def get_property(
         column: name of column to extract value from
 
     Returns:
-        Value of a culumn for a given nuclide.
+        Value of a column for a given nuclide.
     """
     if isinstance(z_or_symbol, str):
         z_or_symbol = z(z_or_symbol)
-    return cast(TABLE_VALUE_TYPE, NUCLIDES_TABLE.at[(z_or_symbol, mass_number), column])
+    return cast(TableValue, NUCLIDES_TABLE.at[(z_or_symbol, mass_number), column])
 
 
 def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:
