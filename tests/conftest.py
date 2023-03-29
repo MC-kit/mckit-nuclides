@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Generator
 
 import importlib.resources as rc
@@ -18,7 +20,7 @@ def data() -> Path:
     return rc.files("tests").joinpath("data")
 
 
-@pytest.fixture
+@pytest.fixture()
 def cd_tmpdir(tmp_path: Path) -> Generator[Path, None, None]:
     """Switch to temp dir for a test run.
 

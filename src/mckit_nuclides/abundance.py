@@ -1,5 +1,7 @@
 """Methods to change nuclide abundance in compositions."""
-from typing import Generator, Iterable, Tuple
+from __future__ import annotations
+
+from typing import Generator, Iterable
 
 import pandas as pd
 
@@ -25,8 +27,8 @@ def convert_to_atomic_fraction(
 
 
 def expand_natural_presence(
-    zaf: Iterable[Tuple[int, int, float]]
-) -> Generator[Tuple[int, int, float], None, None]:
+    zaf: Iterable[tuple[int, int, float]]
+) -> Generator[tuple[int, int, float], None, None]:
     """Convert sequence of nuclide-fraction specification with natural presence.
 
     Substitute a sequence of nuclides when mass number is specified as 0.

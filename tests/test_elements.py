@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from mckit_nuclides.elements import atomic_mass, atomic_number, get_property, name, symbol, z
@@ -7,12 +9,12 @@ def test_symbol():
     assert symbol(1) == "H"
 
 
-@pytest.mark.parametrize("element, expected", [("Ag", 107.868), (1, 1.008)])
+@pytest.mark.parametrize(["element", "expected"], [("Ag", 107.868), (1, 1.008)])
 def test_atomic_mass(element, expected):
     assert expected == atomic_mass(element)
 
 
-@pytest.mark.parametrize("element, expected", [("B", "Boron"), ("Og", "Oganesson")])
+@pytest.mark.parametrize(["element", "expected"], [("B", "Boron"), ("Og", "Oganesson")])
 def test_name(element, expected):
     assert expected == name(element)
 

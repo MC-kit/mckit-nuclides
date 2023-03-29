@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from numpy.testing import assert_array_almost_equal
 
 import pandas as pd
@@ -7,7 +9,7 @@ from mckit_nuclides.abundance import convert_to_atomic_fraction, expand_natural_
 from mckit_nuclides.elements import atomic_mass
 
 
-@pytest.fixture
+@pytest.fixture()
 def water():
     return pd.DataFrame(
         {"fraction": [2 * atomic_mass(1), atomic_mass(8)]},

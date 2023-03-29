@@ -1,7 +1,7 @@
 """Module `elements` provides access to information on chemical element level."""
 from __future__ import annotations
 
-from typing import Optional, Union, cast
+from typing import Union, cast
 
 import pandas as pd
 
@@ -10,7 +10,7 @@ from mckit_nuclides.utils.resource import path_resolver
 TableValue = Union[int, str, float, None]
 
 
-def _opt_float(x: Optional[str]) -> Optional[float]:
+def _opt_float(x: str | None) -> float | None:
     return float(x) if x else None
 
 
@@ -83,12 +83,8 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
         The column value for the given element.
     """
     if isinstance(z_or_symbol, int):
-        column_value: TableValue = ELEMENTS_TABLE.iat[
-            z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)
-        ]
-    else:
-        column_value = ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
-    return column_value
+        return ELEMENTS_TABLE.iat[z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)]
+    return ELEMENTS_TABLE.loc[z_or_symbol, [column]].item()
 
 
 def atomic_mass(z_or_symbol: int | str) -> float:

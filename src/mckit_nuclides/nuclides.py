@@ -1,7 +1,7 @@
 """Information on nuclides: masses, natural presence and more."""
 from __future__ import annotations
 
-from typing import Any, Dict, Final, List, Tuple, cast
+from typing import Any, Final, cast
 
 import pandas as pd
 
@@ -16,7 +16,7 @@ _TYPES: Final = {
 }
 
 
-def _split_line(_line: str) -> Tuple[str, Any]:
+def _split_line(_line: str) -> tuple[str, Any]:
     _label, _value = map(str.strip, _line.split("="))  # type: str, str
     _label = _label.lower().replace(" ", "_")
     value_type = _TYPES.get(_label, None)
@@ -46,8 +46,8 @@ def _load_tables() -> pd.DataFrame:
     return nuclides_table
 
 
-def _load_nist_file() -> Dict[str, List[Any]]:
-    collector: Dict[str, List[Any]] = {
+def _load_nist_file() -> dict[str, list[Any]]:
+    collector: dict[str, list[Any]] = {
         "atomic_number": [],
         "atomic_symbol": [],
         "mass_number": [],
@@ -57,9 +57,9 @@ def _load_nist_file() -> Dict[str, List[Any]]:
     path = path_resolver("mckit_nuclides")("data/nist_atomic_weights_and_element_compositions.txt")
     with path.open(encoding="utf-8") as fid:
         for line in fid.readlines():
-            line = line.strip()
-            if line and not line.startswith("#"):
-                label, value = _split_line(line)
+            _line = line.strip()
+            if _line and not _line.startswith("#"):
+                label, value = _split_line(_line)
                 dst = collector.get(label, None)
                 if dst is not None:
                     dst.append(value)
