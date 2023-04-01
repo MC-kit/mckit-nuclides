@@ -11,7 +11,7 @@ THIS_FILENAME = Path(__file__).name
 
 # noinspection PyCompatibility
 @pytest.mark.parametrize(
-    ["package", "resource", "expected"],
+    "package,resource,expected",
     [
         ("mckit_nuclides", "data/elements.csv", "data/elements.csv"),
     ],
@@ -24,7 +24,7 @@ def test_path_resolver(package, resource, expected) -> None:
 
 
 @pytest.mark.parametrize(
-    ["package", "resource", "expected"],
+    "package,resource,expected",
     [
         ("tests", "data/not_existing", "tests/data/not_existing"),
         ("mckit_nuclides", "data/not_existing", "mckit_nuclides/data/not_existing"),
