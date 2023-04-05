@@ -53,7 +53,7 @@ def atomic_number(element: str) -> int:
     Returns:
         int: Z - the atomic number for the element.
     """
-    return cast(int, ELEMENTS_TABLE.at[element, "atomic_number"])
+    return cast(int, ELEMENTS_TABLE.loc[element, "atomic_number"])
 
 
 z = atomic_number
@@ -84,7 +84,8 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     """
     if isinstance(z_or_symbol, int):
         return cast(
-            TableValue, ELEMENTS_TABLE.iat[z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)]
+            TableValue,
+            ELEMENTS_TABLE.iloc[z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)],
         )
     return cast(TableValue, ELEMENTS_TABLE.loc[z_or_symbol, [column]].item())
 

@@ -36,7 +36,8 @@ def _load_tables() -> pd.DataFrame:
     collector["atomic_symbol"] = symbols
     nuclides_table = pd.DataFrame.from_dict(collector)
     nuclides_table = nuclides_table.set_index(
-        ["atomic_number", "mass_number"], verify_integrity=True
+        ["atomic_number", "mass_number"],
+        verify_integrity=True,
     )
     nuclides_table.index.name = "atom_and_mass_numbers"
     nuclides_table = nuclides_table.rename(
@@ -82,7 +83,7 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
     """
     if isinstance(z_or_symbol, str):
         z_or_symbol = z(z_or_symbol)
-    return cast(TableValue, NUCLIDES_TABLE.at[(z_or_symbol, mass_number), column])
+    return cast(TableValue, NUCLIDES_TABLE.loc[(z_or_symbol, mass_number), column])
 
 
 def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:

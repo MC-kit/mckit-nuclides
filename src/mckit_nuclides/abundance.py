@@ -1,15 +1,17 @@
 """Methods to change nuclide abundance in compositions."""
 from __future__ import annotations
 
-from typing import Generator, Iterable
-
-import pandas as pd
+from typing import TYPE_CHECKING, Generator, Iterable
 
 from mckit_nuclides.nuclides import NUCLIDES_TABLE
 
+if TYPE_CHECKING:
+    import pandas as pd
+
 
 def convert_to_atomic_fraction(
-    composition: pd.DataFrame, fraction_column: str = "fraction"
+    composition: pd.DataFrame,
+    fraction_column: str = "fraction",
 ) -> pd.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
@@ -27,7 +29,7 @@ def convert_to_atomic_fraction(
 
 
 def expand_natural_presence(
-    zaf: Iterable[tuple[int, int, float]]
+    zaf: Iterable[tuple[int, int, float]],
 ) -> Generator[tuple[int, int, float], None, None]:
     """Convert sequence of nuclide-fraction specification with natural presence.
 
@@ -45,6 +47,6 @@ def expand_natural_presence(
             yield z, a, f
         else:
             isotopic_compositions: pd.Series = NUCLIDES_TABLE.loc[z].isotopic_composition
-            isotopic_compositions = isotopic_compositions[0 < isotopic_compositions]
+            isotopic_compositions = isotopic_compositions[isotopic_compositions > 0]
             for _a, _ic in isotopic_compositions.items():
                 yield z, _a, f * _ic

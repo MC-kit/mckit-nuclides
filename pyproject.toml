@@ -59,8 +59,9 @@ tomli = { version = ">=2.0.1", python="<3.11" }
 # TODO dvp: apply yappi: https://coderzcolumn.com/tutorials/python/yappi-yet-another-python-profiler
 #yappi = ">=1.3.2"
 
-[tool.poetry.group.safety.dependencies]
-safety = ">=2.3.5"
+# Safety uses obsolete packaging module.
+# [tool.poetry.group.safety.dependencies]
+# safety = ">=2.3.5"
 
 [tool.poetry.group.pre_commit.dependencies]
 pre-commit = ">=2.15.0"
@@ -152,7 +153,7 @@ ruff = ">=0.0.259"
 [tool.isort]
 atomic = true
 ensure_newline_before_comments = true
-known_first_party = "mckit_nuclides"
+known_first_party = "src"
 known_third_party = "mpl_toolkits,matplotlib,numpy,scipy"
 known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
 sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
@@ -240,7 +241,7 @@ omit = ["*_tab.py", "**/__init__.py"]
 show_missing = true
 skip_covered = true
 fail_under = 100
-omit = ["*_tab.py", "**/__init__.py"]
+omit = ["*_tab.py", "**/__init__.py", "**/types.py"]
 # Regexes for lines to exclude from consideration
 exclude_lines = [
     # Have to re-enable the standard pragma
@@ -254,6 +255,7 @@ exclude_lines = [
     # Don't complain if non-runnable code isn't run:
     "if 0:",
     "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
 ]
 ignore_errors = true
 sort = "Cover"
@@ -368,30 +370,52 @@ deprecated-modules=["six"]
 target-version = "py38"
 #see full list: https://beta.ruff.rs/docs/rules/#pyflakes-f
 select= [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "I",
-  "N",
-  "PIE",
-  "PT",
-  "PL",
-  "PLC",
-  "PLE",
-  "PLR",
-  "PLW",
-  "PYI",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "W",
-  "YTT"
+    "A", # flake8-builtins
+    "ANN", # flake8-annotations
+    "ARG", # flake8-unused-arguments
+    "B", # flake8-bugbear
+    "BLE", # flake8-blind-except
+    "C4", # flake8-comprehensions
+    "C90", # mccabe
+    "COM", # flake8-commas
+    "DJ", # flake8-django
+    "D", # pydocstyle
+    "DTZ", # flake8-datetimez
+    "EM", # flake8-errmsg
+    "ERA", # eradicate
+    "E", # pycodestyle
+    "EXE", # flake8-executable
+    "FBT", # flake8-boolean-trap
+    "F", # Pyflakes
+    "G", # flake8-logging-format
+    "ICN", # flake8-import-conventions
+    "I", # isort
+    "INP", # flake8-no-pep420
+    "ISC", # flake8-implicit-str-concat
+    "N", # pep8-naming
+    "NPY", # NumPy-specific rules
+    "PD", # pandas-vet
+    "PGH", # pygrep-hooks
+    "PIE", # flake8-pie
+    "PL", # Pylint
+    "PT", # flake8-pytest-style
+    "PTH", # flake8-use-pathlib
+    "PYI", # flake8-pyi
+    "Q", # flake8-quotes
+    "RET", # flake8-return
+    "RSE", # flake8-raise
+    "RUF", # Ruff-specific rules
+    "S", # flake8-bandit
+    "SIM", # flake8-simplify
+    "SLF", # flake8-self
+    "T10", # flake8-debugger
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "TRY", # tryceratops
+    "UP", # pyupgrade
+    "W", # pycodestyle 2
+    "YTT", # flake8-2020
 ]
 
 # Ignore rules that currently fail on the codebase
@@ -408,8 +432,8 @@ ignore = [
     "D107",   # Missing docstring in __init__
     # "E203",   # E203: Whitespace before ‘:'
     # "E401",  # Multiple imports on one line
-    "E402",  # Module level import not at top of file
-    "E501",  # Line too long (<LENGTH> > 100 characters)
+    # "E402",  # Module level import not at top of file
+    # "E501",  # Line too long (<LENGTH> > 100 characters)
     # "E701",  # Multiple statements on one line (colon)
     # "E702",  # Multiple statements on one line (semicolon)
     # "E703",  # Statement ends with an unnecessary semicolon
@@ -475,14 +499,10 @@ exclude = [
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["E402"]
-"src/xpypact/fluxes.py" = ["F811"]
 "benchmarks/*" = ["S101"]
 "noxfile.py" = ["ANN"]
 "tests/*" = ["ANN", "D100", "D101", "D102", "D103", "D104",  "PLR2004", "S101"]
-"src/xpypact/inventory.py" = ["F811"]
-"src/xpypact/data_arrays.py" = ["ANN401", "PD011"]
-"src/xpypact/utils/resource.py" = ["ANN202"]
-"tools/*" = ["T201"]
+"tools/*" = ["T201", "INP001"]
 
 [tool.ruff.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
