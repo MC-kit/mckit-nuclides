@@ -473,6 +473,8 @@ ignore = [
     # "PD005", # use operator instead of method
     # "PD008", # We use at() to access single values
     # "PD009", # And we use iat()
+    "PLE1205", # logging-too-many-args - with use logure with '{' style of placeholders
+    "PLR2004", # Magic value in comparison - forces to convert all 0.0 to global constants
     "PT019",   # Fixture `_bin` without value is injected as parameter (false positive?)
 
     # "W503",  # Line break before binary operator: for compatibility with black settings
