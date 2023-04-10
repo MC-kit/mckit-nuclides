@@ -1,4 +1,5 @@
 #!/bin/bash
+
 . ~/.bash-functions.rc
 # set -o nounset
 # set -o errexit
@@ -26,7 +27,7 @@ reset() {
     pyenv local "$env"
     pyenv rehash
     pyenv shell "$env"
-    poetry env info   || die "Environment $env is not loaded, retry."
+    poetry env info
     poetry lock --no-update
     poetry install
     python -c "import ${pkg}; print(${pkg}.__version__)" && success "Environment $env is reset"
