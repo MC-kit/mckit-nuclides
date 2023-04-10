@@ -135,7 +135,8 @@ def tests(s: Session) -> None:
         external=True,
     )
     try:
-        args = s.posargs or ["-n", "2", "--benchmark-skip"]
+        # note: use pytest plugins benchmark and xdist in separate sessions
+        args = s.posargs or ["-n", "2"]  # this is for xdist multiprocess
         s.run("coverage", "run", "--parallel", "-m", "pytest", *args)
     finally:
         if s.interactive and "--no-cov" not in s.posargs:
