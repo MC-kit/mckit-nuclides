@@ -21,6 +21,7 @@ if TYPE_CHECKING:
 nox.options.sessions = (
     "pre-commit",
     "mypy",
+    "ruff",
     "xdoctest",
     "tests",
     "docs-build",
