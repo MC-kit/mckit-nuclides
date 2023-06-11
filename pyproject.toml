@@ -435,6 +435,8 @@ ignore = [
     # "C812",   # C812 Missing trailing comma: black compatibility
     # "C901",   # too complex - ...
 
+    # "COM812", #  [*] Trailing comma missing
+
     # "D100",   # Missing docstring in public module
     # "D101",   # Missing docstring in public class
     # "D102",   # Missing docstring in public method
