@@ -2644,23 +2644,23 @@ files = [
 
 [[package]]
 name = "ruff-lsp"
-version = "0.0.24"
+version = "0.0.35"
 description = "A Language Server Protocol implementation for Ruff."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "ruff_lsp-0.0.24-py3-none-any.whl", hash = "sha256:71207b0a64f40577db3e9aef0b1331fcf4122f9b98bba66b905d41706d639e65"},
-    {file = "ruff_lsp-0.0.24.tar.gz", hash = "sha256:d617bf19893c3bd2ea3d71f79aeede196b91ca08831b53a727e24d4f63f29f3a"},
+    {file = "ruff_lsp-0.0.35-py3-none-any.whl", hash = "sha256:7e9a5581a342122dbd83b007d56e5afbf53bef857bb264bd14e1f2de1438412c"},
+    {file = "ruff_lsp-0.0.35.tar.gz", hash = "sha256:a91369b30a508adbd57331412ac50595ec3e5b5b848ed91b5a79b0051507ab4c"},
 ]
 
 [package.dependencies]
 lsprotocol = ">=2023.0.0a1"
 pygls = ">=1.0.1"
-ruff = ">=0.0.253"
+ruff = ">=0.0.274"
 typing-extensions = "*"
 
 [package.extras]
-dev = ["black (==22.12.0)", "mypy (==0.991)", "python-lsp-jsonrpc (==1.0.0)"]
+dev = ["black (==23.3.0)", "mypy (==1.3.0)", "pip-tools (>=6.13.0,<7.0.0)", "pytest (>=7.3.1,<8.0.0)", "pytest-asyncio (==0.21.0)", "python-lsp-jsonrpc (==1.0.0)"]
 
 [[package]]
 name = "setuptools"
@@ -3293,4 +3293,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "703f3b54aeaddc6624120ae894ea13bdb5dc1261dfc9b069091b41fda17102eb"
+content-hash = "d49a010a7fd015fa63607d82d308216f218b8e4f06b7b442bc15141260f08799"
