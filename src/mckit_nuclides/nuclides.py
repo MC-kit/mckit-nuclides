@@ -40,11 +40,9 @@ def _load_tables() -> pd.DataFrame:
         verify_integrity=True,
     )
     nuclides_table.index.name = "atom_and_mass_numbers"
-    nuclides_table = nuclides_table.rename(
+    return nuclides_table.rename(
         columns={"atomic_symbol": "symbol", "relative_atomic_mass": "nuclide_mass"},
     )
-
-    return nuclides_table
 
 
 def _load_nist_file() -> dict[str, list[Any]]:
