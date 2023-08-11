@@ -19,7 +19,7 @@ _TYPES: Final = {
 def _split_line(_line: str) -> tuple[str, Any]:
     _label, _value = map(str.strip, _line.split("="))  # type: str, str
     _label = _label.lower().replace(" ", "_")
-    value_type = _TYPES.get(_label, None)
+    value_type = _TYPES.get(_label)
     if value_type is not None:
         if _value:
             # drop uncertainties, so far, there's no use cases for them
@@ -59,7 +59,7 @@ def _load_nist_file() -> dict[str, list[Any]]:
             _line = line.strip()
             if _line and not _line.startswith("#"):
                 label, value = _split_line(_line)
-                dst = collector.get(label, None)
+                dst = collector.get(label)
                 if dst is not None:
                     dst.append(value)
     return collector
