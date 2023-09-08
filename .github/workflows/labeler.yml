@@ -33,4 +33,7 @@ jobs:
         with:
           github-token: ${{ secrets.MCKIT_GITHUB_TOKEN }}
           skip-delete: true
-          dry-run: ${{ github.ref != 'refs/heads/master' }}
+          dry-run: ${{ github.event_name != 'pull_request' }}
+          exclude: |
+            help*
+            *issue
