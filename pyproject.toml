@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mckit-nuclides"
-version = "0.2.5a0"
+version = "0.2.5"
 description = "Python tools to work with elements and isotopes"
 authors = ["dvp <dmitri_portnov@yahoo.com>"]
 license = "MIT"
@@ -315,7 +315,6 @@ context=5
 [tool.tryceratops]
 include = ["src"]
 experimental = true
-
 
 [tool.pydocstringformatter]
 write = true
