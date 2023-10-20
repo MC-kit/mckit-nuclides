@@ -10,6 +10,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from __future__ import annotations
+
 import sys
 
 from pathlib import Path
@@ -18,7 +20,6 @@ pkg_path = Path("..", "..", "src").absolute()
 assert pkg_path.exists(), f"Invalid path {pkg_path}"
 sys.path.insert(0, str(pkg_path))
 
-from typing import Dict, List
 
 import mckit_nuclides
 
@@ -42,7 +43,7 @@ release = mckit_nuclides.__version__
 
 # -- General configuration ---------------------------------------------------
 
-extensions: List[str] = [
+extensions: list[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     "sphinx.ext.mathjax",
@@ -113,7 +114,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns: List[str] = []
+exclude_patterns: list[str] = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -158,7 +159,7 @@ htmlhelp_basename = "mckit-nuclides-doc"
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements: Dict[str, str] = {
+latex_elements: dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     "papersize": "a4paper",
     # The font size ('10pt', '11pt' or '12pt').
@@ -173,5 +174,5 @@ latex_elements: Dict[str, str] = {
 # (source start file, target name, title,
 #  author, document class [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "mckit-nuclides.tex", "mckit-nuclides Documentation", "Dmitry Portnov", "manual")
+    (master_doc, "mckit-nuclides.tex", "mckit-nuclides Documentation", "Dmitry Portnov", "manual"),
 ]

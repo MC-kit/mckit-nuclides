@@ -1,11 +1,13 @@
 """Methods to change nuclide abundance in compositions."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Generator, Iterable
+from typing import TYPE_CHECKING
 
 from mckit_nuclides.nuclides import NUCLIDES_TABLE
 
 if TYPE_CHECKING:
+    from collections.abc import Generator, Iterable
+
     import pandas as pd
 
 

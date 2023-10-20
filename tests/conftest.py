@@ -1,23 +1,27 @@
 from __future__ import annotations
 
-from typing import Generator
+from typing import TYPE_CHECKING
 
 import importlib.resources as rc
 import os
 
 from pathlib import Path
 
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
 import pytest
 
 
 @pytest.fixture(scope="session")
-def data() -> Path:
+def data() -> Generator[Path, None, None]:
     """Path to test data.
 
     Returns:
         Path: path to test data
     """
-    return rc.files("tests").joinpath("data")
+    with rc.as_file(rc.files("tests").joinpath("data")) as path:
+        yield path
 
 
 @pytest.fixture()
