@@ -535,6 +535,9 @@ exclude = [
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
 
+[tool.ruff.flake8-annotations]
+mypy-init-return = true  # skip return type for __init__() methods
+
 [tool.ruff.flake8-type-checking]
 strict = true
 
@@ -548,5 +551,4 @@ required-imports = ["from __future__ import annotations"]
 parametrize-names-type = "csv"
 
 [tool.ruff.pydocstyle]
-# Use Google-style docstrings.
-convention = "google"
+convention = "google"  # Use Google-style docstrings.
