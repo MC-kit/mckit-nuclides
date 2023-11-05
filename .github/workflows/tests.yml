@@ -28,6 +28,9 @@ concurrency:
   group: ci-tests-${{ github.ref }}-1
   cancel-in-progress: true
 
+env:
+  DEFAULT_PYTHON: "3.11"
+
 jobs:
 
   lint:
@@ -38,10 +41,10 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4.1.0
 
-      - name: Set up Python 3.10  # on 3.11 pip install in unstable: "canonicalize" fails occasionally
+      - name: Set up Python
         uses: actions/setup-python@v4.7.1
         with:
-          python-version: '3.10'
+          python-version: "$DEFAULT_PYTHON"
 
       - name: Use frozen pip version
         run: |
@@ -70,11 +73,11 @@ jobs:
 
       - name: Run pre commit checks
         run: |
-          nox --force-color --session=pre-commit
+          nox --force-color --session=pre-commit -p "$DEFAULT_PYTHON"
 
       - name: Run mypy static type checks
         run: |
-          nox --force-color --session=mypy
+          nox --force-color --session=mypy -p"$DEFAULT_PYTHON"
 
   docs:
     runs-on: ubuntu-latest
@@ -85,10 +88,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v4.7.1
         with:
-          python-version: '3.11'
+          python-version: "$DEFAULT_PYTHON"
 
       - name: Use frozen pip version
         run: |
@@ -118,7 +121,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          nox --force-color --session=docs-build
+          nox --force-color --session=docs-build -p "$DEFAULT_PYTHON"
 
   tests:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
@@ -185,10 +188,10 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4.1.0
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v4.7.1
         with:
-          python-version: '3.11'
+          python-version: "$DEFAULT_PYTHON"
 
       - name: Use frozen pip version
         run: |
