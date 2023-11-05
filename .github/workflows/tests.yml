@@ -73,11 +73,11 @@ jobs:
 
       - name: Run pre commit checks
         run: |
-          nox --force-color --session=pre-commit -p "$DEFAULT_PYTHON"
+          nox --force-color --session=pre-commit
 
       - name: Run mypy static type checks
         run: |
-          nox --force-color --session=mypy -p"$DEFAULT_PYTHON"
+          nox --force-color --session=mypy
 
   docs:
     runs-on: ubuntu-latest
@@ -121,7 +121,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          nox --force-color --session=docs-build -p "$DEFAULT_PYTHON"
+          nox --force-color --session=docs-build
 
   tests:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
