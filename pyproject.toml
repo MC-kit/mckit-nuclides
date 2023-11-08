@@ -69,7 +69,6 @@ black = ">=22.8.0"  #TODO dvp: update with safety and packaging
 
 [tool.poetry.group.isort.dependencies]
 isort = ">=5.9.3"
-pycln = {version = "^2.1.1", extras = ["click"]}
 
 [tool.poetry.group.test.dependencies]
 pytest = ">=7.1"
@@ -282,6 +281,8 @@ files = "src/mckit_nuclides/**/*.py"
 
 [[tool.mypy.overrides]]
 module = [
+    "IPython.core.magic",
+    "IPython.core.magic_arguments",
     "click",
     "click.testing",
     "importlib_resources",
@@ -293,6 +294,7 @@ module = [
     "pandas",
     "pytest",
     "scipy.constants",
+    "scipy.sparse",
     "tomli",
     "tomllib",
 ]
