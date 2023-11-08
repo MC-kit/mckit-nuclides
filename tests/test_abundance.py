@@ -24,15 +24,15 @@ def test_convert_to_atomic_fraction_h2o(water):
 
 def test_expand_natural_presence():
     composition = [
-        [(1, 0), 2.0],
-        [(8, 16), 1.0],
+        (1, 0, 2.0),
+        (8, 16, 1.0),
     ]
     expected = [
         (1, 1, 2.0 * 0.999885),  # H, expanded from (1,0)
         (1, 2, 2.0 * 0.000115),  # D, -/-
         (8, 16, 1.0),  # O (mass_number is specified)
     ]
-    actual = list(expand_natural_presence((x[0][0], x[0][1], x[1]) for x in composition))
+    actual = list(expand_natural_presence(composition))
     assert expected == actual
 
 
