@@ -289,7 +289,6 @@ module = [
     "click",
     "click.testing",
     "loguru",
-    "importlib_metadata",
     "multipledispatch",
     "nox",
     "numpy.testing",
