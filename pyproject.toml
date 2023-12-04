@@ -62,7 +62,6 @@ python = ">=3.9,<3.13"
 numpy = ">=1.26.0"
 openpyxl = ">=3.0.9"
 pandas = ">=2.0.0"
-poetry = "^1.7.0"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
