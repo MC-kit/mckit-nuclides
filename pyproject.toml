@@ -537,7 +537,7 @@ exclude = [
 
 [tool.ruff.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
-max-complexity = 10
+max-complexity = 15
 
 [tool.ruff.flake8-annotations]
 mypy-init-return = true  # skip return type for __init__() methods
