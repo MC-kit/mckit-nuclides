@@ -10,8 +10,8 @@ deltag() {
     remote=${2:-origin}
     echo "Deleting tag $tag from $remote"
     set -e
-    git push --delete $remote refs/tags/$tag
-    git tag --delete $tag
+    git push --delete "$remote" "refs/tags/$tag"
+    git tag --delete "$tag"
 }
 
 deltag "$@"
