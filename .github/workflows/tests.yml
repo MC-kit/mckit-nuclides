@@ -174,7 +174,7 @@ jobs:
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-data-${{ matrix.python-version }}-${{ matrix.runs-on }}
+          name: coverage-data-${{ matrix.python-version }}-${{ runner.os }}
           path: ".coverage.*"
 
   coverage:
