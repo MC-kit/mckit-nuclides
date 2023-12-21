@@ -172,8 +172,9 @@ jobs:
         run: nox  --force-color --session tests --python ${{ matrix.python-version }}
 
       - name: Show coverage files
-        run: ls -a .coverage*
-        if: ${{ runner.os }} != "Windows"
+        run: |
+          ls -a .coverage*
+        if: ${{ runner.os }} == "Linux"
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
