@@ -222,9 +222,6 @@ jobs:
           pattern: coverage-data-*
           merge-multiple: true
 
-      - name: Show coverage files
-        run: ls -a .coverage* *.zip
-
       - name: Combine coverage data and display human readable report
         run: |
           nox --force-color --session=coverage
