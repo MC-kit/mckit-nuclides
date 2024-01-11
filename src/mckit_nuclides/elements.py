@@ -3,42 +3,9 @@ from __future__ import annotations
 
 from typing import Union, cast
 
-import pandas as pd
 
-from mckit_nuclides.utils.resource import path_resolver
 
 TableValue = Union[int, str, float, None]
-
-
-def _opt_float(x: str | None) -> float | None:
-    return float(x) if x else None
-
-
-def _load_elements() -> pd.DataFrame:
-    converters = {
-        "atomic_number": int,
-        "symbol": str,
-        "name": str,
-        "atomic_mass": float,
-        "cpk_hex_color": lambda x: int(x, base=16) if x and str.isalnum(x) else x,
-        "electron_configuration": str,
-        "electronegativity": _opt_float,
-        "atomic_radius": _opt_float,
-        "ionization_energy": _opt_float,
-        "electron_affinity": _opt_float,
-        "oxidation_states": str,
-        "standard_state": str,
-        "melting_point": _opt_float,
-        "boiling_point": _opt_float,
-        "density": _opt_float,
-        "group_block": str,
-        "year_discovered": lambda x: int(x) if str.isnumeric(x) else x,
-        "period": int,
-        "group": int,
-    }
-    path = path_resolver("mckit_nuclides")("data/elements.csv")
-    with path.open(encoding="utf-8") as fid:
-        return pd.read_csv(fid, index_col="symbol", converters=converters)
 
 
 ELEMENTS_TABLE = _load_elements()

@@ -8,13 +8,13 @@ from mckit_nuclides.nuclides import NUCLIDES_TABLE
 if TYPE_CHECKING:
     from collections.abc import Generator, Iterable
 
-    import pandas as pd
+    import polars as pl
 
 
 def convert_to_atomic_fraction(
-    composition: pd.DataFrame,
+    composition: pl.DataFrame,
     fraction_column: str = "fraction",
-) -> pd.DataFrame:
+) -> pl.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
     Args:
