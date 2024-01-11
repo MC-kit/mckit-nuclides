@@ -1,5 +1,6 @@
 """Transform raw input data to parquet files to be used as resources."""
 from __future__ import annotations
+
 from typing import Any, Final
 
 from pathlib import Path
@@ -82,7 +83,7 @@ def _make_nist_table() -> pl.DataFrame:
         .select(
             pl.col("atomic_number").cast(pl.Int8),
             pl.col("mass_number").cast(pl.Int16),
-            pl.col("state").cast(pl.Float32),
+            pl.col("state").cast(pl.Int8),
             pl.col("relative_atomic_mass").cast(pl.Float32),
             pl.col("isotopic_composition").cast(pl.Float32),
             pl.col("half_life"),
