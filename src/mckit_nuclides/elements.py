@@ -1,14 +1,15 @@
 """Module `elements` provides access to information on chemical element level."""
 from __future__ import annotations
 
-from typing import Union, cast
+from typing import cast
 
+from pathlib import Path
 
+import polars as pl
 
-TableValue = Union[int, str, float, None]
+HERE = Path(__file__).parent
 
-
-ELEMENTS_TABLE = _load_elements()
+ELEMENTS_TABLE_PL = pl.read_parquet(HERE / "data/elements.parquet")
 
 
 def atomic_number(element: str) -> int:
@@ -20,7 +21,9 @@ def atomic_number(element: str) -> int:
     Returns:
         int: Z - the atomic number for the element.
     """
-    return cast(int, ELEMENTS_TABLE.loc[element, "atomic_number"])
+    return cast(
+        int, ELEMENTS_TABLE_PL.filter(pl.col("symbol").eq(element)).select("atomic_number").item(),
+    )
 
 
 z = atomic_number
@@ -36,7 +39,7 @@ def symbol(_atomic_number: int) -> str:
     Returns:
         str: Chemical symbol
     """
-    return ELEMENTS_TABLE.index[_atomic_number - 1]  # type: ignore[no-any-return]
+    return ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(_atomic_number)).select("symbol").item()  # type: ignore[no-any-return]
 
 
 def get_property(z_or_symbol: int | str, column: str) -> TableValue:
