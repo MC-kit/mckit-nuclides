@@ -9,16 +9,13 @@ from __future__ import annotations
 from importlib import metadata as _meta
 from importlib.metadata import PackageNotFoundError, version
 
-from abundance import (
+from .abundance import (
     MOLAR_MASS_TABLE,
     convert_to_atomic_fraction,
     expand_df_natural_presence,
     expand_natural_presence,
     normalize_column,
 )
-from nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL
-from nuclides import get_property as get_nuclide_property
-
 from .elements import (
     ELEMENTS_PARQUET,
     ELEMENTS_TABLE_PL,
@@ -29,6 +26,8 @@ from .elements import (
 )
 from .elements import get_property as get_element_property
 from .elements import symbol, z
+from .nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL
+from .nuclides import get_property as get_nuclide_property
 
 try:
     __version__ = version(__name__)
