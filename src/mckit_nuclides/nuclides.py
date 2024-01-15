@@ -36,9 +36,9 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
             .select(column)
             .item(),
         )
-    except pl.exceptions.ColumnNotFoundError as ex:
+    except pl.exceptions.ColumnNotFoundError as ex:  # pragma: no cover
         raise KeyError from ex
-    except ValueError as ex:
+    except ValueError as ex:  # pragma: no cover
         raise KeyError from ex
 
 
