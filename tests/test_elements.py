@@ -1,8 +1,17 @@
 from __future__ import annotations
 
+import polars as pl
 import pytest
 
-from mckit_nuclides.elements import atomic_mass, atomic_number, get_property, name, symbol, z
+from mckit_nuclides.elements import (
+    atomic_mass,
+    atomic_number,
+    from_molecular_formula,
+    get_property,
+    name,
+    symbol,
+    z,
+)
 
 
 def test_symbol():
@@ -11,7 +20,7 @@ def test_symbol():
 
 @pytest.mark.parametrize("element,expected", [("Ag", 107.868), (1, 1.008)])
 def test_atomic_mass(element, expected):
-    assert expected == atomic_mass(element)
+    assert expected == pytest.approx(atomic_mass(element))
 
 
 @pytest.mark.parametrize("element,expected", [("B", "Boron"), ("Og", "Oganesson")])
@@ -24,13 +33,23 @@ def test_z():
 
 
 def test_element_with_invalid_key():
-    with pytest.raises(IndexError):
+    with pytest.raises(KeyError):
         get_property(1000000, "name")
 
 
 def test_get_unknown_property():
     with pytest.raises(KeyError):
         get_property("Ar", "unknown")
+
+
+def test_from_molecular_formula():
+    actual = from_molecular_formula("H2O")  # fraction by atomic
+    assert actual.height == 2
+    assert actual.select("fraction").sum().item() == pytest.approx(1.0)
+    assert actual.filter(pl.col("atomic_number").eq(1)).select("fraction").item() == pytest.approx(
+        0.66666,
+        rel=1e-4,
+    )
 
 
 if __name__ == "__main__":

@@ -1,22 +1,15 @@
 [tool.poetry]
 name = "mckit-nuclides"
-version = "0.2.5"
+version = "0.3.0"
 description = "Python tools to work with elements and isotopes"
 authors = ["dvp <dmitri_portnov@yahoo.com>"]
 license = "MIT"
 homepage = "https://github.com/MC-kit/mckit-nuclides"
 repository = "https://github.com/MC-kit/mckit-nuclides"
 # documentation = "https://mckit-nuclides.readthedocs.io
-keywords = [
-    "element",
-    "nuclide",
-    "isotope",
-    "abundance",
-]
+keywords = ["element", "nuclide", "isotope", "abundance"]
 readme = "README.rst"
-packages = [
-    { include = "mckit_nuclides", from = "src" },
-]
+packages = [{ include = "mckit_nuclides", from = "src" }]
 # Select from PyPI classifiers: https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -25,6 +18,12 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Physics",
 ]
 
@@ -39,17 +38,34 @@ build-backend = "poetry.core.masonry.api"
 # documentation = "https://mckit_nuclides.readthedocs.io"
 Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
+# Dynamic versioning
+# TODO (dvp): not compatible with our bumping procedure
+# https://sam.hooke.me/note/2023/08/poetry-automatically-generated-package-version-from-git-commit
+# [tool.poetry-dynamic-versioning]
+# enable = true
+# vcs = "git"
+# pattern  = "^v(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?"
+# format-jinja = """
+#     {%- if distance == 0 -%}
+#         {{- base -}}
+#     {%- else -%}
+#         {{- base }}.dev{{ distance }}+g{{commit}}
+#     {%- endif -%}
+# """
+# format-jinja-imports = [
+#     { module = "datetime", item = "datetime" }
+# ]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
 numpy = ">=1.26.0"
 openpyxl = ">=3.0.9"
-pandas = ">=2.0.0"
+polars = {version = "^0.20.3", extras = ["all"]}
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
 nox = ">=2022.1.7"
-tomli = { version = ">=2.0.1", python="<3.11" }
+tomli = { version = ">=2.0.1", python = "<3.11" }
 
 #[tool.poetry.group.profile]
 #optional = true
@@ -62,6 +78,7 @@ tomli = { version = ">=2.0.1", python="<3.11" }
 pre-commit = ">=2.15.0"
 rstcheck = ">=6.1.2"
 pydocstringformatter = ">=0.7.3"
+pyupgrade = ">=3.15.0"
 
 [tool.poetry.group.black.dependencies]
 black = ">=22.8.0"
@@ -81,17 +98,16 @@ coverage = { version = ">=6.1.2", extras = ["toml"] }
 coverage = { version = ">=6.1.2", extras = ["toml"] }
 
 [tool.poetry.group.xdoctest.dependencies]
-xdoctest = {extras = ["colors"], version = ">=0.15.10"}
+xdoctest = { extras = ["colors"], version = ">=0.15.10" }
 
 [tool.poetry.group.typeguard.dependencies]
-typeguard = ">=3.0.2"
-# typeguard = ">=3.0.2"  - pygls, which is required by ruff-lsp, doesn't allow newer version
+typeguard = ">=4.1.5"
 
 [tool.poetry.group.mypy.dependencies]
 mypy = ">=1.2.0"
 pep8-naming = ">=0.12.1"
 types-setuptools = ">=57.4.2"
-numpy = ">=1.23.2"
+numpy = ">=1.26.2"
 
 [tool.poetry.group.flake8.dependencies]
 darglint = ">=1.8.1"
@@ -185,7 +201,7 @@ exclude = '''
   | build
   | build_configs
   | dist
-  | 3rd-party
+  | extern
   | data
   | htmlcov
   | \.egg-info
@@ -213,7 +229,11 @@ filterwarnings = [
     "ignore:.*not typechecking multipledispatch.dispatcher.*UserWarning",
     'ignore:.*io.FileIO \[closed\]',
     'ignore:.*Deprecated call to `pkg_resources.declare_namespace',
-    'ignore:.*Implicit None on return values:DeprecationWarning'
+    'ignore:.*Implicit None on return values:DeprecationWarning',
+    # pandas 2.1.4 at python 3.12
+    'ignore:.*datetime.datetime.utcfromtimestamp\(\) is deprecated:DeprecationWarning',
+    # openpyxl 3.1.2 qt python 3.12
+    'ignore:.*datetime.datetime.utcnow\(\):DeprecationWarning'
 ]
 log_format = "%(asctime)s %(levelname)s %(message)s"
 log_date_format = "%Y-%m-%d %H:%M:%S"
@@ -261,31 +281,24 @@ sort = "Cover"
 python_version = "3.11"
 strict = true
 follow_imports = "silent"
-# namespace_packages = true
-#warn_return_any = true
-#warn_unused_configs = true
-#show_error_codes = true
-#enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
-#show_error_context = true
-#error_summary = true
-#warn_redundant_casts = true
-#warn_unreachable = true
-#warn_unused_ignores = true
+disallow_untyped_defs = true
 files = "src/**/*.py"
 
 
 [[tool.mypy.overrides]]
 module = [
+    "IPython.core.magic",
+    "IPython.core.magic_arguments",
     "click",
     "click.testing",
     "loguru",
-    "importlib_metadata",
     "multipledispatch",
     "nox",
     "numpy.testing",
     "pandas",
     "pytest",
     "scipy.constants",
+    "scipy.sparse",
     "tomli",
     "tomllib",
 ]
@@ -310,7 +323,7 @@ ignore = [
 [tool.ipdb]
 # For debugging in jupyterlab and ipython
 # see https://github.com/gotcha/ipdb
-context=5
+context = 5
 
 [tool.tryceratops]
 include = ["src"]
@@ -319,18 +332,18 @@ experimental = true
 [tool.pydocstringformatter]
 write = true
 style = "pep257"
-exclude = ["tools/**","src/**/*_parser.py","src/**/*_tab.py"]
+exclude = ["tools/**", "src/**/*_parser.py", "src/**/*_tab.py"]
 strip-whitespaces = true
 max-line-length = 100
 summary-quotes-same-line = true
 
 
 [tool.pylint]
-good-names-rgxs=["."]  # a single character variable is okay
-logging-format-style="new"   # use {} in logging messages
-deprecated-modules=["six"]
-extension-pkg-allow-list=["duckdb"]
-disable=[
+good-names-rgxs = ["."]  # a single character variable is okay
+logging-format-style = "new"   # use {} in logging messages
+deprecated-modules = ["six"]
+extension-pkg-allow-list = ["duckdb"]
+disable = [
     "wrong-import-order"  # this is `isort` responsibility
 ]
 
@@ -339,7 +352,7 @@ disable=[
 target-version = "py38"
 #see full list: https://beta.ruff.rs/docs/rules/#pyflakes-f
 #or run 'ruff linter' to see a brief list
-select= [
+select = [
     "A", # flake8-builtins
     "ANN", # flake8-annotations
     "ARG", # flake8-unused-arguments
@@ -390,17 +403,17 @@ select= [
 
 # Ignore rules that currently fail on the codebase
 ignore = [
-    "ANN001", # ANN001 Missing type annotation for function argument: doesn't allow to use functools dispatching
-    "ANN002", # ANN002 Missing type annotation for *drop_items: ... as above
-    "ANN101", # ANN101 Missing type annotation for self in method
-    "ANN102", # ANN102 Missing type annotation for cls in classmethod
+    # "ANN001", # ANN001 Missing type annotation for function argument: doesn't allow to use functools dispatching
+    # "ANN002", # ANN002 Missing type annotation for *drop_items: ... as above
+    # "ANN101", # ANN101 Missing type annotation for self in method
+    # "ANN102", # ANN102 Missing type annotation for cls in classmethod
     # "ANN201", # Missing return type annotation for public function `mesh2com`
     "ANN202", # ANN202 Missing return type annotation for protected function: ... dispatching
-    "ANN204", # ANN204 Missing return type annotation for special method
+    # "ANN204", # ANN204 Missing return type annotation for special method
 
     # "ARG001", # Unused function argument: `expected`
 
-    "B905",   # B905 `zip()` without an explicit `strict=` parameter - ignore while support 3.8, 3.9
+    "B905", # B905 `zip()` without an explicit `strict=` parameter - ignore while support 3.8, 3.9
 
     # "C812",   # C812 Missing trailing comma: black compatibility
     # "C901",   # too complex - ...
@@ -411,10 +424,10 @@ ignore = [
     # "D101",   # Missing docstring in public class
     # "D102",   # Missing docstring in public method
     # "D103",   # Missing docstring in public function
-    "D105",   # D105 Missing docstring in magic method (__hash__, __eq__)
+    "D105", # D105 Missing docstring in magic method (__hash__, __eq__)
     # "D104",   # Missing docstring in public package
     # "D106",   # Missing docstring in public nested class
-    "D107",   # Missing docstring in __init__
+    "D107", # Missing docstring in __init__
     # "D417",   # Missing argument descriptions in the docstring: `config`, `ebins`, - TODO
 
 
@@ -456,13 +469,13 @@ ignore = [
     # "FBT002",  # Boolean default value in function definition (TODO!)
     # "FBT003",  # Boolean positional value in function call
 
-    "I001",    # import order is controlled by isort
+    "I001", # import order is controlled by isort
     # "I101",
     # "I201",
     # "I202",
     # "INP001",  # File `tools/clear-prev-dist-info.py` is part of an implicit namespace package.
 
-# ignore some questionable pandas-vet warnings
+    # ignore some questionable pandas-vet warnings
     # "PD005", # use operator instead of method
     # "PD008", # We use at() to access single values
     # "PD009", # And we use iat()
@@ -475,7 +488,7 @@ ignore = [
     "PLR2004", # magic number - don't want declare 0.0 as constant
     # "PLR5501", # Consider using `elif` instead of `else` then `if` to remove one indentation level
 
-    "PT019",   # Fixture `_bin` without value is injected as parameter (false positive?)
+    "PT019", # Fixture `_bin` without value is injected as parameter (false positive?)
 
     # "S101",    # Use of `assert` detected
     # "S301",    # `pickle` and modules that wrap... - TODO - use sql instead of pickle
@@ -498,19 +511,19 @@ show-fixes = true
 # show source code snippets when reporting violations
 show-source = true
 
-src = ["src", "test"]
+src = ["src", "tests"]
 
 # Allow unused variables when underscore-prefixed.
 # dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 dummy-variable-rgx = "^_$"
 exclude = [
-  "docs/source/conf.py",
-  "__pycache__",
-  "adhoc",
-  "wrk",
-  "*.egg-info",
-  ".cache",
-  "notebooks/dvp/*.py",
+    "docs/source/conf.py",
+    "__pycache__",
+    "adhoc",
+    "wrk",
+    "*.egg-info",
+    ".cache",
+    "notebooks/dvp/*.py",
 ]
 # Assume Python 3.10.
 # target-version = "py310"
@@ -519,12 +532,15 @@ exclude = [
 "__init__.py" = ["E402"]
 "benchmarks/*" = ["S101"]
 "noxfile.py" = ["ANN"]
-"tests/*" = ["ANN", "D100", "D101", "D102", "D103", "D104",  "PLR2004", "S101"]
+"tests/*" = ["ANN", "D100", "D101", "D102", "D103", "D104", "PLR2004", "S101"]
 "tools/*" = ["T201", "INP001", "S603", "S607"]
 
 [tool.ruff.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
-max-complexity = 10
+max-complexity = 15
+
+[tool.ruff.flake8-annotations]
+mypy-init-return = true  # skip return type for __init__() methods
 
 [tool.ruff.flake8-type-checking]
 strict = true
@@ -539,5 +555,4 @@ required-imports = ["from __future__ import annotations"]
 parametrize-names-type = "csv"
 
 [tool.ruff.pydocstyle]
-# Use Google-style docstrings.
-convention = "google"
+convention = "google" # Use Google-style docstrings.
