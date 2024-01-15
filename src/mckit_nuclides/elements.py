@@ -1,7 +1,7 @@
 """Module `elements` provides access to information on chemical element level."""
 from __future__ import annotations
 
-from typing import Final, cast
+from typing import Final, Union, cast
 
 import re
 
@@ -15,7 +15,7 @@ import polars as pl
 HERE = Path(__file__).parent
 
 
-TableValue = int | float | str | None
+TableValue = Union[int, float, str, None]
 
 ELEMENTS_PARQUET: Final[Path] = HERE / "data/elements.parquet"
 ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
