@@ -11,7 +11,7 @@ def test_symbol():
 
 @pytest.mark.parametrize("element,expected", [("Ag", 107.868), (1, 1.008)])
 def test_atomic_mass(element, expected):
-    assert expected == atomic_mass(element)
+    assert expected == pytest.approx(atomic_mass(element))
 
 
 @pytest.mark.parametrize("element,expected", [("B", "Boron"), ("Og", "Oganesson")])
@@ -24,7 +24,7 @@ def test_z():
 
 
 def test_element_with_invalid_key():
-    with pytest.raises(IndexError):
+    with pytest.raises(KeyError):
         get_property(1000000, "name")
 
 

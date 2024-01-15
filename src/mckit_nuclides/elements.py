@@ -1,29 +1,48 @@
 """Module `elements` provides access to information on chemical element level."""
 from __future__ import annotations
 
-from typing import cast
+from typing import Final, cast
 
+import re
+
+from collections import defaultdict
 from pathlib import Path
+
+import numpy as np
 
 import polars as pl
 
 HERE = Path(__file__).parent
 
-ELEMENTS_TABLE_PL = pl.read_parquet(HERE / "data/elements.parquet")
+
+TableValue = int | float | str | None
+
+ELEMENTS_PARQUET: Final[Path] = HERE / "data/elements.parquet"
+ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
+
+# noinspection PyTypeChecker
+Z_TO_SYMBOL: Final[dict[int, str]] = dict(
+    ELEMENTS_TABLE_PL.select("atomic_number", "symbol").iter_rows(),
+)
+
+# noinspection PyTypeChecker
+SYMBOL_TO_Z: Final[dict[str, int]] = dict(
+    ELEMENTS_TABLE_PL.select("symbol", "atomic_number").iter_rows(),
+)
+
+CHEMICAL_FORMULA_ELEMENT_SPEC: Final = re.compile(r"(?P<symbol>[A-Z][a-z]?)(?P<atoms>\d+)?")
 
 
-def atomic_number(element: str) -> int:
+def atomic_number(_symbol: str) -> int:
     """Get atomic number (Z) for an element.
 
     Args:
-        element: element by chemical symbol
+        _symbol: element by chemical symbol
 
     Returns:
         int: Z - the atomic number for the element.
     """
-    return cast(
-        int, ELEMENTS_TABLE_PL.filter(pl.col("symbol").eq(element)).select("atomic_number").item(),
-    )
+    return SYMBOL_TO_Z[_symbol]
 
 
 z = atomic_number
@@ -39,7 +58,7 @@ def symbol(_atomic_number: int) -> str:
     Returns:
         str: Chemical symbol
     """
-    return ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(_atomic_number)).select("symbol").item()  # type: ignore[no-any-return]
+    return Z_TO_SYMBOL[_atomic_number]
 
 
 def get_property(z_or_symbol: int | str, column: str) -> TableValue:
@@ -52,12 +71,16 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     Returns:
         The column value for the given element.
     """
-    if isinstance(z_or_symbol, int):
+    z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
+    try:
         return cast(
             TableValue,
-            ELEMENTS_TABLE.iloc[z_or_symbol - 1, ELEMENTS_TABLE.columns.get_loc(column)],
+            ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(z)).select(column).item(),
         )
-    return cast(TableValue, ELEMENTS_TABLE.loc[z_or_symbol, [column]].item())
+    except pl.exceptions.ColumnNotFoundError as ex:
+        raise KeyError from ex
+    except ValueError as ex:
+        raise KeyError from ex
 
 
 def atomic_mass(z_or_symbol: int | str) -> float:
@@ -69,7 +92,7 @@ def atomic_mass(z_or_symbol: int | str) -> float:
     Returns:
         Average atomic mass of the Element with the atomic number.
     """
-    return cast(float, get_property(z_or_symbol, "atomic_mass"))
+    return cast(float, get_property(z_or_symbol, "molar_mass"))
 
 
 def name(z_or_symbol: int | str) -> str:
@@ -82,6 +105,80 @@ def name(z_or_symbol: int | str) -> str:
         The name of the element.
     """
     return cast(str, get_property(z_or_symbol, "name"))
+
+
+def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.DataFrame:
+    """Create dataframe for material from chemical formula.
+
+    Minimalistic parser for chemical formula to define compositions on the fly.
+
+    Symbols of elements are to be in capitalized form: Ge, Si...
+
+    Args:
+        formula: ... H20, C2H5OH, etc.
+        mass_fraction: define mass fractions instead of atomic (default)
+
+    Examples:
+        >>> print(from_molecular_formula("H2O"))
+        shape: (2, 2)
+        ┌───────────────┬──────────┐
+        │ atomic_number ┆ fraction │
+        │ ---           ┆ ---      │
+        │ u8            ┆ f64      │
+        ╞═══════════════╪══════════╡
+        │ 1             ┆ 0.666667 │
+        │ 8             ┆ 0.333333 │
+        └───────────────┴──────────┘
+        >>> print(from_molecular_formula("C2H5OH"))
+        shape: (3, 2)
+        ┌───────────────┬──────────┐
+        │ atomic_number ┆ fraction │
+        │ ---           ┆ ---      │
+        │ u8            ┆ f64      │
+        ╞═══════════════╪══════════╡
+        │ 1             ┆ 0.666667 │
+        │ 6             ┆ 0.222222 │
+        │ 8             ┆ 0.111111 │
+        └───────────────┴──────────┘
+        >>> print(from_molecular_formula("H2O", mass_fraction=True))
+        shape: (2, 3)
+        ┌───────────────┬──────────┐
+        │ atomic_number ┆ fraction │
+        │ ---           ┆ ---      │
+        │ u8            ┆ f64      │
+        ╞═══════════════╪══════════╡
+        │ 1             ┆ 0.111907 │
+        │ 8             ┆ 0.888093 │
+        └───────────────┴──────────┘
+
+    Returns:
+        composition
+    """
+    collector: dict[str, int] = defaultdict(int)
+    for m in CHEMICAL_FORMULA_ELEMENT_SPEC.finditer(formula):
+        ss = m["symbol"]
+        atoms = m["atoms"]
+        atoms = 1 if atoms is None else int(atoms)
+        collector[ss] += atoms
+    symbols = sorted(collector.keys())
+    atomic_numbers = [atomic_number(s) for s in symbols]
+    if mass_fraction:
+        fractions = np.fromiter((collector[s] * atomic_mass(s) for s in symbols), dtype=float)
+        total_mass = fractions.sum()
+        fractions /= total_mass
+    else:
+        total_atoms = sum(collector.values())
+        fractions = np.fromiter((collector[s] / total_atoms for s in symbols), dtype=float)
+    return (
+        pl.DataFrame(
+            {
+                "atomic_number": atomic_numbers,
+                "fraction": fractions,
+            },
+        )
+        .cast(dtypes={"atomic_number": pl.UInt8})
+        .sort("atomic_number")
+    )
 
 
 __all__ = [n for n in locals() if not n.startswith("_")]

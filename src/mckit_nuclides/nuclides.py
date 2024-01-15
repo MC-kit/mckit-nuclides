@@ -1,12 +1,18 @@
 """Information on nuclides: masses, natural presence and more."""
 from __future__ import annotations
 
-from typing import cast
+from typing import Final, cast
 
+from pathlib import Path
+
+import polars as pl
 
 from mckit_nuclides.elements import TableValue, z
 
-NUCLIDES_TABLE = _load_tables()
+HERE = Path(__file__).parent
+
+NUCLIDES_PARQUET: Final[Path] = HERE / "data/nuclides.parquet"
+NUCLIDES_TABLE_PL: Final = pl.read_parquet(NUCLIDES_PARQUET)
 
 
 def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> TableValue:
@@ -20,9 +26,20 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
     Returns:
         Value of a column for a given nuclide.
     """
-    if isinstance(z_or_symbol, str):
-        z_or_symbol = z(z_or_symbol)
-    return cast(TableValue, NUCLIDES_TABLE.loc[(z_or_symbol, mass_number), column])
+    _z = z(z_or_symbol) if isinstance(z_or_symbol, str) else z_or_symbol
+    try:
+        return cast(
+            TableValue,
+            NUCLIDES_TABLE_PL.filter(
+                pl.col("atomic_number").eq(_z) & pl.col("mass_number").eq(mass_number),
+            )
+            .select(column)
+            .item(),
+        )
+    except pl.exceptions.ColumnNotFoundError as ex:
+        raise KeyError from ex
+    except ValueError as ex:
+        raise KeyError from ex
 
 
 def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:
@@ -35,4 +52,4 @@ def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:
     Returns:
         Mass of the Nuclide (a.u).
     """
-    return cast(float, get_property(z_or_symbol, mass_number, "nuclide_mass"))
+    return cast(float, get_property(z_or_symbol, mass_number, "molar_mass"))
