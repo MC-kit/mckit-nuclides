@@ -218,7 +218,9 @@ python_functions = "test_*  profile_*"
 addopts = "-ra -q --tb=short --doctest-modules --strict-markers --ignore setup.py --failed-first"
 doctest_optionflags = "NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES"
 testpaths = ["tests"]
-markers = ["slow: too slow tests"]
+markers = [
+    "slow: too slow tests"
+]
 # xfail tests that pass should fail the test suite
 xfail_strict = true
 filterwarnings = [
@@ -255,18 +257,18 @@ fail_under = 100
 omit = ["*_tab.py", "**/__init__.py", "**/types.py"]
 # Regexes for lines to exclude from consideration
 exclude_lines = [
-  # Have to re-enable the standard pragma
-  "pragma: no cover",
-  # Don't complain about missing debug-only code:
-  "def __repr__",
-  "if self.debug",
-  # Don't complain if tests don't hit defensive assertion code:
-  "raise AssertionError",
-  "raise NotImplementedError",
-  # Don't complain if non-runnable code isn't run:
-  "if 0:",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self.debug",
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
 ]
 ignore_errors = true
 sort = "Cover"
@@ -303,12 +305,20 @@ module = [
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["tomllib", "tomli"]
+module = [
+    "tomllib",
+    "tomli",
+]
 allow_redefinition = true
 disable_error_code = "no-redef"
 
 [tool.check-manifest]
-ignore = ["tests/*", "tools/*", "*.yaml", "noxfile.py"]
+ignore = [
+    "tests/*",
+    "tools/*",
+    "*.yaml",
+    "noxfile.py",
+]
 
 [tool.ipdb]
 # For debugging in jupyterlab and ipython
@@ -329,12 +339,12 @@ summary-quotes-same-line = true
 
 
 [tool.pylint]
-good-names-rgxs = ["."] # a single character variable is okay
-logging-format-style = "new" # use {} in logging messages
+good-names-rgxs = ["."]  # a single character variable is okay
+logging-format-style = "new"   # use {} in logging messages
 deprecated-modules = ["six"]
 extension-pkg-allow-list = ["duckdb"]
 disable = [
-    "wrong-import-order", # this is `isort` responsibility
+    "wrong-import-order"  # this is `isort` responsibility
 ]
 
 
@@ -507,13 +517,13 @@ src = ["src", "tests"]
 # dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 dummy-variable-rgx = "^_$"
 exclude = [
-  "docs/source/conf.py",
-  "__pycache__",
-  "adhoc",
-  "wrk",
-  "*.egg-info",
-  ".cache",
-  "notebooks/dvp/*.py",
+    "docs/source/conf.py",
+    "__pycache__",
+    "adhoc",
+    "wrk",
+    "*.egg-info",
+    ".cache",
+    "notebooks/dvp/*.py",
 ]
 # Assume Python 3.10.
 # target-version = "py310"
@@ -530,7 +540,7 @@ exclude = [
 max-complexity = 15
 
 [tool.ruff.flake8-annotations]
-mypy-init-return = true # skip return type for __init__() methods
+mypy-init-return = true  # skip return type for __init__() methods
 
 [tool.ruff.flake8-type-checking]
 strict = true

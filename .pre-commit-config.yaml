@@ -23,7 +23,6 @@ repos:
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
-      #    - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
@@ -38,7 +37,6 @@ repos:
       - id: name-tests-test
         args:
           - --pytest-test-first
-      #  - id: no-commit-to-branch
       - id: mixed-line-ending
       - id: requirements-txt-fixer
       - id: trailing-whitespace
@@ -55,23 +53,7 @@ repos:
     hooks:
       - id: pydocstringformatter
         exclude: _parser\.py$|_tab\.py
-  #- repo: https://github.com/sirosen/texthooks
-  #  rev: "0.3.1"
-  #  hooks:
-  #  - id: fix-ligatures
-  #  - id: fix-smartquotes
 
-  # Automatically remove noqa that are not used
-  #- repo: https://github.com/asottile/yesqa
-  #  rev: "v1.4.0"
-  #  hooks:
-  #  - id: yesqa
-
-  # TODO dvp: return rstcheck, fix docs files for that
-  #-   repo: https://github.com/rstcheck/rstcheck
-  #    rev: v6.1.0
-  #    hooks:
-  #    -   id: rstcheck
   - repo: local
     hooks:
       # Upgrade Python code
@@ -83,6 +65,7 @@ repos:
           - --py39-plus
         language: system
         types: [ python ]
+
       # Nicely sort imports
       - id: isort
         name: isort
@@ -90,6 +73,7 @@ repos:
         entry: isort
         language: system
         types: [ python ]
+
       # Black, the code formatter, natively supports pre-commit
       - id: black
         name: black
@@ -97,7 +81,8 @@ repos:
         language: system
         types: [ python ]
         exclude: ^notebooks
-      # Lint
+
+      # Lint and fix Python code
       - id: ruff
         name: ruff
         entry: ruff --force-exclude --fix --config pyproject.toml
