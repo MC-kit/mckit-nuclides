@@ -85,7 +85,7 @@ def _load_nist_file(path: Path) -> dict[str, list[Any]]:
     return collector
 
 
-def _make_half_lives_table(half_lives_path: Path):
+def _make_half_lives_table(half_lives_path: Path) -> pl.DataFrame:
     return pl.read_csv(half_lives_path).with_columns(
         pl.when(pl.col("m").eq("M")).then(1).otherwise(0).cast(pl.UInt8).alias("state"),
     )
