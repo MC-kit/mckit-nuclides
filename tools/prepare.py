@@ -9,7 +9,7 @@ from pathlib import Path
 import polars as pl
 
 HERE = Path(__file__).parent
-
+OUT = HERE.parent / "src/mckit_nuclides/data"
 
 _ELEMENTS_SCHEMA: Final = OrderedDict(
     atomic_number=pl.UInt32,
@@ -124,11 +124,11 @@ def _make_nist_table(half_lives: pl.DataFrame, nist_file_path: Path) -> pl.DataF
 
 if __name__ == "__main__":
     _make_elements_table(HERE / "data/elements.csv").write_parquet(
-        HERE.parent / "mckit_nuclides/data/elements.parquet",
+        OUT / "elements.parquet",
     )
     _make_nist_table(
         _make_half_lives_table(HERE / "data/half-lives.csv"),
         HERE / "data/nist_atomic_weights_and_element_compositions.txt",
     ).write_parquet(
-        HERE.parent / "mckit_nuclides/data/nuclides.parquet",
+        OUT / "nuclides.parquet",
     )

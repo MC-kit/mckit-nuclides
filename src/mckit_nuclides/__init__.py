@@ -26,7 +26,7 @@ from .elements import (
 )
 from .elements import get_property as get_element_property
 from .elements import symbol, z
-from .nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL
+from .nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL, get_nuclide_mass
 from .nuclides import get_property as get_nuclide_property
 
 try:
@@ -56,6 +56,7 @@ __all__ = [
     "expand_df_natural_presence",
     "expand_natural_presence",
     "get_element_property",
+    "get_nuclide_mass",
     "get_nuclide_property",
     "normalize_column",
     "symbol",
