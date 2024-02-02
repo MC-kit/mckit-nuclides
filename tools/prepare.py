@@ -1,4 +1,5 @@
 """Transform raw input data to parquet files to be used as resources in mckit-nuclides."""
+
 from __future__ import annotations
 
 from typing import Any, Final

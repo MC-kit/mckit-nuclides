@@ -1,4 +1,5 @@
 """Methods to change nuclide abundance in compositions."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

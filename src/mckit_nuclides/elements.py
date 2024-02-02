@@ -1,4 +1,5 @@
 """Module `elements` provides access to information on chemical element level."""
+
 from __future__ import annotations
 
 from typing import Final, Union, cast
