@@ -60,7 +60,7 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 python = ">=3.9,<3.13"
 numpy = ">=1.26.0"
 openpyxl = ">=3.0.9"
-polars = {version = "^0.20.3", extras = ["all"]}
+polars = {version = ">=0.20.3", extras = ["all"]}
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
