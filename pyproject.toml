@@ -501,7 +501,7 @@ lint.ignore = [
     # "PD008", # We use at() to access single values
     # "PD009", # And we use iat()
 
-    "PLE1205", # logging-too-many-args - with use logure with '{' style of placeholders
+    "PLE1205", # logging-too-many-args - we use loguru with '{' style of placeholders
 
     # "PLR0912", # Too many branches (15 > 12)
     # "PLR0913", # Too many arguments to function call (6 > 5)
