@@ -59,8 +59,8 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
 numpy = ">=1.26.0"
-openpyxl = ">=3.0.9"
-polars = {version = ">=0.20.3", extras = ["all"]}
+polars = {version = ">0.20.3", extras = ["all"], markers = "sys_platform != 'darwin'"}
+polars-lts-cpu ={version = ">=0.20.3", extras = ["all"], markers = "sys_platform == 'darwin'"}  # old CPU instructions
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
