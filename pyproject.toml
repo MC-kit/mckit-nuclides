@@ -304,7 +304,7 @@ strict = true
 follow_imports = "silent"
 disallow_untyped_defs = true
 files = "src/**/*.py"
-
+plugins = ["numpy.typing.mypy_plugin"]
 
 [[tool.mypy.overrides]]
 module = [
