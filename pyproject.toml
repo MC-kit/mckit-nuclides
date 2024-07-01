@@ -233,11 +233,6 @@ addopts = '''
 --strict-markers
 --ignore setup.py
 --failed-first
---benchmark-disable
---benchmark-storage=.cache/benchmarks
---benchmark-autosave
---benchmark-compare
---benchmark-group-by=name,fullname
 '''
 doctest_optionflags = "ELLIPSIS NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES"
 testpaths = ["tests"]

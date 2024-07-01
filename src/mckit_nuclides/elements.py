@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Final, Union, cast
+from typing import Final, cast
 
 import re
 
@@ -16,7 +16,7 @@ import polars as pl
 HERE = Path(__file__).parent
 
 
-TableValue = Union[int, float, str, None]
+TableValue = int | float | str | None
 
 ELEMENTS_PARQUET: Final[Path] = HERE / "data/elements.parquet"
 ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
@@ -72,11 +72,11 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     Returns:
         The column value for the given element.
     """
-    z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
+    _z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
     try:
         return cast(
             TableValue,
-            ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(z)).select(column).item(),
+            ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(_z)).select(column).item(),
         )
     except pl.exceptions.ColumnNotFoundError as ex:
         raise KeyError from ex
