@@ -57,7 +57,7 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 numpy = ">=1.26.0"
-polars = {version = ">0.20.3", extras = ["all"]}
+polars = { version = ">0.20.3", extras = ["all"] }
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
@@ -76,12 +76,6 @@ pre-commit = ">=2.15.0"
 rstcheck = ">=6.1.2"
 pydocstringformatter = ">=0.7.3"
 pyupgrade = ">=3.15.0"
-
-[tool.poetry.group.black.dependencies]
-black = ">=22.8.0"
-
-[tool.poetry.group.isort.dependencies]
-isort = ">=5.9.3"
 
 [tool.poetry.group.test.dependencies]
 pytest = ">=7.1"
@@ -147,8 +141,6 @@ sphinx-autobuild = ">=2021.3.14"
 
 [tool.poetry.group.pylsp.dependencies]
 pylsp-mypy = ">=0.6.6"
-pyls-isort = ">=0.2.2"
-python-lsp-black = ">=1.2.1"
 pyls-memestra = ">=0.0.16"
 pylsp-rope = ">=0.1.11"
 ruff-lsp = ">=0.0.35"
@@ -156,21 +148,21 @@ ruff-lsp = ">=0.0.35"
 [tool.poetry.group.ruff.dependencies]
 ruff = ">=0.0.259"
 
-[tool.isort]
-atomic = true
-ensure_newline_before_comments = true
-known_first_party = "mckit_nuclides"
-known_third_party = "mpl_toolkits,matplotlib,numpy,scipy,loguru,tqdm,dotenv"
-known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
-sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
-default_section = "FIRSTPARTY"
-use_parentheses = true
-multi_line_output = 3
-line_length = 100
-include_trailing_comma = true
-lines_between_types = 1
-skip_gitignore = true
-skip_glob = ["*-example.py"]
+#[tool.isort]
+#atomic = true
+#ensure_newline_before_comments = true
+#known_first_party = "mckit_nuclides"
+#known_third_party = "mpl_toolkits,matplotlib,numpy,scipy,loguru,tqdm,dotenv"
+#known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
+#sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+#default_section = "FIRSTPARTY"
+#use_parentheses = true
+#multi_line_output = 3
+#line_length = 100
+#include_trailing_comma = true
+#lines_between_types = 1
+#skip_gitignore = true
+#skip_glob = ["*-example.py"]
 
 
 # NOTE: you have to use single-quoted strings in TOML for regular expressions.
@@ -233,9 +225,10 @@ addopts = '''
 --strict-markers
 --ignore setup.py
 --failed-first
+--xdoctest
 '''
 doctest_optionflags = "ELLIPSIS NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES"
-testpaths = ["tests"]
+testpaths = ["tests", "src"]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
 ]
@@ -375,43 +368,43 @@ skips = ["B101", "B301", "B403"]
 
 [tool.bandit.any_other_function_with_shell_equals_true]
 no_shell = [
-  "os.execl",
-  "os.execle",
-  "os.execlp",
-  "os.execlpe",
-  "os.execv",
-  "os.execve",
-  "os.execvp",
-  "os.execvpe",
-  "os.spawnl",
-  "os.spawnle",
-  "os.spawnlp",
-  "os.spawnlpe",
-  "os.spawnv",
-  "os.spawnve",
-  "os.spawnvp",
-  "os.spawnvpe",
-  "os.startfile"
+    "os.execl",
+    "os.execle",
+    "os.execlp",
+    "os.execlpe",
+    "os.execv",
+    "os.execve",
+    "os.execvp",
+    "os.execvpe",
+    "os.spawnl",
+    "os.spawnle",
+    "os.spawnlp",
+    "os.spawnlpe",
+    "os.spawnv",
+    "os.spawnve",
+    "os.spawnvp",
+    "os.spawnvpe",
+    "os.startfile"
 ]
 shell = [
-  "os.system",
-  "os.popen",
-  "os.popen2",
-  "os.popen3",
-  "os.popen4",
-  "popen2.popen2",
-  "popen2.popen3",
-  "popen2.popen4",
-  "popen2.Popen3",
-  "popen2.Popen4",
-  "commands.getoutput",
-  "commands.getstatusoutput"
+    "os.system",
+    "os.popen",
+    "os.popen2",
+    "os.popen3",
+    "os.popen4",
+    "popen2.popen2",
+    "popen2.popen3",
+    "popen2.popen4",
+    "popen2.Popen3",
+    "popen2.Popen4",
+    "commands.getoutput",
+    "commands.getstatusoutput"
 ]
 subprocess = [
-  "subprocess.Popen",
-  "subprocess.call",
-  "subprocess.check_call",
-  "subprocess.check_output"
+    "subprocess.Popen",
+    "subprocess.call",
+    "subprocess.check_call",
+    "subprocess.check_output"
 ]
 
 [tool.ruff]
@@ -440,33 +433,41 @@ exclude = [
 [tool.ruff.lint]
 #see full list: https://beta.ruff.rs/docs/rules/#pyflakes-f
 #or run 'ruff linter' to see a brief list
-select= [
+select = [
     "A", # flake8-builtins
     "ANN", # flake8-annotations
+    "AIR", # Airflow https://airflow.apache.org/docs/apache-airflow/stable/index.html
     "ARG", # flake8-unused-arguments
+    "ASYNC", # flake8-async
     "B", # flake8-bugbear
     "BLE", # flake8-blind-except
     "C4", # flake8-comprehensions
     "C90", # mccabe
     "COM", # flake8-commas
-    "DJ", # flake8-django
     "D", # pydocstyle
+    "DJ", # flake8-django
     "DTZ", # flake8-datetimez
+    "E", # pycodestyle
     "EM", # flake8-errmsg
     "ERA", # eradicate
-    "E", # pycodestyle
     "EXE", # flake8-executable
-    "FBT", # flake8-boolean-trap  https://adamj.eu/tech/2021/07/10/python-type-hints-how-to-avoid-the-boolean-trap
     "F", # Pyflakes
+    "FA", # flake8-future-annotations
+    "FBT", # flake8-boolean-trap  https://adamj.eu/tech/2021/07/10/python-type-hints-how-to-avoid-the-boolean-trap
+    "FIX", # flake8-fixme
+    "FLY", # flynt
     "FURB", # refurb
     "G", # flake8-logging-format
-    "ICN", # flake8-import-conventions
     "I", # isort
+    "ICN", # flake8-import-conventions
     "INP", # flake8-no-pep420
+    "INT", # flake8-gettext
     "ISC", # flake8-implicit-str-concat
+    "LOG", # flake8-log
     "N", # pep8-naming
     "NPY", # NumPy-specific rules
     "PD", # pandas-vet
+    "PERF", # Perflint
     "PGH", # pygrep-hooks
     "PIE", # flake8-pie
     "PL", # Pylint
@@ -480,8 +481,10 @@ select= [
     "S", # flake8-bandit
     "SIM", # flake8-simplify
     "SLF", # flake8-self
+    "SLOT", # flake8-slot
     "T10", # flake8-debugger
     "T20", # flake8-print
+    "TD", # flake8-todos
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
     "TRY", # tryceratops
@@ -489,6 +492,8 @@ select= [
     "W", # pycodestyle 2
     "YTT", # flake8-2020
 ]
+
+#warning: The isort option `isort.split-on-trailing-comma` is incompatible with the formatter `format.skip-magic-trailing-comma=true` option. To avoid unexpected behavior, we recommend either setting `isort.split-on-trailing-comma=false` or `format.skip-magic-trailing-comma=false`.
 
 # Ignore rules that currently fail on the codebase
 ignore = [
@@ -507,7 +512,7 @@ ignore = [
     # "C812",   # C812 Missing trailing comma: black compatibility
     # "C901",   # too complex - ...
 
-    # "COM812", #  [*] Trailing comma missing
+    "COM812", # may cause conflicts when used with the ruff formatter
 
     # "D100",   # Missing docstring in public module
     # "D101",   # Missing docstring in public class
@@ -563,6 +568,7 @@ ignore = [
     # "I201",
     # "I202",
     # "INP001",  # File `tools/clear-prev-dist-info.py` is part of an implicit namespace package.
+    "ISC001", # may cause conflicts when used with the ruff formatter
 
     # ignore some questionable pandas-vet warnings
     # "PD005", # use operator instead of method
@@ -620,22 +626,23 @@ lines-between-types = 1
 required-imports = ["from __future__ import annotations"]
 case-sensitive = true
 section-order = [
-  "future",
-  "typing",
-  "standard-library",
-  "third-party",
-  "first-party",
-  "local-folder",
-  "testing"
+    "future",
+    "typing",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+    "testing"
 ]
 
+
+
 [tool.ruff.lint.isort.sections]
-  "typing" = ["typing", "typing_extension"]
-  "testing" = ["tests"]
+"typing" = ["typing", "typing_extension"]
+"testing" = ["tests"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google" # Use Google-style docstrings.
 
 [tool.ruff.format]
 docstring-code-format = true
-skip-magic-trailing-comma = true

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import polars as pl
 import pytest
 
 from mckit_nuclides.elements import atomic_mass
@@ -26,9 +25,9 @@ def test_get_nuclide_by_element_and_isotope(inp, expected, msg):
 )
 def test_get_nuclide_by_z_and_isotope(inp, msg):
     z, a = inp
-    actual = NUCLIDES_TABLE_PL.filter(
-        pl.col("atomic_number").eq(z) & pl.col("mass_number").eq(a),
-    ).select("atomic_number", "mass_number")
+    actual = NUCLIDES_TABLE_PL.filter(atomic_number=z, mass_number=a).select(
+        "atomic_number", "mass_number"
+    )
     assert actual.row(0) == inp, msg
 
 

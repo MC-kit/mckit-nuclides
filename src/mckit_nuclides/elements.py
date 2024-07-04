@@ -22,12 +22,12 @@ ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
 
 # noinspection PyTypeChecker
 Z_TO_SYMBOL: Final[dict[int, str]] = dict(
-    ELEMENTS_TABLE_PL.select("atomic_number", "symbol").iter_rows(),
+    ELEMENTS_TABLE_PL.select("atomic_number", "symbol").iter_rows()
 )
 
 # noinspection PyTypeChecker
 SYMBOL_TO_Z: Final[dict[str, int]] = dict(
-    ELEMENTS_TABLE_PL.select("symbol", "atomic_number").iter_rows(),
+    ELEMENTS_TABLE_PL.select("symbol", "atomic_number").iter_rows()
 )
 
 CHEMICAL_FORMULA_ELEMENT_SPEC: Final = re.compile(r"(?P<symbol>[A-Z][a-z]?)(?P<atoms>\d+)?")
@@ -68,6 +68,9 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
         z_or_symbol: define either by atomic number or symbol
         column: column name in ELEMENTS_TABLE
 
+    Raises:
+        KeyError: if it cannot find the given element.
+
     Returns:
         The column value for the given element.
     """
@@ -75,7 +78,7 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     try:
         return cast(
             TableValue,
-            ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(_z)).select(column).item(),
+            ELEMENTS_TABLE_PL.filter(atomic_number=_z).select(column).item(),
         )
     except pl.exceptions.ColumnNotFoundError as ex:
         raise KeyError from ex
@@ -141,7 +144,7 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
         │ 8             ┆ 0.111111 │
         └───────────────┴──────────┘
         >>> print(from_molecular_formula("H2O", mass_fraction=True))
-        shape: (2, 3)
+        shape: (2, 2)
         ┌───────────────┬──────────┐
         │ atomic_number ┆ fraction │
         │ ---           ┆ ---      │
@@ -174,7 +177,7 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
             {
                 "atomic_number": atomic_numbers,
                 "fraction": fractions,
-            },
+            }
         )
         .cast(dtypes={"atomic_number": pl.UInt8})
         .sort("atomic_number")
@@ -182,3 +185,9 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
 
 
 __all__ = [n for n in locals() if not n.startswith("_")]
+
+
+if __name__ == "__main__":
+    import xdoctest
+
+    xdoctest.doctest_module(__file__, command="all")

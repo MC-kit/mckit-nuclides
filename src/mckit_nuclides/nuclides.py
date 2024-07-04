@@ -24,15 +24,18 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
         mass_number: A
         column: name of column to extract value from
 
+    Raises:
+        KeyError: if cannot find the given nuclide.
+
     Returns:
-        Value of a column for a given nuclide.
+        Value of a column for the given nuclide.
     """
     _z = z(z_or_symbol) if isinstance(z_or_symbol, str) else z_or_symbol
     try:
         return cast(
             TableValue,
             NUCLIDES_TABLE_PL.filter(
-                pl.col("atomic_number").eq(_z) & pl.col("mass_number").eq(mass_number),
+                pl.col("atomic_number").eq(_z) & pl.col("mass_number").eq(mass_number)
             )
             .select(column)
             .item(),
