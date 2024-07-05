@@ -24,9 +24,10 @@ from .elements import (
     Z_TO_SYMBOL,
     atomic_mass,
     atomic_number,
+    symbol,
+    z,
 )
 from .elements import get_property as get_element_property
-from .elements import symbol, z
 from .nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL, get_nuclide_mass
 from .nuclides import get_property as get_nuclide_property
 

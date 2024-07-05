@@ -16,7 +16,9 @@
 #     https://pre-commit.com/hooks.html         for more hooks
 default_language_version:
   python: python3.11
+
 repos:
+
   # Standard hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.5.0"
@@ -27,7 +29,7 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
-        exclude: notebooks
+        exclude: notebooks  # jupytext creates python scripts with shebangs but without permissions
       - id: check-symlinks
       - id: check-toml
       - id: check-yaml
@@ -47,48 +49,52 @@ repos:
     rev: "v1.5.4"
     hooks:
       - id: remove-tabs
+
   # Format doc strings
   - repo: https://github.com/DanielNoord/pydocstringformatter
     rev: "v0.7.3"
     hooks:
       - id: pydocstringformatter
-        exclude: _parser\.py$|_tab\.py
+        exclude: _parser\.py$|_tab\.py|extern
 
   - repo: local
     hooks:
       # Upgrade Python code
       - id: pyupgrade
         name: pyupgrade
-        exclude: \.idea|\.cache|^notebooks
+        exclude: \.idea|\.cache|^notebooks|^extern
         entry: pyupgrade
         args:
-          - --py39-plus
+          - --py310-plus
         language: system
         types: [ python ]
+        stages: [ manual ]
 
-      # Nicely sort imports
-      - id: isort
-        name: isort
-        exclude: tools|\.idea|\.cache|^notebooks
-        entry: isort
+      # Security check
+      - id: bandit
+        name: bandit
+        entry: bandit
+        args: ["-c", "pyproject.toml"]
         language: system
         types: [ python ]
+        exclude: ^notebooks|^extern
+        stages: [ manual ]
 
-      # Black, the code formatter, natively supports pre-commit
-      - id: black
-        name: black
-        entry: black
-        language: system
-        types: [ python ]
-        exclude: ^notebooks
-
-      # Lint and fix Python code
+      # Lint and fix Python code (including import sort)
       - id: ruff
         name: ruff
-        entry: ruff --force-exclude --fix --config pyproject.toml
+        entry: ruff check --force-exclude --fix --config pyproject.toml
         language: system
         types: [ python ]
-        exclude: ^notebooks
+        exclude: ^notebooks|^extern
+
+      # Format Python code
+      - id: ruff
+        name: ruff-format
+        entry: ruff format --force-exclude --config pyproject.toml
+        language: system
+        types: [ python ]
+        exclude: ^notebooks|^extern
 
   # Check for common shell mistakes
   - repo: https://github.com/shellcheck-py/shellcheck-py
