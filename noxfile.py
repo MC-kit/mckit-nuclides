@@ -57,10 +57,11 @@ def find_my_name() -> str:
     raise ValueError(msg)
 
 
-package: Final = find_my_name()
-locations: Final = f"src/{package}", "tests", "./noxfile.py", "docs/source/conf.py"
+package: Final[str] = find_my_name()
+locations: Final[tuple[str, ...]] = f"src/{package}", "tests", "./noxfile.py", "docs/source/conf.py"
 
-supported_pythons: Final = "3.10", "3.11", "3.12"
+supported_pythons: Final[tuple[str, ...]] = "3.10", "3.11", "3.12"
+default_python: Final[str] = "3.12"
 
 
 def _update_hook(hook: Path, virtualenv: str, s: Session) -> None:
@@ -107,7 +108,7 @@ def activate_virtualenv_in_precommit_hooks(s: Session) -> None:
         _update_hook(hook, virtualenv, s)
 
 
-@session(name="pre-commit", python="3.12")
+@session(name="pre-commit", python=default_python)
 def precommit(s: Session) -> None:
     """Lint using pre-commit."""
     s.run("poetry", "install", "--no-root", "--only", "pre_commit,ruff", external=True)
@@ -171,7 +172,7 @@ def mypy(s: Session) -> None:
         s.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
 
 
-@session(python="3.12")
+@session(python=default_python)
 def xdoctest(s: Session) -> None:
     """Run examples with xdoctest."""
     # Cannot use --no-root, because imports in __init__ require the package metadata
@@ -180,7 +181,7 @@ def xdoctest(s: Session) -> None:
     s.run("python", "-m", "xdoctest", *args)
 
 
-@session(python="3.12")
+@session(python=default_python)
 def ruff(s: Session) -> None:
     """Run ruff linter."""
     s.run("poetry", "install", "--no-root", "--only", "ruff", external=True)
@@ -188,7 +189,7 @@ def ruff(s: Session) -> None:
     s.run("ruff", *args)
 
 
-@session(python="3.12", name="ruff-format")
+@session(python=default_python, name="ruff-format")
 def ruff_format(s: Session) -> None:
     """Run ruff formatter."""
     s.run("poetry", "install", "--no-root", "--only", "ruff", external=True)
@@ -196,7 +197,7 @@ def ruff_format(s: Session) -> None:
     s.run("ruff", *args)
 
 
-@session(name="docs-build", python="3.11")
+@session(name="docs-build", python=default_python)
 def docs_build(s: Session) -> None:
     """Build the documentation."""
     s.run("poetry", "install", "--only", "main,docs", external=True)
@@ -208,7 +209,7 @@ def docs_build(s: Session) -> None:
     s.run("sphinx-build", *args)
 
 
-@session(python="3.11")
+@session(python=default_python)
 def docs(s: Session) -> None:
     """Build and serve the documentation with live reloading on file changes."""
     s.run("poetry", "install", "--only", "main,docs,docs_auto", external=True)
