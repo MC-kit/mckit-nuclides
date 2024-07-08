@@ -18,7 +18,7 @@ HERE = Path(__file__).parent
 TableValue = int | float | str | None
 
 ELEMENTS_PARQUET: Final[Path] = HERE / "data/elements.parquet"
-ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
+ELEMENTS_TABLE_PL: Final[pl.DataFrame] = pl.read_parquet(ELEMENTS_PARQUET)
 
 # noinspection PyTypeChecker
 Z_TO_SYMBOL: Final[dict[int, str]] = dict(
@@ -31,6 +31,14 @@ SYMBOL_TO_Z: Final[dict[str, int]] = dict(
 )
 
 CHEMICAL_FORMULA_ELEMENT_SPEC: Final = re.compile(r"(?P<symbol>[A-Z][a-z]?)(?P<atoms>\d+)?")
+"""Regex pattern to recognize one element parts in a chemical formula.
+
+    The pattern recognizes capitalized chemical symbols and an optional atom per molecule numbers.
+
+    Examples:
+        >>> CHEMICAL_FORMULA_ELEMENT_SPEC.findall("H2O")
+        ["H2", "O"]
+"""
 
 
 def atomic_number(_symbol: str) -> int:
@@ -184,7 +192,18 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
     )
 
 
-__all__ = [n for n in locals() if not n.startswith("_")]
+__all__ = [
+    "ELEMENTS_PARQUET",
+    "ELEMENTS_TABLE_PL",
+    "SYMBOL_TO_Z",
+    "Z_TO_SYMBOL",
+    "atomic_mass",
+    "atomic_number",
+    "from_molecular_formula",
+    "get_property",
+    "symbol",
+    "z",
+]
 
 
 if __name__ == "__main__":

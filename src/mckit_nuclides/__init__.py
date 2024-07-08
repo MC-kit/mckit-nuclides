@@ -24,6 +24,7 @@ from .elements import (
     Z_TO_SYMBOL,
     atomic_mass,
     atomic_number,
+    from_molecular_formula,
     symbol,
     z,
 )
@@ -57,6 +58,7 @@ __all__ = [
     "convert_to_atomic_fraction",
     "expand_df_natural_presence",
     "expand_natural_presence",
+    "from_molecular_formula",
     "get_element_property",
     "get_nuclide_mass",
     "get_nuclide_property",
