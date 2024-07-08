@@ -148,58 +148,6 @@ ruff-lsp = ">=0.0.35"
 [tool.poetry.group.ruff.dependencies]
 ruff = ">=0.0.259"
 
-#[tool.isort]
-#atomic = true
-#ensure_newline_before_comments = true
-#known_first_party = "mckit_nuclides"
-#known_third_party = "mpl_toolkits,matplotlib,numpy,scipy,loguru,tqdm,dotenv"
-#known_typing = "typing,types,typing_extensions,mypy,mypy_extensions"
-#sections = "FUTURE,TYPING,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
-#default_section = "FIRSTPARTY"
-#use_parentheses = true
-#multi_line_output = 3
-#line_length = 100
-#include_trailing_comma = true
-#lines_between_types = 1
-#skip_gitignore = true
-#skip_glob = ["*-example.py"]
-
-
-# NOTE: you have to use single-quoted strings in TOML for regular expressions.
-# It's the equivalent of r-strings in Python.  Multiline strings are treated as
-# verbose regular expressions by Black.  Use [ ] to denote a significant space
-# character.
-
-[tool.black]
-line-length = 100
-include = '''
-(
-    \.pyi?$
-)
-'''
-exclude = '''
-(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.nox
-  | \.venv
-  | \.idea
-  | _build
-  | build
-  | build_configs
-  | dist
-  | extern
-  | data
-  | htmlcov
-  | \.egg-info
-  | _tab\.py$
-  | notebooks
-  | wrk
-)
-'''
-
 [tool.pytest.ini_options]
 minversion = "6.2"
 cache_dir = '.cache/pytest'
@@ -289,7 +237,7 @@ sort = "Cover"
 # See https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
 #     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 follow_imports = "silent"
 disallow_untyped_defs = true
