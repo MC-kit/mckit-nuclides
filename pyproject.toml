@@ -260,6 +260,7 @@ module = [
     "scipy.sparse",
     "tomli",
     "tomllib",
+    "xdoctest",
 ]
 ignore_missing_imports = true
 
