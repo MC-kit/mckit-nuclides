@@ -1,7 +1,8 @@
 """Module `elements` provides access to information on chemical element level."""
+
 from __future__ import annotations
 
-from typing import Final, Union, cast
+from typing import Final, cast
 
 import re
 
@@ -9,28 +10,35 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
-
 import polars as pl
 
 HERE = Path(__file__).parent
 
 
-TableValue = Union[int, float, str, None]
+TableValue = int | float | str | None
 
 ELEMENTS_PARQUET: Final[Path] = HERE / "data/elements.parquet"
-ELEMENTS_TABLE_PL: Final = pl.read_parquet(ELEMENTS_PARQUET)
+ELEMENTS_TABLE_PL: Final[pl.DataFrame] = pl.read_parquet(ELEMENTS_PARQUET)
 
 # noinspection PyTypeChecker
 Z_TO_SYMBOL: Final[dict[int, str]] = dict(
-    ELEMENTS_TABLE_PL.select("atomic_number", "symbol").iter_rows(),
+    ELEMENTS_TABLE_PL.select("atomic_number", "symbol").iter_rows()
 )
 
 # noinspection PyTypeChecker
 SYMBOL_TO_Z: Final[dict[str, int]] = dict(
-    ELEMENTS_TABLE_PL.select("symbol", "atomic_number").iter_rows(),
+    ELEMENTS_TABLE_PL.select("symbol", "atomic_number").iter_rows()
 )
 
 CHEMICAL_FORMULA_ELEMENT_SPEC: Final = re.compile(r"(?P<symbol>[A-Z][a-z]?)(?P<atoms>\d+)?")
+"""Regex pattern to recognize one element parts in a chemical formula.
+
+    The pattern recognizes capitalized chemical symbols and an optional atom per molecule numbers.
+
+    Examples:
+        >>> CHEMICAL_FORMULA_ELEMENT_SPEC.findall("H2O")
+        ["H2", "O"]
+"""
 
 
 def atomic_number(_symbol: str) -> int:
@@ -68,14 +76,17 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
         z_or_symbol: define either by atomic number or symbol
         column: column name in ELEMENTS_TABLE
 
+    Raises:
+        KeyError: if it cannot find the given element.
+
     Returns:
         The column value for the given element.
     """
-    z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
+    _z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
     try:
         return cast(
             TableValue,
-            ELEMENTS_TABLE_PL.filter(pl.col("atomic_number").eq(z)).select(column).item(),
+            ELEMENTS_TABLE_PL.filter(atomic_number=_z).select(column).item(),
         )
     except pl.exceptions.ColumnNotFoundError as ex:
         raise KeyError from ex
@@ -141,7 +152,7 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
         │ 8             ┆ 0.111111 │
         └───────────────┴──────────┘
         >>> print(from_molecular_formula("H2O", mass_fraction=True))
-        shape: (2, 3)
+        shape: (2, 2)
         ┌───────────────┬──────────┐
         │ atomic_number ┆ fraction │
         │ ---           ┆ ---      │
@@ -174,11 +185,28 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
             {
                 "atomic_number": atomic_numbers,
                 "fraction": fractions,
-            },
+            }
         )
         .cast(dtypes={"atomic_number": pl.UInt8})
         .sort("atomic_number")
     )
 
 
-__all__ = [n for n in locals() if not n.startswith("_")]
+__all__ = [
+    "ELEMENTS_PARQUET",
+    "ELEMENTS_TABLE_PL",
+    "SYMBOL_TO_Z",
+    "Z_TO_SYMBOL",
+    "atomic_mass",
+    "atomic_number",
+    "from_molecular_formula",
+    "get_property",
+    "symbol",
+    "z",
+]
+
+
+if __name__ == "__main__":
+    import xdoctest
+
+    xdoctest.doctest_module(__file__, command="all")

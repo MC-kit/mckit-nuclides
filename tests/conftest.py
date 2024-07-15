@@ -17,8 +17,8 @@ import pytest
 def data() -> Generator[Path, None, None]:
     """Path to test data.
 
-    Returns:
-        Path: path to test data
+    Yields:
+        path to test data
     """
     with rc.as_file(rc.files("tests").joinpath("data")) as path:
         yield path

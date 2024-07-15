@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from numpy.testing import assert_array_almost_equal
-
 import polars as pl
 import pytest
+
+from numpy.testing import assert_array_almost_equal
 
 from mckit_nuclides.abundance import (
     convert_to_atomic_fraction,
@@ -28,10 +28,7 @@ def test_convert_to_atomic_fraction_h2o(water) -> None:
 
 
 def test_expand_natural_presence() -> None:
-    composition = [
-        (1, 0, 2.0),
-        (8, 16, 1.0),
-    ]
+    composition = [(1, 0, 2.0), (8, 16, 1.0)]
     expected = [
         (1, 1, 2.0 * 0.999885),  # H, expanded from (1,0)
         (1, 2, 2.0 * 0.000115),  # D, -/-
@@ -49,7 +46,7 @@ def test_expand_df_natural_presence(water):
             "atomic_number": pl.Series([1, 1, 8, 8, 8], dtype=pl.UInt8),
             "mass_number": pl.Series([1, 2, 16, 17, 18], dtype=pl.UInt16),
             "fraction": [0.66659, 0.000077, 0.332523, 0.000127, 0.000683],
-        },
+        }
     )
     assert (
         expanded.select("atomic_number", "mass_number")
@@ -58,11 +55,11 @@ def test_expand_df_natural_presence(water):
     assert (
         expanded.join(expected, on=["atomic_number", "mass_number"])
         .select(
-            (pl.col("fraction") - pl.col("fraction_right")).abs().alias("diff"),
-            (pl.col("fraction") + pl.col("fraction_right")).alias("sum"),
+            diff=(pl.col("fraction") - pl.col("fraction_right")).abs(),
+            sum=(pl.col("fraction") + pl.col("fraction_right")),
         )
-        .select(eval=pl.col("diff") / pl.col("sum") < 1e-2)
-        .filter(pl.col("eval").not_())
+        .select(reldiff=pl.col("diff") / pl.col("sum") < 1e-2)
+        .filter(reldiff=False)
         .height
         == 0
     )

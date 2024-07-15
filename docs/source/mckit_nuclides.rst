@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   mckit_nuclides.utils
 
 Submodules
 ----------

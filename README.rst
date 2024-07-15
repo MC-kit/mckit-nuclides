@@ -48,6 +48,11 @@ Contributing
    :target: https://github.com/pre-commit/pre-commit
    :alt: pre-commit
 
+Notes
+-----
+
+Half lives are extracted from [4] with /home/dvp/.julia/dev/Tools.jl/scripts/extract-half-lives.jl (nice script by the way).
+
 References
 ----------
 
@@ -60,6 +65,7 @@ References
    Atomic Weights and Isotopic Compositions (version 4.1). [Online]
    Available: http://physics.nist.gov/Comp [year, month, day].
    National Institute of Standards and Technology, Gaithersburg, MD.
+4. JEFF-3.3 radioactive decay data file https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/JEFF33-rdd_all.asc
 
 
 .. Substitutions

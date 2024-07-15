@@ -1,4 +1,5 @@
 """Transform raw input data to parquet files to be used as resources in mckit-nuclides."""
+
 from __future__ import annotations
 
 from typing import Any, Final
@@ -87,7 +88,7 @@ def _load_nist_file(path: Path) -> dict[str, list[Any]]:
 
 def _make_half_lives_table(half_lives_path: Path) -> pl.DataFrame:
     return pl.read_csv(half_lives_path).with_columns(
-        pl.when(pl.col("m").eq("M")).then(1).otherwise(0).cast(pl.UInt8).alias("state"),
+        pl.when(pl.col("m").eq("M")).then(1).otherwise(0).cast(pl.UInt8).alias("state")
     )
 
 
@@ -103,7 +104,7 @@ def _make_nist_table(half_lives: pl.DataFrame, nist_file_path: Path) -> pl.DataF
             .then(1)
             .otherwise(0)
             .cast(pl.UInt8)
-            .alias("state"),
+            .alias("state")
         )
         .join(
             half_lives,
@@ -123,12 +124,8 @@ def _make_nist_table(half_lives: pl.DataFrame, nist_file_path: Path) -> pl.DataF
 
 
 if __name__ == "__main__":
-    _make_elements_table(HERE / "data/elements.csv").write_parquet(
-        OUT / "elements.parquet",
-    )
+    _make_elements_table(HERE / "data/elements.csv").write_parquet(OUT / "elements.parquet")
     _make_nist_table(
         _make_half_lives_table(HERE / "data/half-lives.csv"),
         HERE / "data/nist_atomic_weights_and_element_compositions.txt",
-    ).write_parquet(
-        OUT / "nuclides.parquet",
-    )
+    ).write_parquet(OUT / "nuclides.parquet")

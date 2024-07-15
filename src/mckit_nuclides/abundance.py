@@ -1,4 +1,5 @@
 """Methods to change nuclide abundance in compositions."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -22,8 +23,7 @@ MOLAR_MASS_TABLE = (
 
 
 def convert_to_atomic_fraction(
-    composition: pl.DataFrame,
-    fraction_column: str = "fraction",
+    composition: pl.DataFrame, fraction_column: str = "fraction"
 ) -> pl.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
@@ -37,13 +37,8 @@ def convert_to_atomic_fraction(
     composition_columns = composition.columns
     converted = (
         composition.cast(dtypes={"atomic_number": pl.UInt8, "mass_number": pl.UInt16})
-        .join(
-            MOLAR_MASS_TABLE,
-            on=["atomic_number", "mass_number"],
-        )
-        .with_columns(
-            (pl.col(fraction_column) / pl.col("molar_mass")).alias(fraction_column),
-        )
+        .join(MOLAR_MASS_TABLE, on=["atomic_number", "mass_number"])
+        .with_columns((pl.col(fraction_column) / pl.col("molar_mass")).alias(fraction_column))
     )
     return normalize_column(converted, fraction_column).select(composition_columns)
 
@@ -81,14 +76,14 @@ def expand_df_natural_presence(
     expanded = (
         not_having_mass_number.join(
             NUCLIDES_TABLE_PL.select("atomic_number", "mass_number", "isotopic_composition").filter(
-                pl.col("isotopic_composition").gt(0),
+                pl.col("isotopic_composition").gt(0)
             ),
             on="atomic_number",
         )
         .with_columns(
             (pl.col(fraction_column) * pl.col("isotopic_composition")).alias(fraction_column),
             mass_number=pl.col(
-                "mass_number_right",
+                "mass_number_right"
             ),  # replace 0 with mass_number from nuclides table
         )
         .select(composition_columns)
@@ -120,7 +115,7 @@ def expand_natural_presence(
             yield z, a, f
         else:
             isotopic_compositions = NUCLIDES_TABLE_PL.filter(
-                pl.col("atomic_number").eq(z) & pl.col("isotopic_composition").gt(0.0),
+                pl.col("atomic_number").eq(z) & pl.col("isotopic_composition").gt(0.0)
             ).select("mass_number", "isotopic_composition")
             for _a, _ic in isotopic_compositions.iter_rows():
                 yield z, _a, f * _ic

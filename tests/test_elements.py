@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import polars as pl
 import pytest
 
 from mckit_nuclides.elements import (
@@ -46,9 +45,8 @@ def test_from_molecular_formula():
     actual = from_molecular_formula("H2O")  # fraction by atomic
     assert actual.height == 2
     assert actual.select("fraction").sum().item() == pytest.approx(1.0)
-    assert actual.filter(pl.col("atomic_number").eq(1)).select("fraction").item() == pytest.approx(
-        0.66666,
-        rel=1e-4,
+    assert actual.filter(atomic_number=1).select("fraction").item() == pytest.approx(
+        0.66666, rel=1e-4
     )
 
 

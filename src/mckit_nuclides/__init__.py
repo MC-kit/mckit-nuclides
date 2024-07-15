@@ -4,6 +4,7 @@ Provides functionality to transfer meta information
 inserted to STP file component names as special tags
 to MCNP files generated from the STP with SuperMC.
 """
+
 from __future__ import annotations
 
 from importlib import metadata as _meta
@@ -23,9 +24,11 @@ from .elements import (
     Z_TO_SYMBOL,
     atomic_mass,
     atomic_number,
+    from_molecular_formula,
+    symbol,
+    z,
 )
 from .elements import get_property as get_element_property
-from .elements import symbol, z
 from .nuclides import NUCLIDES_PARQUET, NUCLIDES_TABLE_PL, get_nuclide_mass
 from .nuclides import get_property as get_nuclide_property
 
@@ -55,6 +58,7 @@ __all__ = [
     "convert_to_atomic_fraction",
     "expand_df_natural_presence",
     "expand_natural_presence",
+    "from_molecular_formula",
     "get_element_property",
     "get_nuclide_mass",
     "get_nuclide_property",
