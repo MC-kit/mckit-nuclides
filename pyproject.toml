@@ -255,6 +255,7 @@ module = [
     "nox",
     "numpy.testing",
     "pandas",
+    "polars",
     "pytest",
     "scipy.constants",
     "scipy.sparse",
