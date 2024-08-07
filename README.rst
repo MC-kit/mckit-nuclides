@@ -4,7 +4,7 @@
 
 
 
-|Maintained| |License| |Versions| |PyPI| |Docs| |Bandit|
+|Maintained| |License| |Versions| |PyPI| |Docs|
 
 .. contents::
 
@@ -40,8 +40,6 @@ Contributing
    :alt: Tests
 .. image:: https://codecov.io/gh/MC-kit/mckit-nuclides/branch/master/graph/badge.svg?token=wlqoa368k8
   :target: https://codecov.io/gh/MC-kit/mckit-nuclides
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
    :target: https://pycqa.github.io/isort/
 .. image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
@@ -85,6 +83,3 @@ References
 .. |Docs| image:: https://readthedocs.org/projects/mckit-nuclides/badge/?version=latest
    :target: https://mckit-nuclides.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-.. |Bandit| image:: https://img.shields.io/badge/security-bandit-yellow.svg
-   :target: https://github.com/PyCQA/bandit
-   :alt: Security Status
