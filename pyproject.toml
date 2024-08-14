@@ -107,7 +107,6 @@ sphinx-autodoc-typehints = ">=1.19.5"
 [tool.poetry.group.docs_auto.dependencies]
 sphinx-autobuild = ">=2021.3.14"
 
-
 [tool.poetry.group.ruff.dependencies]
 ruff = ">=0.0.259"
 
