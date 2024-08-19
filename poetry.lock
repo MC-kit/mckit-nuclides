@@ -665,7 +665,10 @@ python-versions = ">=3.8"
 files = [
     {file = "deltalake-0.19.0-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:0783ce640ee97842280953bd6923200262d29d980b53530f4d796a6e4919d9ee"},
     {file = "deltalake-0.19.0-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:21789d9a2c3979f12acb2deac11a47fb28e140af4be137f4dffee99eefb70239"},
+    {file = "deltalake-0.19.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4d00c6721d5b61b07daa5cf25b46c7a3aec49a9f055d6641af878e7a52a34e28"},
+    {file = "deltalake-0.19.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:22f993dd7f50cfe88f1a18a73582bf6b355a691c5f6930d9f7086d33f1ad7396"},
     {file = "deltalake-0.19.0-cp38-abi3-win_amd64.whl", hash = "sha256:12fc8ef76294515324de2bc7b44c92f0491a35d33de362e9352f3a2512102ca4"},
+    {file = "deltalake-0.19.0.tar.gz", hash = "sha256:3af1e7cfd611a42bdcb694c5df5c92e018aade2a9a1871af8cb7118ffd4c6e5c"},
 ]
 
 [package.dependencies]
@@ -3270,13 +3273,13 @@ typing-extensions = ">=3.7.4.3"
 
 [[package]]
 name = "types-setuptools"
-version = "71.1.0.20240813"
+version = "71.1.0.20240818"
 description = "Typing stubs for setuptools"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types-setuptools-71.1.0.20240813.tar.gz", hash = "sha256:94ff4f0af18c7c24ac88932bcb0f5655fb7187a001b7c61e53a1bfdaf9877b54"},
-    {file = "types_setuptools-71.1.0.20240813-py3-none-any.whl", hash = "sha256:d9d9ba2936f5d3b47b59ae9bf65942a60063ac1d6bbee180a8a79fbb43f22ce5"},
+    {file = "types-setuptools-71.1.0.20240818.tar.gz", hash = "sha256:f62eaffaa39774462c65fbb49368c4dc1d91a90a28371cb14e1af090ff0e41e3"},
+    {file = "types_setuptools-71.1.0.20240818-py3-none-any.whl", hash = "sha256:c4f95302f88369ac0ac46c67ddbfc70c6c4dbbb184d9fed356244217a2934025"},
 ]
 
 [[package]]
