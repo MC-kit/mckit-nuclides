@@ -98,7 +98,7 @@ def expand_df_natural_presence(
 
 def expand_natural_presence(
     zaf: Iterable[tuple[int, int, float]],
-) -> Generator[tuple[int, int, float]]:
+) -> Generator[tuple[int, int, float], None, None]:
     """Convert sequence of nuclide-fraction specification with natural presence.
 
     Substitute a sequence of nuclides when mass number is specified as 0.
