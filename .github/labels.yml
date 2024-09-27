@@ -5,90 +5,110 @@
 # The repository labels will be automatically configured using this file and
 # the GitHub Action https://github.com/marketplace/actions/github-labeler.
 -
-  name: area/ci
-  description: Continuous Integration
-  color: 4a97d6
+  name: "area/ci"
+  color: "4a97d6"
+  description: "Continuous Integration"
 -
-  name: area/python
-  description: Pull requests that update Python code
-  color: 2b67c6
+  name: "area/python"
+  color: "2b67c6"
+  description: "Pull requests that update Python code"
 -
   name: "bot"
   color: "69cde9"
   description: ""
 -
-  name: github_actions
-  description: Pull requests that update Github_actions code
+  name: "github_actions"
   color: "000000"
+  description: "Update Github_actions code"
 -
-  name: good first issue
-  description: Good for newcomers
-  color: 7057ff
+  name: "good first issue"
+  color: "7057ff"
+  description: "Good for newcomers"
 -
-  name: help wanted
-  description: Extra attention is needed
-  color: 008672
+  name: "help wanted"
+  description: "Extra attention is needed"
+  color: "008672"
 -
-  name: kind/breaking
-  description: Breaking Changes
-  color: bfd4f2
+  name: "kind/breaking"
+  description: "Breaking Changes"
+  color: "bfd4f2"
 -
-  name: kind/bug
-  description: Something isn't working
-  color: d73a4a
+  name: "kind/bug"
+  description: "Something isn't working"
+  color: "d73a4a"
 -
-  name: kind/build
-  description: Build System and Dependencies
-  color: bfdadc
+  name: "kind/build"
+  description: "Build System and Dependencies"
+  color: "bfdadc"
 -
-  name: kind/dependencies
-  description: Pull requests that update a dependency file
-  color: 0366d6
+  name: "kind/dependencies"
+  color: "0366d6"
+  description: ""
 -
-  name: kind/docs
-  description: Improvements or additions to documentation
-  color: 0075ca
+  name: "kind/docs"
+  description: "Improvements or additions to documentation"
+  color: "0075ca"
 -
-  name: kind/duplicate
-  description: This issue or pull request already exists
-  color: cfd3d7
+  name: "kind/duplicate"
+  description: "This issue or pull request already exists"
+  color: "cfd3d7"
 -
-  name: kind/enhancement
-  description: New feature or request
-  color: a2eeef
+  name: "kind/enhancement"
+  description: "New feature or request"
+  color: "a2eeef"
 -
-  name: kind/invalid
-  description: This doesn't seem right
-  color: e4e669
+  name: "kind/invalid"
+  description: "This doesn't seem right"
+  color: "e4e669"
 -
-  name: kind/performance
-  description: Performance
+  name: "kind/performance"
+  description: "Performance"
   color: "016175"
 -
-  name: kind/refactoring
-  description: Refactoring
-  color: ef67c4
+  name: "kind/refactoring"
+  description: "Refactoring"
+  color: "ef67c4"
 -
-  name: kind/removal
-  description: Removals and Deprecations
-  color: 9ae7ea
+  name: "kind/removal"
+  description: "Removals and Deprecations"
+  color: "9ae7ea"
 -
   name: "kind/upstream"
   color: "fbca04"
   description: ""
 -
-  name: question
-  description: Further information is requested
-  color: d876e3
+  name: "kind/wontfix"
+  description: "This will not be worked on"
+  color: "ffffff"
 -
-  name: style
-  description: Style
-  color: c120e5
+  name: "question"
+  description: "Further information is requested"
+  color: "d876e3"
 -
-  name: testing
-  description: Testing
-  color: b1fc6f
+  name: "status/automerge"
+  color: "8f4fbc"
+  description: ""
 -
-  name: wontfix
-  description: This will not be worked on
-  color: ffffff
+  name: "status/needs-investigation"
+  color: "e6625b"
+  description: ""
+-
+  name: "status/needs-more-info"
+  color: "795548"
+  description: ""
+-
+  name: "status/stale"
+  color: "237da0"
+  description: ""
+-
+  name: "status/triage"
+  color: "dde4b7"
+  description: ""
+-
+  name: "style"
+  description: "Style"
+  color: "c120e5"
+-
+  name: "testing"
+  description: "Testing"
+  color: "b1fc6f"
