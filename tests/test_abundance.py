@@ -13,7 +13,7 @@ from mckit_nuclides.abundance import (
 from mckit_nuclides.elements import from_molecular_formula
 
 
-@pytest.fixture()
+@pytest.fixture
 def water() -> pl.DataFrame:
     return (
         from_molecular_formula("H2O", mass_fraction=True)

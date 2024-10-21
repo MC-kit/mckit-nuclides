@@ -24,7 +24,7 @@ def data() -> Generator[Path]:
         yield path
 
 
-@pytest.fixture()
+@pytest.fixture
 def cd_tmpdir(tmp_path: Path) -> Generator[Path]:
     """Switch to temp dir for a test run.
 
