@@ -14,7 +14,7 @@ import pytest
 
 
 @pytest.fixture(scope="session")
-def data() -> Generator[Path, None, None]:
+def data() -> Generator[Path]:
     """Path to test data.
 
     Yields:
@@ -24,8 +24,8 @@ def data() -> Generator[Path, None, None]:
         yield path
 
 
-@pytest.fixture()
-def cd_tmpdir(tmp_path: Path) -> Generator[Path, None, None]:
+@pytest.fixture
+def cd_tmpdir(tmp_path: Path) -> Generator[Path]:
     """Switch to temp dir for a test run.
 
     Yields:

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Run pylint using existing environment
+# dvp, 2024
+
+pyenv exec pylint src
