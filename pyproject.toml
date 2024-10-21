@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mckit-nuclides"
-version = "0.3.4a0"
+version = "0.3.4"
 description = "Python tools to work with elements and isotopes"
 authors = ["dvp <dmitri_portnov@yahoo.com>"]
 license = "MIT"
