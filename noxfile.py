@@ -60,7 +60,7 @@ def find_my_name() -> str:
 package: Final[str] = find_my_name()
 locations: Final[tuple[str, ...]] = f"src/{package}", "tests", "./noxfile.py", "docs/source/conf.py"
 
-supported_pythons: Final[tuple[str, ...]] = "3.10", "3.11", "3.12"
+supported_pythons: Final[tuple[str, ...]] = "3.10", "3.11", "3.12", "3.13"
 default_python: Final[str] = "3.12"
 
 
