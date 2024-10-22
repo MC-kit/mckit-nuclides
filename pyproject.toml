@@ -57,7 +57,7 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
-numpy = ">=1.26.2"
+numpy = ">=2.0"
 polars = { version = ">0.20.3", extras = ["all"] }
 
 [tool.poetry.group.dev.dependencies]
