@@ -52,7 +52,7 @@ def get_project_name() -> str:
         str: the name of package specified in pyproject.toml
 
     Raises:
-        EnvironmentError: if file pyproject.toml is not found.
+        OSError: if file pyproject.toml is not found.
     """
     pyproject_path = search_upwards_for_file("pyproject.toml")
     if pyproject_path is None:
