@@ -24,6 +24,15 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 [tool.poetry]
 version = "0.3.5a0"
 packages = [{ include = "mckit_nuclides", from = "src" }]
+include = [
+   { path = "noxfile.py", format = "sdist" },
+   { path = "tests", format = "sdist" },
+   { path = "docs", format = "sdist"}
+]
+exclude = [
+  { path = "docs/build"}
+]
+
 # Select from PyPI trove classifiers: https://pypi.org/classifiers/
 # about dynamic classifiers in poetry: https://python-poetry.org/docs/pyproject/#classifiers-1
 classifiers = [
