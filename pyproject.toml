@@ -9,15 +9,6 @@ authors = [
   {name="dvp2015", email="dmitri_portnov@yahoo.com"}
 ]
 keywords = ["element", "nuclide", "isotope", "abundance"]
-# Select from PyPI classifiers: https://pypi.org/classifiers/
-classifiers = [
-  "Development Status :: 4 - Beta",
-  "Environment :: Console",
-  "Intended Audience :: Developers",
-  "Intended Audience :: Science/Research",
-  "Operating System :: OS Independent",
-  "Topic :: Scientific/Engineering :: Physics",
-]
 dependencies = [
   "numpy (>=2.1.3)",
   "polars[all] (>=1.12.0)"
@@ -33,6 +24,16 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 [tool.poetry]
 version = "0.3.5a0"
 packages = [{ include = "mckit_nuclides", from = "src" }]
+# Select from PyPI trove classifiers: https://pypi.org/classifiers/
+# about dynamic classifiers in poetry: https://python-poetry.org/docs/pyproject/#classifiers-1
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Physics",
+]
 
 [build-system]
 requires = ["poetry-core >= 2.0.0, <3.0.0"]
