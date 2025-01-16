@@ -21,6 +21,10 @@ documentation = "https://mckit-nuclides.readthedocs.io"
 "Bug Tracker" = "https://github.com/MC-kit/mckit-nuclides/issues"
 Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
+[build-system]
+requires = ["poetry-core >= 2.0.0, <3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 version = "0.3.5a0"
 packages = [{ include = "mckit_nuclides", from = "src" }]
@@ -32,7 +36,6 @@ include = [
 exclude = [
   { path = "docs/build"}
 ]
-
 # Select from PyPI trove classifiers: https://pypi.org/classifiers/
 # about dynamic classifiers in poetry: https://python-poetry.org/docs/pyproject/#classifiers-1
 classifiers = [
@@ -44,13 +47,6 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Physics",
 ]
 
-[build-system]
-requires = ["poetry-core >= 2.0.0, <3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-# [tool.poetry.scripts]
-# mckit_nuclides = "mckit_nuclides.cli.runner:mckit_nuclides"
-Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 
 # Dynamic versioning
@@ -301,25 +297,25 @@ output-format = "concise"
 src = ["src", "tests"]
 
 exclude = [
-    "*.egg-info",
-    ".direnv",
-    ".cache",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".mypy_cache",
-    ".nox",
-    ".ruff_cache",
-    ".venv",
-    "__pycache__",
-    "_build",
-    "adhoc",
-    "build",
-    "dist",
-    "docs/source/conf.py",
-    "notebooks",
-    "venv",
-    "wrk",
+  "*.egg-info",
+  ".direnv",
+  ".cache",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".mypy_cache",
+  ".nox",
+  ".ruff_cache",
+  ".venv",
+  "__pycache__",
+  "_build",
+  "adhoc",
+  "build",
+  "dist",
+  "docs/source/conf.py",
+  "notebooks",
+  "venv",
+  "wrk",
 ]
 
 [tool.ruff.lint]
