@@ -49,27 +49,8 @@ classifiers = [
 
 
 
-# Dynamic versioning
-# TODO (dvp): not compatible with our bumping procedure
-# https://sam.hooke.me/note/2023/08/poetry-automatically-generated-package-version-from-git-commit
-# [tool.poetry-dynamic-versioning]
-# enable = true
-# vcs = "git"
-# pattern  = "^v(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?"
-# format-jinja = """
-#     {%- if distance == 0 -%}
-#         {{- base -}}
-#     {%- else -%}
-#         {{- base }}.dev{{ distance }}+g{{commit}}
-#     {%- endif -%}
-# """
-# format-jinja-imports = [
-#     { module = "datetime", item = "datetime" }
-# ]
-
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
-# polars = { version = ">=1.12.0", extras = ["all"] }
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
@@ -297,25 +278,25 @@ output-format = "concise"
 src = ["src", "tests"]
 
 exclude = [
-  "*.egg-info",
-  ".direnv",
-  ".cache",
-  ".eggs",
-  ".git",
-  ".git-rewrite",
-  ".mypy_cache",
-  ".nox",
-  ".ruff_cache",
-  ".venv",
-  "__pycache__",
-  "_build",
-  "adhoc",
-  "build",
-  "dist",
-  "docs/source/conf.py",
-  "notebooks",
-  "venv",
-  "wrk",
+    "*.egg-info",
+    ".direnv",
+    ".cache",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".mypy_cache",
+    ".nox",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "_build",
+    "adhoc",
+    "build",
+    "dist",
+    "docs/source/conf.py",
+    "notebooks",
+    "venv",
+    "wrk",
 ]
 
 [tool.ruff.lint]
