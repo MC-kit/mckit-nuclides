@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core >= 2.0.0, <3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [project]
 name = "mckit-nuclides"
 dynamic = [ "version", "classifiers" ]
@@ -21,10 +25,6 @@ documentation = "https://mckit-nuclides.readthedocs.io"
 "Bug Tracker" = "https://github.com/MC-kit/mckit-nuclides/issues"
 Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
-[build-system]
-requires = ["poetry-core >= 2.0.0, <3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry]
 version = "0.3.5a0"
 packages = [{ include = "mckit_nuclides", from = "src" }]
@@ -46,8 +46,6 @@ classifiers = [
   "Operating System :: OS Independent",
   "Topic :: Scientific/Engineering :: Physics",
 ]
-
-
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
