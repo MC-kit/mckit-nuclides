@@ -4,18 +4,17 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "mckit-nuclides"
-dynamic = [ "version", "classifiers" ]
+dynamic = ["version", "classifiers", "requires-python"]
 description = "Python tools to work with elements and nuclides"
 license = { text = "MIT" }
 readme = "README.rst"
-requires-python = ">=3.10"
 authors = [
-  {name="dvp2015", email="dmitri_portnov@yahoo.com"}
+    { name = "dvp2015", email = "dmitri_portnov@yahoo.com" }
 ]
 keywords = ["element", "nuclide", "isotope", "abundance"]
 dependencies = [
-  "numpy (>=2.1.3)",
-  "polars[all] (>=1.12.0)"
+    "numpy (>=2.1.3)",
+    "polars[all] (>=1.12.0)"
 ]
 
 [project.urls]
@@ -29,22 +28,22 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 version = "0.3.5a0"
 packages = [{ include = "mckit_nuclides", from = "src" }]
 include = [
-   { path = "noxfile.py", format = "sdist" },
-   { path = "tests", format = "sdist" },
-   { path = "docs", format = "sdist"}
+    { path = "noxfile.py", format = "sdist" },
+    { path = "tests", format = "sdist" },
+    { path = "docs", format = "sdist" }
 ]
 exclude = [
-  { path = "docs/build"}
+    { path = "docs/build" }
 ]
 # Select from PyPI trove classifiers: https://pypi.org/classifiers/
 # about dynamic classifiers in poetry: https://python-poetry.org/docs/pyproject/#classifiers-1
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Environment :: Console",
-  "Intended Audience :: Developers",
-  "Intended Audience :: Science/Research",
-  "Operating System :: OS Independent",
-  "Topic :: Scientific/Engineering :: Physics",
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Physics",
 ]
 
 [tool.poetry.dependencies]
@@ -314,7 +313,7 @@ select = [
     # "CPY", # flake8-copyright
     "D", # pydocstyle
     "DJ", # flake8-django
-    "DOC", # pydoclint
+    # "DOC", # pydoclint
     "DTZ", # flake8-datetimez
     "E", # pycodestyle
     "EM", # flake8-errmsg
@@ -519,3 +518,8 @@ docstring-code-format = true
 # https://jupytext.readthedocs.io/en/latest/config.html
 # Pair ipynb notebooks to py:percent text notebooks
 formats = "ipynb,md,py:percent"
+
+[tool.creosote]
+paths = ["src"]
+deps-file = "pyproject.toml"
+sections = ["project.dependencies"]
