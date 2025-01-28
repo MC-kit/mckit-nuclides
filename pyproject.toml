@@ -30,7 +30,7 @@ packages = [{ include = "mckit_nuclides", from = "src" }]
 include = [
     { path = "noxfile.py", format = "sdist" },
     { path = "tests", format = "sdist" },
-    { path = "docs", format = "sdist" }
+    { path = "docs", format = "sdist" },
 ]
 exclude = [
     { path = "docs/build" }
