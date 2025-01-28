@@ -502,8 +502,6 @@ section-order = [
     "testing"
 ]
 
-
-
 [tool.ruff.lint.isort.sections]
 "typing" = ["typing", "typing_extension"]
 "testing" = ["tests"]
