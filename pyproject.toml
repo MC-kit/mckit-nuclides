@@ -360,8 +360,6 @@ select = [
     "YTT", # flake8-2020
 ]
 
-#warning: The isort option `isort.split-on-trailing-comma` is incompatible with the formatter `format.skip-magic-trailing-comma=true` option. To avoid unexpected behavior, we recommend either setting `isort.split-on-trailing-comma=false` or `format.skip-magic-trailing-comma=false`.
-
 # Ignore rules that currently fail on the codebase
 ignore = [
     "ANN202", # ANN202 Missing return type annotation for protected function: ... dispatching
@@ -397,6 +395,11 @@ parametrize-names-type = "csv"
 
 [tool.ruff.lint.flake8-type-checking]
 strict = true
+
+# warning: The isort option `isort.split-on-trailing-comma` is incompatible
+# with the formatter `format.skip-magic-trailing-comma=true` option.
+# To avoid unexpected behavior, we recommend either setting `isort.split-on-trailing-comma=false`
+# or `format.skip-magic-trailing-comma=false`.
 
 [tool.ruff.lint.isort]
 known-first-party = ["src"]
