@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Sometimes on poetry.lock file is damaged on `git pull`
+# We have to create new one and merge.
+#
+git pull --rebase
+rm -f poetry.lock
+poetry update
+git commit -cam "build: merge"
+git rebase --continue
