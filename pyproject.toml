@@ -50,7 +50,6 @@ classifiers = [
 python = ">=3.10,<3.14"
 
 [tool.poetry.group.dev.dependencies]
-Pygments = ">=2.10.0"
 nox = ">=2022.1.7"
 tomli = { version = ">=2.0.1", python = "<3.11" }
 
