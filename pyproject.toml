@@ -354,14 +354,10 @@ select = [
 
 # Ignore rules that currently fail on the codebase
 ignore = [
-    "ANN202", # ANN202 Missing return type annotation for protected function: ... dispatching
     "COM812", # may cause conflicts when used with the ruff formatter
-    "D105", # D105 Missing docstring in magic method (__hash__, __eq__)
-    "D107", # Missing docstring in __init__
     "ISC001", # may cause conflicts when used with the ruff formatter
     "PLE1205", # logging-too-many-args - we use loguru with '{' style of placeholders
     "PLR2004", # magic number - don't want to declare 0.0 as constant
-    "PT019", # Fixture `_bin` without value is injected as parameter (false positive?)
 ]
 
 
