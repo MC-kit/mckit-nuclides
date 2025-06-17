@@ -13,7 +13,7 @@ authors = [
 ]
 keywords = ["element", "nuclide", "isotope", "abundance"]
 dependencies = [
-    "numpy (>=2.1.3)",
+    "numpy (>=2.2.3)",
     "polars[all] (>=1.12.0)"
 ]
 
@@ -79,7 +79,6 @@ typeguard = ">=4.1.5"
 mypy = ">=1.2.0"
 pep8-naming = ">=0.12.1"
 types-setuptools = ">=57.4.2"
-numpy = ">=2.1.3"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=6.1.3"
@@ -187,7 +186,6 @@ strict = true
 follow_imports = "silent"
 disallow_untyped_defs = true
 files = "src/**/*.py"
-plugins = ["numpy.typing.mypy_plugin"]
 
 [[tool.mypy.overrides]]
 module = [
