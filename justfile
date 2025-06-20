@@ -9,7 +9,7 @@ test-ff *ARGS:
 test-cache-clear *ARGS:
   pytest -vv --cache-clear {{ARGS}}
 
-test-fast +ARGS:
+test-fast *ARGS:
   pytest -m "not slow" {{ARGS}}
 
 test-all *ARGS:
