@@ -15,6 +15,15 @@ test-ff *ARGS:
 test-all *ARGS:
   pytest {{ARGS}}
 
+# Run pre-commit on all files
+pre-commit:
+  pre-commit run -a 
+
+
+# Check style and test all
+check-all: pre-commit test-all
+
+
 # Clean reproducible files
 clean:
   #!/bin/bash
@@ -51,3 +60,4 @@ up:
 
 # Aliases
 alias t := test-all
+alias c := check-all
