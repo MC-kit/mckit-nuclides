@@ -292,8 +292,7 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-#see full list: `ruff rule --all | rg "^# "`
-#or run 'ruff linter' to see a brief list
+#run 'ruff linter' to see a brief list
 select = ["ALL"]
 
 # Ignore rules that currently fail on the codebase
