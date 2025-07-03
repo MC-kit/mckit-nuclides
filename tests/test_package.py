@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 from re import sub as substitute
 
-if sys.version_info >= (3, 11):
+if sys.version_info >= (3, 11):  # noqa: UP036, while we support python-3.10
     import tomllib
 else:
     import tomli as tomllib

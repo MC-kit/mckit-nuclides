@@ -8,8 +8,9 @@ Run this if test_package() fails on pytest run.
 
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import TYPECHECKING
 
+import os
 import shutil
 import site
 import subprocess
@@ -21,7 +22,8 @@ try:
 except ModuleNotFoundError:
     import tomli as tomllib
 
-PathLike = TypeVar("PathLike", str, Path)
+if TYPECHECKING:
+    PathLike = str | Path | os.PathLike
 
 
 def search_upwards_for_file(filename: PathLike) -> Path | None:
