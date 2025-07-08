@@ -138,6 +138,3 @@ wrk/
 # poetry local config
 /poetry.toml
 
-#Don't lock deps of libraries
-#Locking is useful only for applications
-/uv.lock

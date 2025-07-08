@@ -23,6 +23,7 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python :: 3",
 ]
 dependencies = [
     "numpy (>=2.2.3)",

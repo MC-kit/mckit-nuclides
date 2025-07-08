@@ -15,6 +15,12 @@ test-ff *ARGS:
 test-all *ARGS:
   pytest {{ARGS}}
 
+coverage:
+  coverage run --parallel -m pytest
+
+coverage-html: coverage
+  coverage html
+
 # Run pre-commit on all files
 pre-commit:
   pre-commit run -a 
@@ -22,6 +28,10 @@ pre-commit:
 
 # Check style and test all
 check-all: pre-commit test-all
+
+bump *ARGS:
+  #!/bin/bash
+  uv version {{ARGS}} && git commit -m "bump: version $(uv version)" pyproject.toml
 
 
 # Clean reproducible files
@@ -47,16 +57,18 @@ clean:
 
 
 build:
-  poetry build
-  poetry install  
+  uv build
 
 # Clean build
 rebuild: clean build
 
+install:
+  uv pip install -e .  
+
 # Update dependencies
 up:
   pre-commit autoupdate
-  poetry update
+  uv update
 
 # Aliases
 alias t := test-all

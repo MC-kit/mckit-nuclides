@@ -31,6 +31,4 @@ def normalize_version(version: str) -> str:
 def test_package() -> None:
     """This test checks if only current version is installed in working environment."""
     version = find_version_from_project_toml()
-    assert __version__ == normalize_version(version), (
-        "Run 'poetry install' and, if this doesn't help, run `tools/clear-prev-dist-info.py`"
-    )
+    assert __version__ == normalize_version(version), "Run 'uv install'"

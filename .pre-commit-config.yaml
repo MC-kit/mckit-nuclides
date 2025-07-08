@@ -24,7 +24,7 @@ repos:
     rev: "v5.0.0"
     hooks:
       - id: check-added-large-files
-        exclude: poetry.lock
+        exclude: uv.lock
       - id: check-ast
         exclude: notebooks
       - id: check-case-conflict
@@ -54,31 +54,36 @@ repos:
         exclude: data|\.ipynb$
       - id: requirements-txt-fixer
 
-  # Changes tabs to spaces
-  - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: "v1.5.5"
-    hooks:
-      - id: remove-tabs
+  # # Changes tabs to spaces
+  # - repo: https://github.com/Lucas-C/pre-commit-hooks
+  #   rev: "v1.5.5"
+  #   hooks:
+  #     - id: remove-tabs
+  #
+  # - repo: https://github.com/pre-commit/pre-commit
+  #   rev: v4.2.0
+  #   hooks:
+  #     - id: validate_manifest
 
-  - repo: https://github.com/pre-commit/pre-commit
-    rev: v4.2.0
-    hooks:
-      - id: validate_manifest
-
-  # Format doc strings
-  - repo: https://github.com/DanielNoord/pydocstringformatter
-    rev: "v0.7.3"
-    hooks:
-      - id: pydocstringformatter
-        exclude: _parser\.py$|_tab\.py|extern
+  # # Format doc strings
+  # - repo: https://github.com/DanielNoord/pydocstringformatter
+  #   rev: "v0.7.3"
+  #   hooks:
+  #     - id: pydocstringformatter
+  #       exclude: _parser\.py$|_tab\.py|extern
 
   - repo: https://github.com/fredrikaverpil/creosote
     rev: v4.0.3
     hooks:
       - id: creosote
 
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.5.4
+    hooks:
+      - id: uv-lock 
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0
+    rev: v0.12.2
     hooks:
       # linter
       - id: ruff-check
