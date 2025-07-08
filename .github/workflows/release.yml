@@ -39,4 +39,4 @@ jobs:
           uv build
 
       - name: Publish package on PyPI
-        run: uv publish --token=__token__
+        run: uv publish --username=__token__ --password=${{ secrets.PYPI_TOKEN }}
