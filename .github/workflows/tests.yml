@@ -51,12 +51,12 @@ jobs:
       #   run: |
       #     uv python install ${{ env.DEFAULT_PYTHON }}
 
-      # - name: Install the project
-      #   run: uv sync --all-extras --group pre-commit
+      - name: Install the project
+        run: uv sync --all-extras --group pre-commit
 
-      # - name: Run pre commit checks
-      #   run: |
-      #     uv run pre-commit run -a
+      - name: Run pre commit checks
+        run: |
+          uv run pre-commit run -a
 
   
   typing:
