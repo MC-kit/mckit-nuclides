@@ -31,8 +31,8 @@ check-all: pre-commit test-all
 
 bump *ARGS:
   #!/bin/bash
-  uv version --bump {{ARGS}} && git commit -m "bump: version $(uv version)" pyproject.toml
-
+  uv version --bump {{ARGS}}
+  git commit -m "bump: version $(uv version)" pyproject.toml uv.lock 
 
 # Clean reproducible files
 clean:
