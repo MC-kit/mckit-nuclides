@@ -85,7 +85,7 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
     _z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
     try:
         return cast(
-            TableValue,
+            "TableValue",
             ELEMENTS_TABLE_PL.filter(atomic_number=_z).select(column).item(),
         )
     except pl.exceptions.ColumnNotFoundError as ex:
@@ -103,7 +103,7 @@ def atomic_mass(z_or_symbol: int | str) -> float:
     Returns:
         Average atomic mass of the Element with the atomic number.
     """
-    return cast(float, get_property(z_or_symbol, "molar_mass"))
+    return cast("float", get_property(z_or_symbol, "molar_mass"))
 
 
 def name(z_or_symbol: int | str) -> str:
@@ -115,7 +115,7 @@ def name(z_or_symbol: int | str) -> str:
     Returns:
         The name of the element.
     """
-    return cast(str, get_property(z_or_symbol, "name"))
+    return cast("str", get_property(z_or_symbol, "name"))
 
 
 def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.DataFrame:

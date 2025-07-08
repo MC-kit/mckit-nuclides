@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 from re import sub as substitute
 
-if sys.version_info >= (3, 11):
+if sys.version_info >= (3, 11):  # noqa: UP036, while we support python-3.10
     import tomllib
 else:
     import tomli as tomllib
@@ -18,7 +18,7 @@ def find_version_from_project_toml() -> str:
     toml_path = Path(__file__).parent.parent / "pyproject.toml"
     assert toml_path.exists()
     pyproject = tomllib.loads(toml_path.read_text())
-    return pyproject["tool"]["poetry"]["version"]
+    return pyproject["project"]["version"]
 
 
 _VERSION_NORM_PATTERN = re.compile(r"-(?P<letter>.)[^.]*\.(?P<prepatch>.*)$")
@@ -31,6 +31,4 @@ def normalize_version(version: str) -> str:
 def test_package() -> None:
     """This test checks if only current version is installed in working environment."""
     version = find_version_from_project_toml()
-    assert __version__ == normalize_version(
-        version
-    ), "Run 'poetry install' and, if this doesn't help, run `tools/clear-prev-dist-info.py`"
+    assert __version__ == normalize_version(version), "Run 'uv install'"

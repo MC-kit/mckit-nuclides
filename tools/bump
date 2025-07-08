@@ -10,10 +10,12 @@ Usage:
     or
     bump --help"
 
-See also poetry help:
+See also:
+
+    uv version --help:
 
 EOM
-    poetry version --help
+    uv version --help
 }
 
 main() {
@@ -21,7 +23,7 @@ main() {
     if [[ "$version" == "--help" ]]; then
         usage
     else
-        poetry version "$version" && git commit -m "bump: version $(poetry version)" pyproject.toml
+        uv version "$version" && git commit -m "bump: version $(uv version)" pyproject.toml
     fi
 }
 

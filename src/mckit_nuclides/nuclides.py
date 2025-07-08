@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Final, cast
+from typing import TYPE_CHECKING, Final, cast
 
 from pathlib import Path
 
 import polars as pl
 
-from mckit_nuclides.elements import TableValue, z
+from mckit_nuclides.elements import z
+
+if TYPE_CHECKING:
+    from mckit_nuclides.elements import TableValue
+
 
 HERE = Path(__file__).parent
 
@@ -33,7 +37,7 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
     _z = z(z_or_symbol) if isinstance(z_or_symbol, str) else z_or_symbol
     try:
         return cast(
-            TableValue,
+            "TableValue",
             NUCLIDES_TABLE_PL.filter(
                 pl.col("atomic_number").eq(_z) & pl.col("mass_number").eq(mass_number)
             )
@@ -56,4 +60,4 @@ def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:
     Returns:
         Mass of the Nuclide (a.u).
     """
-    return cast(float, get_property(z_or_symbol, mass_number, "molar_mass"))
+    return cast("float", get_property(z_or_symbol, mass_number, "molar_mass"))

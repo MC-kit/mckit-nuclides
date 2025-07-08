@@ -34,7 +34,7 @@ With package manager (as dependency):
 
 .. code-block::
 
-   poetry add mckit-nuclides
+   uv add mckit-nuclides
 
 From source:
 

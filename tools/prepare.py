@@ -94,7 +94,7 @@ def _make_half_lives_table(half_lives_path: Path) -> pl.DataFrame:
 
 def _make_nist_table(half_lives: pl.DataFrame, nist_file_path: Path) -> pl.DataFrame:
     collector = _load_nist_file(nist_file_path)
-    symbols = ["H" if x in ["D", "T"] else x for x in collector["atomic_symbol"]]
+    symbols = ["H" if x in {"D", "T"} else x for x in collector["atomic_symbol"]]
     collector["atomic_symbol"] = symbols
     return (
         pl.DataFrame(collector)
