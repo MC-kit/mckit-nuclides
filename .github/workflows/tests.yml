@@ -38,7 +38,7 @@ jobs:
     if: |
       !contains(github.event.head_commit.message, '[skip_ci]')
     steps:
-      - name: Check out the repository
+      - name: ✅ Check out the repository
         uses: actions/checkout@v4
 
       - name: Install uv
@@ -83,22 +83,30 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, typing]
     steps:
-      - name: Check out the repository
+      - name: ✅ Check out the repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Install uv
+      - name: 📦 Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Install Python with uv
+      - name: 🧠 Restore uv cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}- ${{ env.DEFAULT_PYTHON }}-
+
+      - name: 🐍 Install Python with uv
         run: |
           uv python install ${{ env.DEFAULT_PYTHON }}
 
-      - name: Install the project
+      - name: 📦 Install the project
         run: uv sync --all-extras --group docs
 
-      - name: Build documentation
+      - name: 📦 Build documentation
         run: |
           uv run sphinx-build docs/source docs/build
 
@@ -114,25 +122,33 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: ✅ Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Install uv
+      - name: 📦 Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Install Python with uv
+      - name: 🧠 Restore uv cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}- ${{ matrix.python-version }}-
+
+      - name: 🐍 Install Python with uv
         run: |
           uv python install ${{ matrix.python-version }}
 
-      - name: Install the project
+      - name: 📦 Install the project
         run: uv sync --all-extras --group test
 
-      - name: Run tests
+      - name: ✅ Run tests
         run: uv run coverage run --parallel -m pytest
 
-      - name: Upload coverage data
+      - name: 🔃 Upload coverage data
         uses: actions/upload-artifact@v4
         with:
           name: coverage-data-${{ runner.os }}-${{ matrix.python-version }}
@@ -145,35 +161,43 @@ jobs:
     needs: tests
     steps:
 
-      - name: Check out the repository
+      - name: ✅ Check out the repository
         uses: actions/checkout@v4
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Install Python with uv
+      - name: 🧠 Restore uv cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}- ${{ env.DEFAULT_PYTHON }}-
+
+      - name: 🐍 Install Python with uv
         run: |
           uv python install ${{ env.DEFAULT_PYTHON }}
 
-      - name: Install the project
+      - name: 📦 Install the project
         run: uv sync --all-extras --group coverage
 
-      - name: Download coverage data
+      - name: 🔃 Download coverage data
         uses: actions/download-artifact@v4
         with:
           pattern: coverage-data-*
           merge-multiple: true
 
-      - name: Combine coverage data and display human readable report
+      - name: 📦 Combine coverage data and display human readable report
         run: |
           coverage combine
           coverage report
 
-      - name: Create coverage report
+      - name: 📦 Create coverage report
         run: |
           coverage xml
 
-      - name: Upload coverage report
+      - name: 📤 Upload coverage report
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

@@ -68,7 +68,12 @@ install:
 # Update dependencies
 up:
   pre-commit autoupdate
-  uv update
+  uv self update
+
+ruff:
+  ruff check --fix src tests
+  ruff format src tests
+
 
 # Aliases
 alias t := test-all

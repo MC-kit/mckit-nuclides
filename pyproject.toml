@@ -68,6 +68,7 @@ test = [
     "coverage[toml]>=6.1.2",
     "xdoctest[colors]>=0.15.10",
     "pytest-durations>=1.5.2",
+    "pytest-emoji>=0.2.0",
 ]
 coverage = ["coverage[toml]>=6.1.2"]
 xdoctest = ["xdoctest[colors]>=0.15.10"]
@@ -122,6 +123,7 @@ python_functions = "test_*  profile_*"
 addopts = '''
 -ra
 -q
+--emoji
 --tb=short
 --doctest-modules
 --strict-markers

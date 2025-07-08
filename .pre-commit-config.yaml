@@ -78,7 +78,7 @@ repos:
       - id: creosote
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.5.4
+    rev: 0.7.19
     hooks:
       - id: uv-lock 
 
