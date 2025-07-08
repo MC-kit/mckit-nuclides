@@ -6,14 +6,10 @@ env:
 on:
   workflow_dispatch:
 
-  push:
-    branches:
-      - main
-      - master
+  release:
+    types: ["published"]
 
-defaults:
-  run:
-    shell: bash
+
 
 concurrency:
   group: ci-release-${{ github.ref }}-1
@@ -22,61 +18,25 @@ concurrency:
 
 jobs:
   release:
-    name: Release
+    name: Build and publish release
     runs-on: ubuntu-latest
 
     steps:
       - name: ✅ Check out the repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2    # need previous revision to define tag
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
-
-      - name: 🧠 Restore uv cache
-        uses: actions/cache@v4
         with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}- ${{ env.PYTHON_VERSION }}-
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
-      - name: Check if there is a parent commit
-        id: check-parent-commit
-        run: |
-          echo "::set-output name=sha::$(git rev-parse --verify --quiet HEAD^)"
-
-      - name: Detect and tag new version
-        id: check-version
-        if: steps.check-parent-commit.outputs.sha
-        uses: salsify/action-detect-and-tag-new-version@v2.0.3
-        with:
-          version-command: uv version --short
-
-      - name: Bump version for developmental release
-        if: ! steps.check-version.outputs.tag
-        run: |
-          uv version --bump patch &&
-          version=$(uv version --short) &&
-          uv version $version.dev.$(date +%s)
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Build package
         run: |
           uv build
 
       - name: Publish package on PyPI
-        if: steps.check-version.outputs.tag
-        run: uv publish --token=__token__ --password=${{ secrets.PYPI_TOKEN }}
-
-      - name: Publish package on TestPyPI
-        if: ! steps.check-version.outputs.tag
-        run: uv publish --token=__token__ --password=${{ secrets.TEST_PYPI_TOKEN }}
-
-      - name: Publish the release notes
-        uses: release-drafter/release-drafter@v6
-        with:
-          publish: ${{ steps.check-version.outputs.tag != '' }}
-          tag: ${{ steps.check-version.outputs.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.MCKIT_GITHUB_TOKEN }}
+        run: uv publish --username=__token__ --password=${{ secrets.PYPI_TOKEN }}
