@@ -57,7 +57,7 @@ jobs:
       - name: Bump version for developmental release
         if: ! steps.check-version.outputs.tag
         run: |
-          uv version patch &&
+          uv version --bump patch &&
           version=$(uv version --short) &&
           uv version $version.dev.$(date +%s)
 
