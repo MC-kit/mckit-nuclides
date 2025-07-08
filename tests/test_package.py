@@ -18,7 +18,7 @@ def find_version_from_project_toml() -> str:
     toml_path = Path(__file__).parent.parent / "pyproject.toml"
     assert toml_path.exists()
     pyproject = tomllib.loads(toml_path.read_text())
-    return pyproject["tool"]["poetry"]["version"]
+    return pyproject["project"]["version"]
 
 
 _VERSION_NORM_PATTERN = re.compile(r"-(?P<letter>.)[^.]*\.(?P<prepatch>.*)$")
