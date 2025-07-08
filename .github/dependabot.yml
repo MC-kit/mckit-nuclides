@@ -6,6 +6,7 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
+      day: wednesday
     labels:
       - "kind/dependencies"
       - "bot"
@@ -30,8 +31,8 @@ updates:
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
-      interval: weekly
-      day: wednesday
+      interval: monthly
+      day: monday
       time: "11:00"
     labels:
       - "kind/dependencies"
