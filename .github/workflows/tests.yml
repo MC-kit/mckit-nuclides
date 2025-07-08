@@ -56,7 +56,8 @@ jobs:
 
       - name: 📦 Install the project
         run: |
-          uv sync --all-extras --group pre-commit
+          uv sync --all-extras --no-dev --group pre-commit
+          uv pip list
 
       - name: Run pre commit checks
         run: |
@@ -80,7 +81,8 @@ jobs:
 
       - name: 📦 Install the project
         run: |
-          uv sync --all-extras --group mypy
+          uv sync --all-extras --no-dev --group mypy
+          uv pip list
 
       - name: Run mypy static type checks
         run: |
@@ -112,7 +114,9 @@ jobs:
           uv python install ${{ env.DEFAULT_PYTHON }}
 
       - name: 📦 Install the project
-        run: uv sync --all-extras --group docs
+        run: |
+          uv sync --all-extras --no-dev --group docs
+          uv pip list
 
       - name: 📦 Build documentation
         run: |
@@ -151,7 +155,7 @@ jobs:
           uv python install ${{ matrix.python-version }}
 
       - name: 📦 Install the project
-        run: uv sync --all-extras --group test
+        run: uv sync --all-extras --no-dev --group test
 
       - name: ✅ Run tests
         run: uv run coverage run --parallel -m pytest
@@ -188,7 +192,7 @@ jobs:
           uv python install ${{ env.DEFAULT_PYTHON }}
 
       - name: 📦 Install the project
-        run: uv sync --all-extras --group coverage
+        run: uv sync --all-extras --no-dev --group coverage
 
       - name: 🔃 Download coverage data
         uses: actions/download-artifact@v4
