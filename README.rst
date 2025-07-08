@@ -45,8 +45,9 @@ Contributing
    :alt: pre-commit
 .. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
    :target: https://github.com/astral-sh/ruff
-.. image:: https://img.shields.io/pypi/v/uv.svg
-   :target: https://pypi.python.org/pypi/uv
+.. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
+   :target: https://github.com/astral-sh/uv
+
 
 .. https://github.com/astral-sh/uv
 Notes
