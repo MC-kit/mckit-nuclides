@@ -32,20 +32,11 @@ jobs:
           cache-dependency-glob: uv.lock
 
       - name: Set up Python
-        run: uv python install {{ env.PYTHON_VERSION }}
+        run: uv python install ${{ env.PYTHON_VERSION }}
 
       - name: Build package
         run: |
           uv build
 
       - name: Publish package on PyPI
-        if: steps.check-version.outputs.tag
         run: uv publish --token=__token__
-
-      - name: Publish the release notes
-        uses: release-drafter/release-drafter@v6
-        with:
-          publish: ${{ steps.check-version.outputs.tag != '' }}
-          tag: ${{ steps.check-version.outputs.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.MCKIT_GITHUB_TOKEN }}
