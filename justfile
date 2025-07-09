@@ -1,6 +1,7 @@
 set dotenv-load := true
+
+default_python := "3.13"
 TITLE := `uv version`
-# export PACKAGE=${full_version[1]}
 VERSION := `uv version --short`
 
 default:
@@ -8,7 +9,7 @@ default:
 
 # create uv venv
 venv:
-  [ -d .venv ] || uv venv
+  [ -d .venv ] || uv venv --python {{default_python}}
 
 # build package
 build: venv
