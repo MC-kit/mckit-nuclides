@@ -1,40 +1,21 @@
 set dotenv-load := true
 
+default_python := "3.13"
+TITLE := `uv version`
+VERSION := `uv version --short`
+
 default:
   @just --list
 
-test-ff *ARGS:
-  pytest -vv -x {{ARGS}}
+# create uv venv
+venv:
+  [ -d .venv ] || uv venv --python {{default_python}}
 
-# test-cache-clear *ARGS:
-#   pytest -vv --cache-clear {{ARGS}}
+# build package
+build: venv
+  uv build
 
-# test-fast *ARGS:
-#   pytest -m "not slow" {{ARGS}}
-
-test-all *ARGS:
-  pytest {{ARGS}}
-
-coverage:
-  coverage run --parallel -m pytest
-
-coverage-html: coverage
-  coverage html
-
-# Run pre-commit on all files
-pre-commit:
-  pre-commit run -a 
-
-
-# Check style and test all
-check-all: pre-commit test-all
-
-bump *ARGS:
-  #!/bin/bash
-  uv version --bump {{ARGS}}
-  git commit -m "bump: version $(uv version)" pyproject.toml uv.lock 
-
-# Clean reproducible files
+# clean reproducible files
 clean:
   #!/bin/bash
   to_clean=(
@@ -56,19 +37,75 @@ clean:
   rm -fr ${to_clean[@]}
 
 
-build:
-  uv build
+# install package
+install: build
+  uv sync   
 
-# Clean build
-rebuild: clean build
+# clean build
+reinstall: clean install
 
-install:
-  uv pip install -e .  
+# test up to the first fail
+test-ff *ARGS:
+  pytest -vv -x {{ARGS}}
+
+# test with clean cache
+test-cache-clear *ARGS:
+  pytest -vv --cache-clear {{ARGS}}
+
+# test fast
+test-fast *ARGS:
+  pytest -m "not slow" {{ARGS}}
+
+# run all the tests
+test-all *ARGS:
+  pytest {{ARGS}}
+
+# check correct typing at runtime
+typeguard *ARGS:
+  @uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
+
+# run documentation tests 
+xdoctest *ARGS:
+  @uv run --no-dev --group test --group xdoctest python -m xdoctest --silent --style google -c all src tools {{ARGS}}
+
+# create coverage data
+coverage:
+  uv run --no-dev --group coverage coverage run --parallel -m pytest
+  uv run --no-dev --group coverage coverage combine
+  uv run --no-dev --group coverage coverage report
+
+# coverage to html
+coverage-html: coverage
+  uv run --no-dev --group coverage coverage html
+
+# Run pre-commit on all files
+pre-commit:
+  uv run --no-dev --group pre-commit pre-commit run -a 
+
+# Run mypy
+mypy:
+  uv run --no-dev --group mypy mypy src docs/source/conf.py
+
+
+# Check style and test all
+check-all: pre-commit test-all
+
+bump *ARGS:
+  #!/bin/bash
+  uv version --bump {{ARGS}}
+  git commit -m "bump: version $(uv version)" pyproject.toml uv.lock 
+
 
 # Update dependencies
 up:
   pre-commit autoupdate
   uv self update
+
+docs-build:
+  uv run --no-dev --group docs sphinx-build docs/source docs/_build
+
+docs:
+  uv run --no-dev --group docs --group docs-auto sphinx-autobuild --open-browser docs/source docs/_build
 
 ruff:
   ruff check --fix src tests

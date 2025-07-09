@@ -1,6 +1,8 @@
 name: Tests
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - "master"
@@ -33,6 +35,7 @@ concurrency:
 
 env:
   DEFAULT_PYTHON: "3.13"
+  UV_LINK_MODE: "copy"
 
 jobs:
 
@@ -46,22 +49,16 @@ jobs:
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
-        # run: |
-        #   curl -LsSf https://astral.sh/uv/install.sh | sh
-
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml      
       
-      - name: 🐍 Install Python with uv
-        run: |
-          uv python install ${{ env.DEFAULT_PYTHON }}
-
-      - name: 📦 Install the project
-        run: |
-          uv sync --all-extras --no-dev --group pre-commit
-          uv pip list
-
       - name: Run pre commit checks
         run: |
-          uv run pre-commit run -a
+          uv run --no-dev --group pre-commit pre-commit run -a
 
   
   typing:
@@ -74,24 +71,25 @@ jobs:
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml      
 
-      - name: 🐍 Install Python with uv
-        run: |
-          uv python install ${{ env.DEFAULT_PYTHON }}
-
-      - name: 📦 Install the project
+      - name: 🐍 Install the project
         run: |
           uv sync --all-extras --no-dev --group mypy
           uv pip list
 
-      - name: Run mypy static type checks
+      - name: 📦 Run mypy static type checks
         run: |
           uv run mypy src docs/source/conf.py
 
 
   docs:
     runs-on: ubuntu-latest
-    needs: [lint, typing]
     steps:
       - name: ✅ Check out the repository
         uses: actions/checkout@v4
@@ -100,20 +98,14 @@ jobs:
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
-
-      - name: 🧠 Restore uv cache
-        uses: actions/cache@v4
         with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}- ${{ env.DEFAULT_PYTHON }}-
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml      
 
-      - name: 🐍 Install Python with uv
-        run: |
-          uv python install ${{ env.DEFAULT_PYTHON }}
-
-      - name: 📦 Install the project
+      - name: 🐍 Install the project
         run: |
           uv sync --all-extras --no-dev --group docs
           uv pip list
@@ -129,8 +121,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest ]
         python-version: [ '3.10', '3.11', '3.12', '3.13' ]
+        include: 
+          - os: windows-latest
+            python-version: '3.13'  # Windows runner is too slow
 
     steps:
 
@@ -141,20 +136,14 @@ jobs:
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
-
-      - name: 🧠 Restore uv cache
-        uses: actions/cache@v4
         with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}- ${{ matrix.python-version }}-
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml      
 
-      - name: 🐍 Install Python with uv
-        run: |
-          uv python install ${{ matrix.python-version }}
-
-      - name: 📦 Install the project
+      - name: 🐍 Install the project
         run: uv sync --all-extras --no-dev --group test
 
       - name: ✅ Run tests
@@ -178,21 +167,12 @@ jobs:
 
       - name: 📦 Install uv
         uses: astral-sh/setup-uv@v6
-
-      - name: 🧠 Restore uv cache
-        uses: actions/cache@v4
         with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-${{ env.DEFAULT_PYTHON }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}- ${{ env.DEFAULT_PYTHON }}-
-
-      - name: 🐍 Install Python with uv
-        run: |
-          uv python install ${{ env.DEFAULT_PYTHON }}
-
-      - name: 📦 Install the project
-        run: uv sync --all-extras --no-dev --group coverage
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml      
 
       - name: 🔃 Download coverage data
         uses: actions/download-artifact@v4
@@ -202,12 +182,12 @@ jobs:
 
       - name: 📦 Combine coverage data and display human readable report
         run: |
-          uv run coverage combine
-          uv run coverage report
+          uv run --no-dev --group coverage coverage combine
+          uv run --no-dev --group coverage coverage report
 
       - name: 📦 Create coverage report
         run: |
-          uv run coverage xml
+          uv run --no-dev --group coverage coverage xml
 
       - name: 📤 Upload coverage report
         uses: codecov/codecov-action@v5

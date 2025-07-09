@@ -4,10 +4,10 @@ build-backend = "uv_build"
 
 [project]
 name = "mckit-nuclides"
-version = "0.4.1"
+version = "0.4.2"
 description = "Python tools to work with elements and nuclides"
 authors = [{ name = "dvp2015", email = "dmitri_portnov@yahoo.com" }]
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.10,<3.14"  # connectorx==0.4.3 prevents <4
 readme = "README.rst"
 license = { text = "MIT" }
 keywords = [
@@ -44,7 +44,6 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 [dependency-groups]
 dev = [
-    "nox>=2022.1.7",
     "tomli>=2.0.1 ; python_version < '3.11'",
     { include-group = "pre_commit" },
     { include-group = "test" },
@@ -123,7 +122,6 @@ python_functions = "test_*  profile_*"
 addopts = '''
 -ra
 -q
---emoji
 --tb=short
 --doctest-modules
 --strict-markers
