@@ -62,29 +62,29 @@ test-all *ARGS:
 
 # check correct typing at runtime
 typeguard *ARGS:
-  @uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
+  uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
 
 # run documentation tests 
 xdoctest *ARGS:
-  @uv run --no-dev --group test --group xdoctest python -m xdoctest --silent --style google -c all src tools {{ARGS}}
+  uv run --no-dev --group test --group xdoctest python -m xdoctest --silent --style google -c all src tools {{ARGS}}
 
 # create coverage data
 coverage:
-  uv run --no-dev --group coverage coverage run --parallel -m pytest
-  uv run --no-dev --group coverage coverage combine
-  uv run --no-dev --group coverage coverage report
+  @uv run --no-dev --group coverage coverage run --parallel -m pytest
+  @uv run --no-dev --group coverage coverage combine
+  @uv run --no-dev --group coverage coverage report
 
 # coverage to html
 coverage-html: coverage
-  uv run --no-dev --group coverage coverage html
+  @uv run --no-dev --group coverage coverage html
 
 # Run pre-commit on all files
 pre-commit:
-  uv run --no-dev --group pre-commit pre-commit run -a 
+  @uv run --no-dev --group pre-commit pre-commit run -a 
 
 # Run mypy
 mypy:
-  uv run --no-dev --group mypy mypy src docs/source/conf.py
+  @uv run --no-dev --group mypy mypy src docs/source/conf.py
 
 
 # Check style and test all
@@ -98,18 +98,22 @@ bump *ARGS:
 
 # Update dependencies
 up:
-  pre-commit autoupdate
-  uv self update
+  @pre-commit autoupdate
+  @uv self update
 
-docs-build:
-  uv run --no-dev --group docs sphinx-build docs/source docs/_build
+# Check rst-texts
+rstcheck:
+  @rstcheck *.rst docs/source/*.rst
+
+docs-build: rstcheck
+  @uv run --no-dev --group docs sphinx-build docs/source docs/_build
 
 docs:
-  uv run --no-dev --group docs --group docs-auto sphinx-autobuild --open-browser docs/source docs/_build
+  @uv run --no-dev --group docs --group docs-auto sphinx-autobuild --open-browser docs/source docs/_build
 
 ruff:
-  ruff check --fix src tests
-  ruff format src tests
+  @ruff check --fix src tests
+  @ruff format src tests
 
 
 # Aliases

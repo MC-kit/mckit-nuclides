@@ -49,7 +49,6 @@ Contributing
    :target: https://github.com/astral-sh/uv
 
 
-.. https://github.com/astral-sh/uv
 Notes
 -----
 
