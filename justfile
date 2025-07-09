@@ -70,6 +70,12 @@ up:
   pre-commit autoupdate
   uv self update
 
+docs-build:
+  uv run --no-dev --group docs sphinx-build docs/source docs/_build
+
+docs:
+  uv run --no-dev --group docs --group docs-auto sphinx-autobuild --open-browser docs/source docs/_build
+
 ruff:
   ruff check --fix src tests
   ruff format src tests
