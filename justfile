@@ -15,6 +15,9 @@ test-ff *ARGS:
 test-all *ARGS:
   pytest {{ARGS}}
 
+typeguard *ARGS:
+  uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
+
 coverage:
   coverage run --parallel -m pytest
 

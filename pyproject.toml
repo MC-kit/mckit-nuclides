@@ -123,7 +123,6 @@ python_functions = "test_*  profile_*"
 addopts = '''
 -ra
 -q
---emoji
 --tb=short
 --doctest-modules
 --strict-markers
