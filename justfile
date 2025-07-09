@@ -16,17 +16,27 @@ test-all *ARGS:
   pytest {{ARGS}}
 
 typeguard *ARGS:
-  uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
+  @uv run --no-dev --group test --group typeguard pytest -vv --emoji --typeguard-packages=src {{ARGS}}
+
+xdoctest *ARGS:
+  @uv run --no-dev --group test --group xdoctest python -m xdoctest --silent --style google -c all src tools {{ARGS}}
+
 
 coverage:
-  coverage run --parallel -m pytest
+  uv run --no-dev --group coverage coverage run --parallel -m pytest
+  uv run --no-dev --group coverage coverage combine
+  uv run --no-dev --group coverage coverage report
 
 coverage-html: coverage
-  coverage html
+  uv run --no-dev --group coverage coverage html
 
 # Run pre-commit on all files
 pre-commit:
-  pre-commit run -a 
+  uv run --no-dev --group pre-commit pre-commit run -a 
+
+# Run mypy
+mypy:
+  uv run --no-dev --group mypy mypy src docs/source/conf.py
 
 
 # Check style and test all
