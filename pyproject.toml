@@ -44,7 +44,6 @@ Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 [dependency-groups]
 dev = [
-    "nox>=2022.1.7",
     "tomli>=2.0.1 ; python_version < '3.11'",
     { include-group = "pre_commit" },
     { include-group = "test" },
