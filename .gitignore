@@ -137,4 +137,4 @@ wrk/
 
 # poetry local config
 /poetry.toml
-
+/poetry.lock
