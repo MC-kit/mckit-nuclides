@@ -5,12 +5,18 @@ build-backend = "uv_build"
 [project]
 name = "mckit-nuclides"
 version = "0.4.4"
-description = "Python tools to work with elements and nuclides"
-authors = [{ name = "dvp2015", email = "dmitri_portnov@yahoo.com" }]
 requires-python = ">=3.11,<3.14" # connectorx==0.4.3 prevents <4
+description = "Python tools to work with elements and nuclides"
+authors = [
+  { name = "dvp2015", email = "dmitri_portnov@yahoo.com" }
+]
 readme = "README.rst"
 license = { text = "MIT" }
-keywords = ["element", "nuclide", "isotope", "abundance"]
+keywords = [
+    "element",
+    "nuclide",
+    "abundance",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -21,11 +27,6 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = ["numpy (>=2.3.1)", "polars[all] (>=1.12.0)"]
-# dynamic = [
-#     "version",
-#     "classifiers",
-#     "requires-python",
-# ]
 
 [project.urls]
 homepage = "https://github.com/MC-kit/mckit-nuclides"
@@ -67,19 +68,6 @@ docs_auto = ["sphinx-autobuild>=2021.3.14"]
 ruff = ["ruff>=0.0.259"]
 analyze = ["jupyterlab>=4.2.5", "jupytext>=1.16.4"]
 
-# [tool.uv.build.targets.sdist]
-# include = [
-#     "src/mckit_nuclides",
-#     "noxfile.py",
-#     "tests",
-#     "docs",
-# ]
-#
-# [tool.uv.build.targets.wheel]
-# include = ["src/mckit_nuclides"]
-#
-# [tool.uv.build.targets.wheel.sources]
-# "src/mckit_nuclides" = "mckit_nuclides"
 
 [tool.pytest.ini_options]
 minversion = "6.2"
@@ -112,7 +100,9 @@ addopts = '''
 '''
 doctest_optionflags = "ELLIPSIS NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES NUMBER"
 testpaths = ["tests", "src"]
-markers = ["slow: marks tests as slow (deselect with '-m \"not slow\"')"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
 # xfail tests that pass should fail the test suite
 xfail_strict = true
 filterwarnings = [
@@ -165,6 +155,10 @@ exclude_lines = [
 ignore_errors = true
 sort = "Cover"
 
+
+# MyPy config
+# See https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
+#     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
 [tool.mypy]
 python_version = "3.12"
 strict = true
@@ -178,7 +172,11 @@ module = [
     "IPython.core.magic_arguments",
     "click",
     "click.testing",
+    "dask.*",
+    "duckdb",
     "loguru",
+    "mckit_nuclides.*",
+    "msgspec",
     "multipledispatch",
     "nox",
     "numpy",
@@ -195,12 +193,16 @@ module = [
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["tomllib", "tomli"]
+module = ["tomllib"]
 allow_redefinition = true
 disable_error_code = "no-redef"
 
 [tool.check-manifest]
-ignore = ["tests/*", "tools/*", "*.yaml", "noxfile.py"]
+ignore = [
+    "tests/*",
+    "tools/*",
+    "*.yaml",
+]
 
 [tool.jupytext]
 # https://jupytext.readthedocs.io/en/latest/config.html

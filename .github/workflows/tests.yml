@@ -115,8 +115,8 @@ jobs:
           uv run sphinx-build docs/source docs/build
 
   tests:
-    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
-    needs: [lint, typing]
+    name: "Python ${{ matrix-version }} on ${{ matrix.os }}"
+    needs: [lint, typing, docs]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
