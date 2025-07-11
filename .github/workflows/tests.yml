@@ -116,7 +116,7 @@ jobs:
 
   tests:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
-    needs: [lint, typing]
+    needs: [lint, typing, docs]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -147,7 +147,7 @@ jobs:
         run: uv sync --all-extras --no-dev --group test
 
       - name: ✅ Run tests
-        run: uv run coverage run --parallel -m pytest
+        run: uv run coverage run --parallel -m pytest -vv --emoji
 
       - name: 🔃 Upload coverage data
         uses: actions/upload-artifact@v4
