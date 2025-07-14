@@ -35,6 +35,7 @@ clean:
       ".nox"
       ".pytest_cache"
       ".ruff_cache"
+      ".venv"
       "__pycache__"
       "_skbuild"
       "build"
@@ -42,7 +43,6 @@ clean:
       "docs/_build"
       "htmlcov"
       "setup.py"
-      "venv"
   )
   rm -fr ${to_clean[@]}
 
