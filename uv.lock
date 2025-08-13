@@ -1594,6 +1594,7 @@ dev = [
     { name = "pytest-durations" },
     { name = "pytest-emoji" },
     { name = "pytest-mock" },
+    { name = "rstcheck" },
     { name = "ruff" },
     { name = "sphinx" },
     { name = "sphinx-autobuild" },
@@ -1603,6 +1604,7 @@ dev = [
     { name = "xdoctest", extra = ["colors"] },
 ]
 docs = [
+    { name = "rstcheck" },
     { name = "sphinx" },
     { name = "sphinx-autodoc-typehints" },
 ]
@@ -1665,6 +1667,7 @@ dev = [
     { name = "pytest-durations", specifier = ">=1.5.2" },
     { name = "pytest-emoji", specifier = ">=0.2.0" },
     { name = "pytest-mock", specifier = ">=3.14.0" },
+    { name = "rstcheck", specifier = ">=6.2.5" },
     { name = "ruff", specifier = ">=0.0.259" },
     { name = "sphinx", specifier = ">=8.2.3" },
     { name = "sphinx-autobuild", specifier = ">=2024.10.3" },
@@ -1675,6 +1678,7 @@ dev = [
     { name = "xdoctest", extras = ["colors"], specifier = ">=1.2.0" },
 ]
 docs = [
+    { name = "rstcheck", specifier = ">=6.2.5" },
     { name = "sphinx", specifier = ">=8.2.3" },
     { name = "sphinx-autodoc-typehints", specifier = ">=3.2.0" },
 ]
@@ -2888,6 +2892,32 @@ wheels = [
 ]
 
 [[package]]
+name = "rstcheck"
+version = "6.2.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "rstcheck-core" },
+    { name = "typer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/20/c9/4910e032405dbe1178bc410c45531b7bcc4f36326af167f4648f212c2409/rstcheck-6.2.5.tar.gz", hash = "sha256:122b6d6b953fa1a09d7e7de42ac5d8938da291c6f68351ace6166bb50fc3bd6c", size = 25235, upload-time = "2025-06-01T13:06:36.324Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/c2/67e0fa861f250e343c5c25de5f09800e85227241942d018a3e303d14d965/rstcheck-6.2.5-py3-none-any.whl", hash = "sha256:09af9555cf05f23651189154066d483ced25d36ebb3f01dc3a5d27524e4a5fdc", size = 8679, upload-time = "2025-06-01T13:06:35.16Z" },
+]
+
+[[package]]
+name = "rstcheck-core"
+version = "1.2.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "docutils" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/b7/324827abb8c6d07bdfb91b728624bbb249cf8333e5b9190672a97424e4e9/rstcheck_core-1.2.2.tar.gz", hash = "sha256:9e4842efcc32fe6dbe1767bf1f96225495369c82a2b5e0ed2969082f1ed56c9e", size = 53629, upload-time = "2025-06-01T13:04:36.102Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/35/eb1f8de49e57eefa3428c2f868a003755c2d438afebeb8c7e97b448f0287/rstcheck_core-1.2.2-py3-none-any.whl", hash = "sha256:2af6be0f91c8bed88f05ae9695331dc0f329ac379e98d469f4ff4536ef95e718", size = 27294, upload-time = "2025-06-01T13:04:34.518Z" },
+]
+
+[[package]]
 name = "ruff"
 version = "0.12.8"
 source = { registry = "https://pypi.org/simple" }
@@ -2928,6 +2958,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz", hash = "sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c", size = 1319958, upload-time = "2025-05-27T00:56:51.443Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl", hash = "sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922", size = 1201486, upload-time = "2025-05-27T00:56:49.664Z" },
+]
+
+[[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310, upload-time = "2023-10-24T04:13:40.426Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755, upload-time = "2023-10-24T04:13:38.866Z" },
 ]
 
 [[package]]
@@ -3283,6 +3322,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c7/68/71c1a15b5f65f40e91b65da23b8224dad41349894535a97f63a52e462196/typeguard-4.4.4.tar.gz", hash = "sha256:3a7fd2dffb705d4d0efaed4306a704c89b9dee850b688f060a8b1615a79e5f74", size = 75203, upload-time = "2025-06-18T09:56:07.624Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1b/a9/e3aee762739c1d7528da1c3e06d518503f8b6c439c35549b53735ba52ead/typeguard-4.4.4-py3-none-any.whl", hash = "sha256:b5f562281b6bfa1f5492470464730ef001646128b180769880468bd84b68b09e", size = 34874, upload-time = "2025-06-18T09:56:05.999Z" },
+]
+
+[[package]]
+name = "typer"
+version = "0.16.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "rich" },
+    { name = "shellingham" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c5/8c/7d682431efca5fd290017663ea4588bf6f2c6aad085c7f108c5dbc316e70/typer-0.16.0.tar.gz", hash = "sha256:af377ffaee1dbe37ae9440cb4e8f11686ea5ce4e9bae01b84ae7c63b87f1dd3b", size = 102625, upload-time = "2025-05-26T14:30:31.824Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/42/3efaf858001d2c2913de7f354563e3a3a2f0decae3efe98427125a8f441e/typer-0.16.0-py3-none-any.whl", hash = "sha256:1f79bed11d4d02d4310e3c1b7ba594183bcedb0ac73b27a9e5f28f6fb5b98855", size = 46317, upload-time = "2025-05-26T14:30:30.523Z" },
 ]
 
 [[package]]
