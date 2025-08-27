@@ -158,7 +158,7 @@ pre-commit:
 # Check rst-texts
 [group: 'docs']
 @rstcheck:
-  rstcheck --recursive *.rst docs
+  uv run --no-dev --group docs rstcheck --recursive *.rst docs
 
 # build documentation
 [group: 'docs']
