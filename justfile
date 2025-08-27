@@ -115,7 +115,7 @@ default:
 # run documentation tests 
 [group: 'test']
 @xdoctest *args:
-  uv run --no-dev --group test --group xdoctest python -m xdoctest --silent --style google -c all src tools {{args}}
+  uv run --no-dev --group test --group test python -m xdoctest --silent --style google -c all src tools {{args}}
 
 # create coverage data
 [group: 'test']
@@ -127,7 +127,7 @@ default:
 # coverage to html
 [group: 'test']
 coverage-html: coverage
-  @uv run --no-dev --group coverage coverage html
+  @uv run --no-dev --group test coverage html
 
 # check correct typing at runtime
 [group: 'test']
@@ -158,7 +158,7 @@ pre-commit:
 # Check rst-texts
 [group: 'docs']
 @rstcheck:
-  rstcheck *.rst docs/source/*.rst
+  rstcheck --recursive *.rst docs
 
 # build documentation
 [group: 'docs']
