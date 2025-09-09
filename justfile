@@ -46,16 +46,6 @@ default:
   for d in "${dirs_to_clean[@]}"; do
       find . -type d -name "$d" -exec rm -rf {} +
   done
-  files_to_clean=(
-      "*.so"
-      "*.so.*"
-      "*.dll"
-      "*.dylib"
-      "setup.py"
-  )
-  for f in "${files_to_clean[@]}"; do
-      find src/mckit -type f -name "$f" -exec rm -rf {} +
-  done
 
 
 # install package
