@@ -152,7 +152,7 @@ pre-commit:
 
 # build documentation
 [group: 'docs']
-@docs-build: rstcheck
+@docs-build:
   uv run --no-dev --group docs sphinx-build docs/source docs/_build
 
 # browse and edit documentation with auto build
