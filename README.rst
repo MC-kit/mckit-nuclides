@@ -15,22 +15,9 @@ Description
 The module presents basic information on chemical elements and nuclides including natural presence.
 The data is organized as `Polars <https://pola.rs/>`_ tables.
 Polars allows efficient data joining and selecting on huge datsets produced in computations like `Rigorous 2 Step <https://github.com/svalinn/r2s-act/blob/master/docs/r2s-userguide.rst>`_ .
-There are also some tools to expand natural presence and to merge compositions.
 
-.. note::
+More details in |Docs|.
 
-    The documentation is in progress yet.
-
-Installation
-------------
-
-.. TODO
-
-
-Examples
---------
-
-.. TODO
 
 Contributing
 ------------
@@ -48,11 +35,15 @@ Contributing
 .. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
    :target: https://github.com/astral-sh/uv
 
+Everything as usual.
+Some specific: in development environment we use uv, just, github actions, ruff.
 
 Notes
 -----
 
-Half lives are extracted from [4] with /home/dvp/.julia/dev/Tools.jl/scripts/extract-half-lives.jl (nice script by the way).
+Half lives are extracted from [4].
+
+.. ... with /home/dvp/.julia/dev/Tools.jl/scripts/extract-half-lives.jl (nice script by the way).
 
 References
 ----------

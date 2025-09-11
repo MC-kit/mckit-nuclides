@@ -1,0 +1,42 @@
+{% set name = "mckit-nuclides" %}
+{% set version = "0.4.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mckit_nuclides-{{ version }}.tar.gz
+  sha256: aa6a8cc005bb634b1cfa5a728b5a741dafe1f63c4ea2421d26bf39348bcb0a1a
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.11,<3.14
+    - uv_build >=0.7.19,<0.8.0
+    - pip
+  run:
+    - python >=3.11,<3.14
+    - numpy >=2.3.1
+    - polars >=1.12.0
+
+test:
+  imports:
+    - mckit_nuclides
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Python tools to work with elements and nuclides
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - dvp

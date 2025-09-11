@@ -1,8 +1,6 @@
 """The `mckit_nuclides` package.
 
-Provides functionality to transfer meta information
-inserted to STP file component names as special tags
-to MCNP files generated from the STP with SuperMC.
+Provides information on chemical elements and nuclides as Polars tables.
 """
 
 from __future__ import annotations
@@ -16,6 +14,14 @@ from .abundance import (
     expand_df_natural_presence,
     expand_natural_presence,
     normalize_column,
+)
+from .constants import (
+    ATOMIC_MASS_CONSTANT,
+    ATOMIC_MASS_CONSTANT_IN_MEV,
+    AVOGADRO,
+    NEUTRON_HALF_LIFE,
+    NEUTRON_MASS,
+    NEUTRON_MASS_IN_MEV,
 )
 from .elements import (
     ELEMENTS_PARQUET,
@@ -46,9 +52,15 @@ __summary__ = __meta_data__["Summary"]
 __copyright__ = f"Copyright 2021 {__author__}"
 
 __all__ = [
+    "ATOMIC_MASS_CONSTANT",
+    "ATOMIC_MASS_CONSTANT_IN_MEV",
+    "AVOGADRO",
     "ELEMENTS_PARQUET",
     "ELEMENTS_TABLE_PL",
     "MOLAR_MASS_TABLE",
+    "NEUTRON_HALF_LIFE",
+    "NEUTRON_MASS",
+    "NEUTRON_MASS_IN_MEV",
     "NUCLIDES_PARQUET",
     "NUCLIDES_TABLE_PL",
     "SYMBOL_TO_Z",

@@ -109,7 +109,7 @@ def expand_natural_presence(
 
     Yields:
         atomic number, mass_number, and corrected atomic fraction
-    """  # DAR401
+    """
     for z, a, f in zaf:
         if a != 0:
             yield z, a, f

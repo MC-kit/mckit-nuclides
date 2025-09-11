@@ -1,20 +1,16 @@
 [build-system]
-requires = ["uv_build>=0.7.19,<0.8.0"]
+requires = ["uv_build>=0.7.19,<0.9.0"]
 build-backend = "uv_build"
 
 [project]
 name = "mckit-nuclides"
-version = "0.4.4"
+version = "0.4.5"
 requires-python = ">=3.11,<3.14" # connectorx==0.4.3 prevents <4
 description = "Python tools to work with elements and nuclides"
 authors = [{ name = "dvp2015", email = "dmitri_portnov@yahoo.com" }]
 readme = "README.rst"
 license = { text = "MIT" }
-keywords = [
-  "element",
-  "nuclide",
-  "abundance",
-]
+keywords = ["element", "nuclide", "abundance"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -24,10 +20,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "Programming Language :: Python :: 3",
 ]
-dependencies = [
-  "numpy (>=2.3.1)",
-  "polars[all] (>=1.12.0)",
-]
+dependencies = ["numpy (>=2.3.1)", "polars[all] (>=1.12.0)"]
 
 [project.urls]
 homepage = "https://github.com/MC-kit/mckit-nuclides"
@@ -37,40 +30,39 @@ documentation = "https://mckit-nuclides.readthedocs.io"
 Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
 
 [dependency-groups]
-dev = [
-    "tomli>=2.0.1 ; python_version < '3.11'",
+dev = [{ include-group = "style" }, { include-group = "test" }]
+style = [
     { include-group = "pre_commit" },
-    { include-group = "test" },
-    { include-group = "coverage" },
-    { include-group = "xdoctest" },
-    { include-group = "typeguard" },
-    { include-group = "mypy" },
-    { include-group = "docs" },
-    { include-group = "docs_auto" },
     { include-group = "ruff" },
-    { include-group = "analyze" },
+    { include-group = "mypy" },
+    { include-group = "lint" },
 ]
-pre_commit = ["pre-commit>=2.15.0", "pydocstringformatter>=0.7.3"]
-test = [
-    "pytest>=8.4.1",
-    "pytest-cov>=6.2.1",
-    "pytest-mock>=3.14.0",
-    "pytest-durations>=1.5.2",
-    "pytest-emoji>=0.2.0",
-    { include-group = "coverage" },
-    { include-group = "xdoctest" },
-]
-coverage = ["coverage[toml]>=7.9.2"]
-xdoctest = ["xdoctest[colors]>=1.2.0"]
-typeguard = ["typeguard>=4.1.5"]
+pre_commit = ["pre-commit>=4.3.0", "pydocstringformatter>=0.7.3"]
+ruff = ["ruff>=0.0.259"]
 mypy = [
     "mypy>=1.2.0",
     "pep8-naming>=0.12.1",
     "types-setuptools>=80.9.0.20250529",
 ]
-docs = ["sphinx>=8.2.3", "sphinx-autodoc-typehints>=3.2.0"]
-docs_auto = ["sphinx-autobuild>=2024.10.3"]
-ruff = ["ruff>=0.0.259"]
+lint = ["pylint", "pylint-per-file-ignores"]
+test = [
+    "pytest>=8.4.1",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.14.0",
+    "pytest-durations>=1.5.2",
+    "pytest-emoji>=0.2.0",
+    "xdoctest>=1.2.0",
+    { include-group = "coverage" }, # coverage may be used on its own, see GHA test
+]
+coverage = ["coverage[toml]>=7.9.2"]
+# environments not in dev
+typeguard = ["typeguard>=4.1.5"]
+docs = [
+    "rstcheck[toml,sphinx]>=6.2.5",
+    "sphinx>=8.2.3",
+    "sphinx-autodoc-typehints>=3.2.0",
+    "sphinx-autobuild>=2025.8.25",
+]
 analyze = ["jupyterlab>=4.2.5", "jupytext>=1.16.4"]
 
 [tool.pytest.ini_options]
@@ -163,6 +155,7 @@ sort = "Cover"
 #     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
 [tool.mypy]
 python_version = "3.13"
+cache_dir = ".cache/mypy"
 strict = true
 follow_imports = "silent"
 disallow_untyped_defs = true
@@ -199,13 +192,6 @@ module = ["tomllib"]
 allow_redefinition = true
 disable_error_code = "no-redef"
 
-[tool.check-manifest]
-ignore = [
-    "tests/*",
-    "tools/*",
-    "*.yaml",
-]
-
 [tool.jupytext]
 # https://jupytext.readthedocs.io/en/latest/config.html
 # Pair ipynb notebooks to py:percent text notebooks
@@ -215,3 +201,7 @@ formats = "ipynb,py:percent"
 paths = ["src"]
 deps-file = "pyproject.toml"
 sections = ["project.dependencies"]
+
+[tool.rstcheck]
+report_level = "ERROR"
+ignore_messages = "(Unknown directive type \"(todo.*|automodule)\".$)"
