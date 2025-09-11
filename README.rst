@@ -13,9 +13,9 @@ Description
 -----------
 
 The module presents basic information on chemical elements and nuclides including natural presence.
-The data is organized as Pandas tables.
-Pandas allows to use dataset approach on data indexing, joining and selecting.
-There are also some tools to work with composition fractions.
+The data is organized as [Polars](https://pola.rs/) tables.
+Polars allows efficient data joining and selecting on huge datsets produced in computations like [Rigorous 2 Step](https://github.com/svalinn/r2s-act/blob/master/docs/r2s-userguide.rst) .
+There are also some tools to expand natural presence and merge composition fractions.
 
 .. note::
 
