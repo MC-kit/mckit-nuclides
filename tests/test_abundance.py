@@ -22,7 +22,7 @@ def water() -> pl.DataFrame:
     )
 
 
-def test_convert_to_atomic_fraction_h2o(water) -> None:
+def test_convert_to_atomic_fraction_h2o(water: pl.DataFrame) -> None:
     new_water = convert_to_atomic_fraction(water)
     assert_array_almost_equal(new_water["fraction"].to_numpy(), [2.0 / 3, 1.0 / 3], decimal=3)
 
@@ -38,7 +38,7 @@ def test_expand_natural_presence() -> None:
     assert_array_almost_equal(expected, actual)
 
 
-def test_expand_df_natural_presence(water):
+def test_expand_df_natural_presence(water: pl.DataFrame) -> None:
     new_water = convert_to_atomic_fraction(water)
     expanded = expand_df_natural_presence(new_water)
     expected = pl.DataFrame(
