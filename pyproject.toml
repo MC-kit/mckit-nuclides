@@ -167,6 +167,7 @@ sort = "Cover"
 #     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
 [tool.mypy]
 python_version = "3.13"
+cache_dir = ".cache/mypy"
 strict = true
 follow_imports = "silent"
 disallow_untyped_defs = true
