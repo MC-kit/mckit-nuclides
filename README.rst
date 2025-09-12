@@ -14,9 +14,9 @@ Description
 
 The module presents basic information on chemical elements and nuclides including natural presence.
 The data is organized as `Polars <https://pola.rs/>`_ tables.
-Polars allows efficient data joining and selecting on huge datsets produced in computations like `Rigorous 2 Step <https://github.com/svalinn/r2s-act/blob/master/docs/r2s-userguide.rst>`_ .
+Polars allows efficient data joining and selecting on huge datsets produced in `computations like [1]`_.
 
-More details in |Docs|.
+More details in documentation_.
 
 
 Contributing
@@ -36,28 +36,42 @@ Contributing
    :target: https://github.com/astral-sh/uv
 
 Everything as usual.
-Some specific: in development environment we use uv, just, github actions, ruff.
+Some specific: in development environment we use uv_, just_, ruff_.
 
 Notes
 -----
 
-Half lives are extracted from [4].
+Half lives are extracted from [5].
 
 .. ... with /home/dvp/.julia/dev/Tools.jl/scripts/extract-half-lives.jl (nice script by the way).
 
 References
 ----------
 
-1. Kim, Sunghwan, Gindulyte, Asta, Zhang, Jian, Thiessen, Paul A. and Bolton, Evan E..
+1. Y. Chen and U. Fischer, 
+   “Rigorous mcnp based shutdown dose rate calculations: computational scheme, verification calculations and application to ITER”
+   Fusion Engineering and Design, vol. 63–64, pp. 107–114, Dec. 2002, doi: 10.1016/S0920-3796(02)00144-8.
+2. Kim, Sunghwan, Gindulyte, Asta, Zhang, Jian, Thiessen, Paul A. and Bolton, Evan E..
    "PubChem Periodic Table and Element pages: improving access to information on chemical
    elements from authoritative sources" Chemistry Teacher International, vol. 3, no. 1, 2021, pp. 57-65.
    https://doi.org/10.1515/cti-2020-0006
-2. Elements table. https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV
-3. Coursey, J.S., Schwab, D.J., Tsai, J.J., and Dragoset, R.A. (2018-06-14),
+3. Elements table. https://pubchem.ncbi.nlm.nih.gov/rest/pug/periodictable/CSV
+4. Coursey, J.S., Schwab, D.J., Tsai, J.J., and Dragoset, R.A. (2018-06-14),
    Atomic Weights and Isotopic Compositions (version 4.1). [Online]
    Available: http://physics.nist.gov/Comp [year, month, day].
    National Institute of Standards and Technology, Gaithersburg, MD.
-4. JEFF-3.3 radioactive decay data file https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/JEFF33-rdd_all.asc
+5. JEFF-3.3 radioactive decay data file https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/JEFF33-rdd_all.asc
+   
+
+
+
+.. Links
+
+.. _documentation: https://mckit-nuclides.readthedocs.io/en/latest
+.. _`computations like [1]`: https://linkinghub.elsevier.com/retrieve/pii/S0920379602001448 
+.. _uv: https://github.com/astral-sh/uv
+.. _just: https://github.com/casey/just
+.. _ruff: https://github.com/astral-sh/ruff
 
 
 .. Substitutions
