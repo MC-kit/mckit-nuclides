@@ -63,6 +63,7 @@ docs = [
     "sphinx-autodoc-typehints>=3.2.0",
     "sphinx-autobuild>=2025.8.25",
     "esbonio>=0.16.5",
+    "sphinx-togglebutton>=0.3.2",
 ]
 analyze = ["jupyterlab>=4.2.5", "jupytext>=1.16.4"]
 
