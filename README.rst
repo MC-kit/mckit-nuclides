@@ -40,20 +40,20 @@ Some specific: in development environment we use uv_, just_, ruff_.
 
 To setup development environment, run:
 
-.. code-block::
+.. code-block:: shell
 
   just install | reinstall
 
 To build documentation, run:
 
-.. code-block::
+.. code-block:: shell
 
    just docs        # - for local online docs rendering, while editing 
    just docs-build  # - to build documentation 
 
 To release, run:
 
-.. code-block::
+.. code-block:: shell
 
   just bump [major|minor|patch]  # - in `devel` branch
   
