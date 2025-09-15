@@ -78,12 +78,12 @@ Planned Features:
 API Reference
 =============
 
-For detailed API documentation, please refer to the :doc:`api` section.
+.. For detailed API documentation, please refer to the :doc:`api` section.
 
 Examples
 ========
 
-Basic usage examples and tutorials will be available in the :doc:`examples` section.
+.. Basic usage examples and tutorials will be available in the :doc:`examples` section.
 
 Contributing
 ============
