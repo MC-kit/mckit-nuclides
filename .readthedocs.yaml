@@ -9,6 +9,6 @@ build:
   os: ubuntu-lts-latest
   commands:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
-    - ll /home/docs/.local/bin
+    - ls -l /home/docs/.local/bin
     - export PATH="/home/docs/.local/bin:$PATH"
     - uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html
