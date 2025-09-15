@@ -12,6 +12,6 @@ build:
   jobs:
     install:
       - cargo install uv
-  build:
-    html:
-      uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html
+    build:
+      html:
+        - uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html
