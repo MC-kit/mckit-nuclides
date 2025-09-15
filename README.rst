@@ -35,8 +35,30 @@ Contributing
 .. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json
    :target: https://github.com/astral-sh/uv
 
-Everything as usual.
+
 Some specific: in development environment we use uv_, just_, ruff_.
+
+To setup development environment, run:
+
+.. code-block::
+
+  just install | reinstall
+
+To build documentation, run:
+
+.. code-block::
+
+   just docs        # - for local online docs rendering, while editing 
+   just docs-build  # - to build documentation 
+
+To release, run:
+
+.. code-block::
+
+  just bump [major|minor|patch]  # - in `devel` branch
+  
+Then merge devel to master (via Pull Request) and if all the checks are passed create Release. Manually.
+
 
 Notes
 -----
