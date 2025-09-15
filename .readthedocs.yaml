@@ -6,15 +6,12 @@ version: 2
 
 # Set the version of Python and other tools you might need
 build:
-  os: ubuntu-24.04
+  os: ubuntu-lts-latest
   tools:
-    python: "3.13"
-
-sphinx:
-  configuration: docs/source/conf.py
-
-# formats: all
-
-python:
-  install:
-    - requirements: docs/requirements.txt
+    rust: latest
+  jobs:
+    install:
+      - cargo install uv
+  build:
+    html:
+      uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html
