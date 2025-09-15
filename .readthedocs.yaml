@@ -6,15 +6,9 @@ version: 2
 
 # Set the version of Python and other tools you might need
 build:
-  os: ubuntu-22.04
-  tools:
-    python: "3.9"
-
-sphinx:
-  configuration: docs/source/conf.py
-
-# formats: all
-
-python:
-  install:
-    - requirements: docs/requirements.txt
+  os: ubuntu-lts-latest
+  commands:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - cat /home/docs/.local/bin/env
+    # - export PATH="/home/docs/.local/bin:$PATH"
+    - /home/docs/.local/bin/uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html

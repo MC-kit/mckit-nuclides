@@ -10,8 +10,8 @@ log := "warn"
 
 export JUST_LOG := log
 
-default:
-  @just --list
+@_default:
+  just --list
 
 # create venv, if not exists
 [group: 'dev']
@@ -133,8 +133,8 @@ typeguard *args:
 
 # Run pre-commit on all files
 [group: 'lint']
-pre-commit:
-  @uv run --no-dev --group pre-commit pre-commit run -a 
+@pre-commit:
+  uv run --no-dev --group pre-commit pre-commit run --show-diff-on-failure --color=always --all-files
 
 # Run mypy
 [group: 'lint']
