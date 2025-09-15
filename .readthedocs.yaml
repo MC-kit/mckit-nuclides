@@ -7,11 +7,9 @@ version: 2
 # Set the version of Python and other tools you might need
 build:
   os: ubuntu-lts-latest
-  tools:
-    rust: latest
   jobs:
     install:
-      - cargo install uv
+      - curl -LsSf https://astral.sh/uv/install.sh | sh
     build:
       html:
         - uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html
