@@ -50,7 +50,7 @@ Installation
    # or 
    uv pip install mckit-nuclides
 
-**With package manager:**
+**With package manager (as a dependency):**
 
 .. code-block:: bash
    
