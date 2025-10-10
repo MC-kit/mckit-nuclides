@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "mckit-nuclides"
 version = "0.4.6"
-requires-python = ">=3.11,<3.14" # connectorx==0.4.3 prevents <4
+requires-python = ">=3.11,<3.15" # connectorx==0.4.3 prevents <4
 description = "Python tools to work with elements and nuclides"
 authors = [{ name = "dvp2015", email = "dmitri_portnov@yahoo.com" }]
 readme = "README.rst"
