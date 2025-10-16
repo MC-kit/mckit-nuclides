@@ -44,7 +44,10 @@ mypy = [
     "pep8-naming>=0.12.1",
     "types-setuptools>=80.9.0.20250529",
 ]
-lint = ["pylint", "pylint-per-file-ignores"]
+lint = [
+    "pylint",
+    "pylint-per-file-ignores",
+]
 test = [
     "pytest>=8.4.1",
     "pytest-cov>=7.0.0",
