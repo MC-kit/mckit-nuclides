@@ -1816,7 +1816,7 @@ wheels = [
 
 [[package]]
 name = "mckit-nuclides"
-version = "0.4.6"
+version = "0.5.0.dev1"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
