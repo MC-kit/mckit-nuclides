@@ -47,7 +47,8 @@ def atomic_number(_symbol: str) -> int:
     Args:
         _symbol: element by chemical symbol
 
-    Returns:
+    Returns
+    -------
         int: Z - the atomic number for the element.
     """
     return SYMBOL_TO_Z[_symbol]
@@ -63,7 +64,8 @@ def symbol(_atomic_number: int) -> str:
     Args:
         _atomic_number: Z of an element
 
-    Returns:
+    Returns
+    -------
         str: Chemical symbol
     """
     return Z_TO_SYMBOL[_atomic_number]
@@ -76,10 +78,12 @@ def get_property(z_or_symbol: int | str, column: str) -> TableValue:
         z_or_symbol: define either by atomic number or symbol
         column: column name in ELEMENTS_TABLE
 
-    Raises:
+    Raises
+    ------
         KeyError: if it cannot find the given element.
 
-    Returns:
+    Returns
+    -------
         The column value for the given element.
     """
     _z = SYMBOL_TO_Z[z_or_symbol] if isinstance(z_or_symbol, str) else z_or_symbol
@@ -100,7 +104,8 @@ def atomic_mass(z_or_symbol: int | str) -> float:
     Args:
         z_or_symbol: define either by atomic number or symbol
 
-    Returns:
+    Returns
+    -------
         Average atomic mass of the Element with the atomic number.
     """
     return cast("float", get_property(z_or_symbol, "molar_mass"))
@@ -112,7 +117,8 @@ def name(z_or_symbol: int | str) -> str:
     Args:
         z_or_symbol: define either by atomic number or symbol
 
-    Returns:
+    Returns
+    -------
         The name of the element.
     """
     return cast("str", get_property(z_or_symbol, "name"))
@@ -129,7 +135,8 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
         formula: ... H20, C2H5OH, etc.
         mass_fraction: define mass fractions instead of atomic (default)
 
-    Examples:
+    Examples
+    --------
         >>> print(from_molecular_formula("H2O"))
         shape: (2, 2)
         ┌───────────────┬──────────┐
@@ -162,7 +169,8 @@ def from_molecular_formula(formula: str, *, mass_fraction: bool = False) -> pl.D
         │ 8             ┆ 0.888093 │
         └───────────────┴──────────┘
 
-    Returns:
+    Returns
+    -------
         composition
     """
     collector: dict[str, int] = defaultdict(int)

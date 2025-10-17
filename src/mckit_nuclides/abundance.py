@@ -31,7 +31,8 @@ def convert_to_atomic_fraction(
         composition: DataFrame with columns atomic_number, mass_number
         fraction_column: name of column presenting fraction
 
-    Returns:
+    Returns
+    -------
         DataFrame: df with modified column "fraction"
     """
     composition_columns = composition.columns
@@ -50,7 +51,8 @@ def normalize_column(table: pl.DataFrame, column: str = "fraction") -> pl.DataFr
         table: ... to normalize
         column: ... over this column
 
-    Returns:
+    Returns
+    -------
         Result of normalization
     """
     total_fractions = table.select(column).sum().item()
@@ -67,7 +69,8 @@ def expand_df_natural_presence(
         composition: table with columns atomic_number, mass_number (may be 0), fraction
         fraction_column: exact 'fraction' column name
 
-    Returns:
+    Returns
+    -------
         Expanded composition as a DataFrame.
     """
     composition_columns = composition.columns
@@ -107,7 +110,8 @@ def expand_natural_presence(
     Args:
         zaf: sequence of atomic number, mass number and fraction
 
-    Yields:
+    Yields
+    ------
         atomic number, mass_number, and corrected atomic fraction
     """
     for z, a, f in zaf:
