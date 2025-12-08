@@ -158,6 +158,11 @@ typeguard *args:
 @pyright:
   uv run --no-dev --group pyright pyright src tests
 
+# Lint with ty
+[group: 'lint']
+@ty:
+  uvx ty check 
+
 # Check rst-texts
 [group: 'docs']
 @rstcheck:
