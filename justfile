@@ -125,8 +125,9 @@ export JUST_LOG := log
 
 # coverage to html
 [group: 'test']
-coverage-html: coverage
-  @uv run --no-dev --group coverage coverage html
+@coverage-html: coverage
+  uv run --no-dev --group coverage coverage html
+  open htmlcov/index.html
 
 # check correct typing at runtime
 [group: 'test']
