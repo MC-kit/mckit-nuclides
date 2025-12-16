@@ -57,7 +57,10 @@ style = [
   { include-group = "pyright" },
   { include-group = "ruff" },
 ]
-pre_commit = [ "pre-commit>=4.3" ]
+pre_commit = [
+  "pre-commit>=4.3",
+  "pre-commit-uv>=4.2",
+]
 ruff = [ "ruff>=0.0.259" ]
 mypy = [
   "mypy>=1.2",
