@@ -118,40 +118,11 @@ sort = "Cover"
 [tool.mypy]
 python_version = "3.13"
 cache_dir = ".cache/mypy"
-strict = true
-follow_imports = "silent"
-disallow_untyped_defs = true
 files = "src/**/*.py"
-
-[[tool.mypy.overrides]]
-module = [
-  "IPython.core.magic",
-  "IPython.core.magic_arguments",
-  "click",
-  "click.testing",
-  "cyclopts",
-  "dask.*",
-  "duckdb",
-  "eliot",
-  "eliot.*",
-  "loguru",
-  "mckit_nuclides.*",
-  "msgspec",
-  "multipledispatch",
-  "nox",
-  "numpy",
-  "numpy.testing",
-  "pandas",
-  "polars",
-  "pytest",
-  "rich.*",
-  "scipy.constants",
-  "scipy.sparse",
-  "tomli",
-  "tomllib",
-  "xdoctest",
-]
-ignore_missing_imports = true
+follow_imports = "silent"
+pretty = true
+strict = true
+warn_unused_configs = true
 
 [[tool.mypy.overrides]]
 module = [ "tomllib" ]
