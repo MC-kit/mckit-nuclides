@@ -59,7 +59,6 @@ style = [
 ]
 pre_commit = [
   "pre-commit>=4.3",
-  "pre-commit-uv>=4.2",
 ]
 ruff = [ "ruff>=0.0.259" ]
 mypy = [
