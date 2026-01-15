@@ -801,6 +801,7 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/79/f4/d72a7a39fc1add115da23b5b7a954f335bc988e68e28e8b581051cfb5a81/deltalake-1.3.1-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:828a6b26ebe7e81b9fd0c3c72423731c4396de2690fa8c6336a57a0fc78530b3", size = 37278359, upload-time = "2026-01-10T15:20:05.526Z" },
     { url = "https://files.pythonhosted.org/packages/07/5c/b509e977e354daa758cbf81782551442437d0b3435d23e40d54a537f50c3/deltalake-1.3.1-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:006fb85da0fdc64e33fb40a203d5d6ef765dc7be15f92f451358af7b3aa3fde9", size = 34081885, upload-time = "2026-01-10T15:19:44.388Z" },
     { url = "https://files.pythonhosted.org/packages/a7/c6/24669b8e3be916f03b7750a358f6ef2ec603c5fe8270318f0232cc7e22af/deltalake-1.3.1-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2ba92a28bfd49784eb6b09b010147dd1c47051089e51f4843376a5b6f6bd9c64", size = 38036368, upload-time = "2026-01-10T15:06:56.009Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/3a/86476bb50dd2a9597e92905085a38be46b63310a3e7abf736f0a4325fe1b/deltalake-1.3.1-cp310-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:ccfe7bbdad0ce7c1a9b398d1ce383657f479b3930d7fc6d3be499e03dab36953", size = 36681307, upload-time = "2026-01-13T14:57:58.334Z" },
     { url = "https://files.pythonhosted.org/packages/1a/97/572be48c095d79d427a83cdd37b90d8557a39022d8c2aceb9ce4a65b56fb/deltalake-1.3.1-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:95dfd25f1590bd7c886a8bc0027924a730dc6611d7a94ac440f5ee7efae51f8a", size = 38025312, upload-time = "2026-01-10T15:05:57.122Z" },
     { url = "https://files.pythonhosted.org/packages/cb/08/7914537a2039a208886344038fd5dad38968c66c36917f9a614292537ad5/deltalake-1.3.1-cp310-abi3-win_amd64.whl", hash = "sha256:3ce7c4eab9b8ec28d76d007e4733352f6b3b063c6b39266d524cafc4f8d798c7", size = 40447650, upload-time = "2026-01-10T15:30:45.979Z" },
 ]
@@ -3757,7 +3758,7 @@ wheels = [
 
 [[package]]
 name = "sphinx-togglebutton"
-version = "0.3.2"
+version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docutils" },
@@ -3766,9 +3767,9 @@ dependencies = [
     { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "wheel" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/df/d151dfbbe588116e450ca7e898750cb218dca6b2e557ced8de6f9bd7242b/sphinx-togglebutton-0.3.2.tar.gz", hash = "sha256:ab0c8b366427b01e4c89802d5d078472c427fa6e9d12d521c34fa0442559dc7a", size = 8324, upload-time = "2022-07-15T12:08:50.286Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/89/6b/19def5241b45a7ae90fd91052bb91fa7b8fbcc0606a0cf65ac4ea70fb93b/sphinx_togglebutton-0.4.4.tar.gz", hash = "sha256:04c332692fd5f5363ad02a001e693369767d6c1f0e58279770a2aeb571b472a1", size = 17883, upload-time = "2026-01-14T14:33:11.599Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e9/18/267ce39f29d26cdc7177231428ba823fe5ca94db8c56d1bed69033b364c8/sphinx_togglebutton-0.3.2-py3-none-any.whl", hash = "sha256:9647ba7874b7d1e2d43413d8497153a85edc6ac95a3fea9a75ef9c1e08aaae2b", size = 8249, upload-time = "2022-07-15T12:08:48.8Z" },
+    { url = "https://files.pythonhosted.org/packages/fa/cb/9f6ceb4308ebfe5f393a271ee6206e17883edee0662a9b5c1a371878064b/sphinx_togglebutton-0.4.4-py3-none-any.whl", hash = "sha256:820658cd4c4c34c2ee7a21105e638b2f65a9e1d43ee991090715eb7fd9683cdf", size = 44892, upload-time = "2026-01-14T14:33:10.674Z" },
 ]
 
 [[package]]
