@@ -4,11 +4,9 @@
 
 version: 2
 
-# Set the version of Python and other tools you might need
 build:
   os: ubuntu-lts-latest
   commands:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
-    - cat /home/docs/.local/bin/env
-    # - export PATH="/home/docs/.local/bin:$PATH"
+    # uv is installed in "/home/docs/.local/bin"
     - /home/docs/.local/bin/uv run --no-dev --group docs sphinx-build docs/source $READTHEDOCS_OUTPUT/html

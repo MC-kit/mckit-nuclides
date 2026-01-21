@@ -28,10 +28,12 @@ def get_property(z_or_symbol: int | str, mass_number: int, column: str) -> Table
         mass_number: A
         column: name of column to extract value from
 
-    Raises:
+    Raises
+    ------
         KeyError: if cannot find the given nuclide.
 
-    Returns:
+    Returns
+    -------
         Value of a column for the given nuclide.
     """
     _z = z(z_or_symbol) if isinstance(z_or_symbol, str) else z_or_symbol
@@ -57,7 +59,8 @@ def get_nuclide_mass(z_or_symbol: int | str, mass_number: int) -> float:
         z_or_symbol: Z or symbol of a nuclide
         mass_number: A
 
-    Returns:
+    Returns
+    -------
         Mass of the Nuclide (a.u).
     """
     return cast("float", get_property(z_or_symbol, mass_number, "molar_mass"))
