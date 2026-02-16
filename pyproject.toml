@@ -67,7 +67,7 @@ typeguard = [ "typeguard>=4.1.5" ]
 analyze = [ "jupyterlab>=4.2.5", "jupytext>=1.16.4" ]
 
 [tool.coverage.paths]
-source = [ "src", ".nox/*/site-packages" ]
+source = [ "src" ]
 
 [tool.coverage.run]
 branch = true
