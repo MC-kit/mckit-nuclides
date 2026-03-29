@@ -17,8 +17,10 @@ norecursedirs = [
 ]
 python_functions = ["test_*", "profile_*"]
 addopts = [
+    "-n=auto",
     "-ra",
     "-q",
+    "--cov-config", "pyproject.toml",
     "--tb=short",
     "--doctest-modules",
     "--strict-markers",
