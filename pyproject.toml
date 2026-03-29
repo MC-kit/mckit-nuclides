@@ -36,7 +36,6 @@ test = [
   "pytest>=9",
   "pytest-cov>=7.1",
   "pytest-durations>=1.5",
-  "pytest-emoji>=0.2",
   "pytest-mock>=3.14",
   "pytest-xdist[psutil]>=3.8",
   "xdoctest>=1.2",

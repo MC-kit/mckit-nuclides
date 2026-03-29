@@ -151,7 +151,8 @@ jobs:
         run: uv sync --all-extras --no-dev --group test
 
       - name: ✅ Run tests
-        run: uv run coverage run --parallel -m pytest -vv --emoji
+        # run: uv run coverage run --parallel -m pytest -vv --emoji
+        run:  pytest --cov -vv
 
       - name: 🔃 Upload coverage data
         uses: actions/upload-artifact@v7
