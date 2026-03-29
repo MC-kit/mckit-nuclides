@@ -120,7 +120,7 @@ jobs:
 
   tests:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
-    needs: [lint, typing, docs]
+    # needs: [lint, typing, docs]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -150,15 +150,21 @@ jobs:
       - name: 🐍 Install the project
         run: uv sync --all-extras --no-dev --group test
 
+      - name: 🔃 Download coverage data
+        uses: actions/download-artifact@v8
+        with:
+          pattern: coverage-data
+          merge-multiple: true
+
       - name: ✅ Run tests
         # run: uv run coverage run --parallel -m pytest -vv --emoji
-        run:  uv run --group test pytest --cov -vv
+        run:  uv run --group test pytest --cov --cov-report xml --cov-append -vv
 
       - name: 🔃 Upload coverage data
         uses: actions/upload-artifact@v7
         with:
-          name: coverage-data-${{ runner.os }}-${{ matrix.python-version }}
-          path: ".coverage.*"
+          name: coverage-data
+          path: "coverage.xml"
           include-hidden-files: true
           if-no-files-found: error
 
@@ -182,19 +188,20 @@ jobs:
       - name: 🔃 Download coverage data
         uses: actions/download-artifact@v8
         with:
-          pattern: coverage-data-*
+          pattern: coverage-data
           merge-multiple: true
 
-      - name: 📦 Combine coverage data and display human readable report
-        run: |
-          uv run --no-dev --group coverage coverage combine
-          uv run --no-dev --group coverage coverage report
-
-      - name: 📦 Create coverage report
-        run: |
-          uv run --no-dev --group coverage coverage xml
+      # - name: 📦 Combine coverage data and display human readable report
+      #   run: |
+      #     uv run --no-dev --group coverage coverage combine 
+      #     uv run --no-dev --group coverage coverage report
+      #
+      # - name: 📦 Create coverage report
+      #   run: |
+      #     uv run --no-dev --group coverage coverage xml
 
       - name: 📤 Upload coverage report
         uses: codecov/codecov-action@v5
         with:
+          file: ./coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
