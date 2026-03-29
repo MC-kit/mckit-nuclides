@@ -129,9 +129,7 @@ export JUST_LOG := log
 # create coverage data
 [group: 'test']
 @coverage:
-  uv run --no-dev --group test pytest --cov --cov-append --cov-report=term-missing:skip-covered
-  # uv run --no-dev --group coverage coverage combine
-  # uv run --no-dev --group coverage coverage report --show-missing --skip-covered
+  uv run --no-dev --group test pytest --cov --cov-report=term-missing:skip-covered
 
 # coverage to html
 [group: 'test']
