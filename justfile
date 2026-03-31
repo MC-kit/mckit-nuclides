@@ -1,3 +1,17 @@
+# Examples: msgspec
+
+# Disable showing recipe lines before execution.
+set quiet
+
+# Enable unstable features.
+set unstable
+
+# Configure the shell for Windows.
+set windows-shell := ["pwsh.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command"]
+
+# We don't want to install any dev dependencies by default.
+# export UV_NO_DEV := "true"
+
 alias t := test
 alias c := check
 set dotenv-load := true
@@ -104,17 +118,17 @@ export JUST_LOG := log
 # test up to the first fail
 [group: 'test']
 @test-ff *args:
-  pytest -vv -x {{args}}
+  uv run --no-dev --group test pytest -x {{args}}
 
 # test with clean cache
 [group: 'test']
 @test-cache-clear *args:
-  pytest --cache-clear {{args}}
+  uv run --no-dev --group test pytest --cache-clear {{args}}
 
 # test fast
 [group: 'test']
 @test-fast *args:
-  pytest -m "not slow" {{args}}
+  uv run --no-dev --group test pytest -m "not slow" {{args}}
 
 # run all the tests
 [group: 'test']
