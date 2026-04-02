@@ -3,7 +3,7 @@ minversion = "9.0"
 cache_dir = ".cache/pytest"
 strict = true
 norecursedirs = [
-    "*.egg-info",
+    ".egg-info",
     ".*",
     "build",
     "data",

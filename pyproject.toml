@@ -62,7 +62,6 @@ style = [
   { include-group = "pyright" },
   { include-group = "ruff" },
 ]
-# environments not in dev
 typeguard = [ "typeguard>=4.1.5" ]
 
 [tool.coverage]
