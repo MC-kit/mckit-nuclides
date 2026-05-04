@@ -144,7 +144,7 @@ export JUST_LOG := log
 # run documentation tests
 [group('test')]
 @xdoctest *args:
-    uv run --no-dev --group test xdoctest --silent -c all src/numjuggler tools {{ args }}
+    uv run --no-dev --group test xdoctest --silent -c all -m mckit_nuclides {{ args }}
 
 # create coverage data
 [group('test')]
