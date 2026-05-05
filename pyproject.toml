@@ -9,7 +9,6 @@ description = "Python tools to work with elements and nuclides"
 readme = "README.rst"
 keywords = [ "abundance", "element", "nuclide" ]
 license = { text = "MIT" }
-authors = [ { name = "dvp2015", email = "dmitri_portnov@yahoo.com" } ]
 requires-python = ">=3.12"
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -24,11 +23,15 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [ "numpy>=2.4", "polars[all]>=1.37" ]
-urls."Bug Tracker" = "https://github.com/MC-kit/mckit-nuclides/issues"
-urls.Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
-urls.documentation = "https://mckit-nuclides.readthedocs.io"
-urls.homepage = "https://github.com/MC-kit/mckit-nuclides"
-urls.repository = "https://github.com/MC-kit/mckit-nuclides"
+[[project.authors]]
+name = "dvp2015"
+email = "dmitri_portnov@yahoo.com"
+[project.urls]
+"Bug Tracker" = "https://github.com/MC-kit/mckit-nuclides/issues"
+Changelog = "https://github.com/MC-kit/mckit-nuclides/releases"
+documentation = "https://mckit-nuclides.readthedocs.io"
+homepage = "https://github.com/MC-kit/mckit-nuclides"
+repository = "https://github.com/MC-kit/mckit-nuclides"
 
 [dependency-groups]
 dev = [ { include-group = "style" }, { include-group = "test" } ]
@@ -65,13 +68,10 @@ style = [
 typeguard = [ "typeguard>=4.1.5" ]
 
 [tool.coverage]
-run.branch = true
-run.omit = [ "**/__init__.py", "*_tab.py", "tools/*.py" ]
-run.parallel = true
-run.source = [ "src" ]
-paths.source = [ "src" ]
-# Regexes for lines to exclude from consideration
-report.exclude_lines = [
+[tool.coverage.paths]
+source = [ "src" ]
+[tool.coverage.report]
+exclude_lines = [
   # Don't complain about missing debug-only code:
   "def __repr__",
   "if __name__ == .__main__.:",
@@ -82,19 +82,20 @@ report.exclude_lines = [
   "raise AssertionError",
   "raise NotImplementedError",
 ]
-report.fail_under = 100
-report.ignore_errors = true
-report.omit = [ "**/__init__.py", "**/types.py", "*_tab.py" ]
-report.show_missing = true
-report.skip_covered = true
-report.sort = "Cover"
-
-# MyPy config
-# See https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
-#     https://dev.to/tusharsadhwani/the-comprehensive-guide-to-mypy-561m
+fail_under = 100
+ignore_errors = true
+omit = [ "**/__init__.py", "**/types.py", "*_tab.py" ]
+show_missing = true
+skip_covered = true
+sort = "Cover"
+[tool.coverage.run]
+branch = true
+omit = [ "**/__init__.py", "*_tab.py", "tools/*.py" ]
+parallel = true
+source = [ "src" ]
 
 [tool.mypy]
-python_version = "3.13"
+python_version = "3.14"
 cache_dir = ".cache/mypy"
 files = "src/**/*.py"
 follow_imports = "silent"
