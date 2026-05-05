@@ -28,7 +28,7 @@ addopts = [
     "--failed-first",
     "--xdoctest",
     "--pytest-durations-min=1",
-    "--pytest-resultlog=pytest-result.log"
+    "--pytest-resultlog=pytest-result.log",
 ]
 doctest_optionflags = [
   "ELLIPSIS",
