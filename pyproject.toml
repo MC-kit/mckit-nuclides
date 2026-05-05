@@ -67,6 +67,15 @@ style = [
 ]
 typeguard = [ "typeguard>=4.1.5" ]
 
+[tool.mypy]
+python_version = "3.14"
+cache_dir = ".cache/mypy"
+files = "src/**/*.py"
+follow_imports = "silent"
+pretty = true
+strict = true
+warn_unused_configs = true
+
 [tool.coverage]
 [tool.coverage.paths]
 source = [ "src" ]
@@ -94,16 +103,7 @@ omit = [ "**/__init__.py", "*_tab.py", "tools/*.py" ]
 parallel = true
 source = [ "src" ]
 
-[tool.mypy]
-python_version = "3.14"
-cache_dir = ".cache/mypy"
-files = "src/**/*.py"
-follow_imports = "silent"
-pretty = true
-strict = true
-warn_unused_configs = true
-overrides = [ { module = [ "tomllib" ], allow_redefinition = true, disable_error_code = "no-redef" } ]
-
+# overrides = [ { module = [ "tomllib" ], allow_redefinition = true, disable_error_code = "no-redef" } ]
 [tool.xdoctest]
 quiet = true
 options = ""
