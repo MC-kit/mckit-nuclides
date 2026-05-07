@@ -20,14 +20,14 @@ addopts = [
     "--doctest-modules",
     "--failed-first",
     "--ignore=setup.py",
+    "--numprocesses=logical",
     "--pytest-durations-min=1",
     "--pytest-resultlog=pytest-result.log",
+    "--quiet/",
     "--strict-markers",
     "--tb=short",
     "--xdoctest",
-    "-n=auto",
-    "-q",
-    "-ra",
+    "-ra",                                   # extra test summary: all except passed
 ]
 doctest_optionflags = [
     "ALLOW_BYTES",

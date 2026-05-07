@@ -76,22 +76,14 @@ ignore-names = [ "*He*", "*eV*" ]
 # or `format.skip-magic-trailing-comma=false`.
 
 [lint.isort]
-known-first-party = ["src"]
-known-third-party = [
-  "mpl_toolkits",
-  "matplotlib",
-  "numpy",
-  "scipy",
-  "loguru",
-  "tqdm",
-  "dotenv",
-]
+known-first-party = [ "src" ]
+known-third-party = [ "dotenv", "loguru", "matplotlib", "mpl_toolkits", "numpy", "scipy", "tqdm" ]
 default-section = "third-party"
 lines-between-types = 1
-required-imports = ["from __future__ import annotations"]
+required-imports = [ "from __future__ import annotations" ]
 case-sensitive = true
 section-order = [
-  "future",
+  "future",  
   "typing",
   "standard-library",
   "third-party",
@@ -101,8 +93,8 @@ section-order = [
 ]
 
 [lint.isort.sections]
-"typing" = ["typing", "typing_extension"]
-"testing" = ["tests"]
+"typing" = [ "typing", "typing_extension" ]
+"testing" = [ "tests" ]
 
 [lint.pydocstyle]
 convention = "numpy"

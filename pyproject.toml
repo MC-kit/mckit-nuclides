@@ -64,7 +64,7 @@ style = [
   { include-group = "pyright" },
   { include-group = "ruff" },
 ]
-typeguard = [ "typeguard>=4.1.5" ]
+typeguard = [ "typeguard>=4.5" ]
 
 [tool.mypy]
 python_version = "3.14"
@@ -82,9 +82,9 @@ source = [ "src" ]
 exclude_lines = [
   # Don't complain about missing debug-only code:
   "def __repr__",
+  "if __name__ == .__main__.:",
   "if 0:",
   "if TYPE_CHECKING:",
-  "if __name__ == .__main__.:",
   "if self.debug",
   "pragma: no cover",
   "raise AssertionError",
@@ -112,9 +112,10 @@ quiet = true
 formats = "ipynb,py:percent"
 
 [tool.creosote]
-paths = [ "src" ]
 deps-file = "pyproject.toml"
+paths = [ "src" ]
 sections = [ "project.dependencies" ]
+venvs = [ ".venv" ]
 
 [tool.rstcheck]
 ignore_messages = '(Unknown directive type "(todo.*|automodule)".$)'
