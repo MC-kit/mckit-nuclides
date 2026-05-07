@@ -82,9 +82,9 @@ source = [ "src" ]
 exclude_lines = [
   # Don't complain about missing debug-only code:
   "def __repr__",
-  "if __name__ == .__main__.:",
   "if 0:",
   "if TYPE_CHECKING:",
+  "if __name__ == .__main__.:",
   "if self.debug",
   "pragma: no cover",
   "raise AssertionError",
