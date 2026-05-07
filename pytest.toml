@@ -17,7 +17,6 @@ norecursedirs = [
 ]
 python_functions = [ "profile_*", "test_*" ]
 addopts = [
-    "--cov-config",
     "--doctest-modules",
     "--failed-first",
     "--ignore=setup.py",
@@ -29,7 +28,6 @@ addopts = [
     "-n=auto",
     "-q",
     "-ra",
-    "pyproject.toml",
 ]
 doctest_optionflags = [
     "ALLOW_BYTES",
