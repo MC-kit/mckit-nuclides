@@ -83,7 +83,7 @@ lines-between-types = 1
 required-imports = [ "from __future__ import annotations" ]
 case-sensitive = true
 section-order = [
-  "future",  
+  "future",
   "typing",
   "standard-library",
   "third-party",
