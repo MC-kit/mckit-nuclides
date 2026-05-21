@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering :: Physics",
 ]
-dependencies = [ "numpy>=2.4", "polars[all]>=1.37" ]
+dependencies = [ "numpy>=2.4", "polars[numpy]>=1.37" ]
 [[project.authors]]
 name = "dvp2015"
 email = "dmitri_portnov@yahoo.com"
