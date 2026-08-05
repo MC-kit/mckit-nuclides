@@ -120,5 +120,5 @@ sections = [ "project.dependencies" ]
 venvs = [ ".venv" ]
 
 [tool.rstcheck]
-ignore_messages = '(Unknown directive type "(todo.*|automodule)".$)'
+ignore_messages = '(Unknown directive type \"cyclopts|todo|(auto(module|class|function))\"\.)'
 report_level = "ERROR"
