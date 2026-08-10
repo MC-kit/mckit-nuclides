@@ -50,7 +50,9 @@ docs = [
   "sphinx-autodoc-typehints>=3.10",
   "sphinx-togglebutton>=0.4",
 ]
-analyze = [ "jupyterlab>=4.5", "jupytext>=1.19" ]
+analyze = [
+  "marimo>=0.23.14",
+]
 lint = [ "pylint", "pylint-per-file-ignores" ]
 mypy = [ "mypy>=1.2", "pep8-naming>=0.12.1", "types-setuptools>=80.9.0.20250529" ]
 pre_commit = [ "pre-commit>=4.3" ]
