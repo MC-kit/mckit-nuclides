@@ -53,10 +53,10 @@ Installation
 **With package manager (as a dependency):**
 
 .. code-block:: bash
-   
+
    # uv
    uv add mckit-nuclides
-   
+
    # pixi
    pixi add --pypi mckit-nuclides
 
@@ -68,7 +68,7 @@ Installation
 **From Source:**
 
 .. code-block:: bash
-   
+
    uv pip install git+https://github.com/MC-kit/mckit-nuclides.git
    # or
    pip install git+https://github.com/MC-kit/mckit-nuclides.git
