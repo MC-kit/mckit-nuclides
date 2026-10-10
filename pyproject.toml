@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.13" ]
 
 [project]
 name = "mckit-nuclides"
-version = "0.6.1.dev2"
+version = "0.6.2"
 description = "Python tools to work with elements and nuclides"
 readme = "README.rst"
 keywords = [ "abundance", "element", "nuclide" ]
