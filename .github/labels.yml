@@ -5,7 +5,7 @@
 # The repository labels will be automatically configured using this file and
 # the GitHub Action https://github.com/marketplace/actions/github-labeler.
 -
-  name: "area/ci"
+  name: "ci"
   color: "4a97d6"
   description: "Continuous Integration"
 -
@@ -33,19 +33,19 @@
   description: "Breaking Changes"
   color: "bfd4f2"
 -
-  name: "kind/bug"
+  name: "bug"
   description: "Something isn't working"
   color: "d73a4a"
 -
-  name: "kind/build"
+  name: "build"
   description: "Build System and Dependencies"
   color: "bfdadc"
 -
-  name: "kind/dependencies"
+  name: "dependencies"
   color: "0366d6"
   description: ""
 -
-  name: "kind/docs"
+  name: "docs"
   description: "Improvements or additions to documentation"
   color: "0075ca"
 -
@@ -61,11 +61,11 @@
   description: "This doesn't seem right"
   color: "e4e669"
 -
-  name: "kind/performance"
+  name: "feat"
   description: "Performance"
   color: "016175"
 -
-  name: "kind/refactoring"
+  name: "refactoring"
   description: "Refactoring"
   color: "ef67c4"
 -
@@ -109,6 +109,6 @@
   description: "Style"
   color: "c120e5"
 -
-  name: "testing"
+  name: "test"
   description: "Testing"
   color: "b1fc6f"
