@@ -20,7 +20,6 @@ addopts = [
     "--doctest-modules",
     "--failed-first",
     "--ignore=setup.py",
-    "--numprocesses=logical",
     "--quiet",
     "--strict-markers",
     "--tb=short",
