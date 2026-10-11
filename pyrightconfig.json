@@ -3,7 +3,8 @@
   "venv": ".venv",
   "typeCheckingMode": "basic",
   "include": [
-    "src"
+    "src",
+    "tests"
   ],
   "exclude": [
     "**/data",
