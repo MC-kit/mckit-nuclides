@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import polars as pl
 
@@ -27,13 +27,14 @@ def convert_to_atomic_fraction(
 ) -> pl.DataFrame:
     """Change fractions by mass to fractions by atoms.
 
-    Args:
-        composition: DataFrame with columns atomic_number, mass_number
-        fraction_column: name of column presenting fraction
+    Parameters
+    ----------
+    composition: DataFrame with columns atomic_number, mass_number
+    fraction_column: name of column presenting fraction
 
     Returns
     -------
-        DataFrame: df with modified column "fraction"
+    DataFrame: df with modified column "fraction"
     """
     composition_columns = composition.columns
     converted = (
@@ -47,16 +48,16 @@ def convert_to_atomic_fraction(
 def normalize_column(table: pl.DataFrame, column: str = "fraction") -> pl.DataFrame:
     """Normalize the values in a column to have sum() == 1.0 over the column.
 
-    Args:
-        table: ... to normalize
-        column: ... over this column
+    Parameters
+    ----------
+    table: ... to normalize
+    column: ... over this column
 
     Returns
     -------
-        Result of normalization
+    Result of normalization
     """
-    total_fractions = table.select(column).sum().item()
-    return table.with_columns(pl.col(column) / total_fractions)
+    return table.with_columns(pl.col(column) / cast("float", table.select(column).sum().item()))
 
 
 def expand_df_natural_presence(
@@ -65,13 +66,14 @@ def expand_df_natural_presence(
 ) -> pl.DataFrame:
     """Expand 'natural' presence in composition presented as a DataFrame.
 
-    Args:
-        composition: table with columns atomic_number, mass_number (may be 0), fraction
-        fraction_column: exact 'fraction' column name
+    Parameters
+    ----------
+    composition: table with columns atomic_number, mass_number (may be 0), fraction
+    fraction_column: exact 'fraction' column name
 
     Returns
     -------
-        Expanded composition as a DataFrame.
+    Expanded composition as a DataFrame.
     """
     composition_columns = composition.columns
     having_mass_numbers = composition.filter(pl.col("mass_number").ne(0))
@@ -107,12 +109,13 @@ def expand_natural_presence(
     Substitute a sequence of nuclides when mass number is specified as 0.
     This means natural presence.
 
-    Args:
-        zaf: sequence of atomic number, mass number and fraction
+    Parameters
+    ----------
+    zaf: sequence of atomic number, mass number and fraction
 
     Yields
     ------
-        atomic number, mass_number, and corrected atomic fraction
+    atomic number, mass_number, and corrected atomic fraction
     """
     for z, a, f in zaf:
         if a != 0:
@@ -121,5 +124,5 @@ def expand_natural_presence(
             isotopic_compositions = NUCLIDES_TABLE_PL.filter(
                 pl.col("atomic_number").eq(z) & pl.col("isotopic_composition").gt(0.0)
             ).select("mass_number", "isotopic_composition")
-            for _a, _ic in isotopic_compositions.iter_rows():
+            for _a, _ic in isotopic_compositions.iter_rows():  # pyright: ignore[reportAny]
                 yield z, _a, f * _ic

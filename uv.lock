@@ -1170,8 +1170,8 @@ typeguard = [
 
 [package.metadata]
 requires-dist = [
-    { name = "numpy", specifier = ">=2.4" },
-    { name = "polars", extras = ["numpy"], specifier = ">=1.37" },
+    { name = "numpy", specifier = ">=2.5" },
+    { name = "polars", extras = ["numpy"], specifier = ">=2.0" },
 ]
 
 [package.metadata.requires-dev]

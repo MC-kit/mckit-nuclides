@@ -217,4 +217,4 @@ __all__ = [
 if __name__ == "__main__":
     import xdoctest
 
-    xdoctest.doctest_module(__file__, command="all")
+    _ = xdoctest.doctest_module(__file__, command="all")

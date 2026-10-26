@@ -63,7 +63,3 @@ def test_expand_df_natural_presence(water: pl.DataFrame) -> None:
         .height
         == 0
     )
-
-
-if __name__ == "__main__":
-    pytest.main()

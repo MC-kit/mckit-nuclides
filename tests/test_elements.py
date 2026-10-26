@@ -33,12 +33,12 @@ def test_z() -> None:
 
 def test_element_with_invalid_key() -> None:
     with pytest.raises(KeyError):
-        get_property(1000000, "name")
+        _ = get_property(1000000, "name")
 
 
 def test_get_unknown_property() -> None:
     with pytest.raises(KeyError):
-        get_property("Ar", "unknown")
+        _ = get_property("Ar", "unknown")
 
 
 def test_from_molecular_formula() -> None:
@@ -48,7 +48,3 @@ def test_from_molecular_formula() -> None:
     assert actual.filter(atomic_number=1).select("fraction").item() == pytest.approx(
         0.66666, rel=1e-4
     )
-
-
-if __name__ == "__main__":
-    pytest.main()
